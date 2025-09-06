@@ -1,0 +1,15 @@
+---
+keys:
+  - &primary age195m7v6w6lce8knleuc9juqwklj56vjflng64q60eh90yrfpsfyjs222pls
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *primary
+  - path_regex: secrets/bubule/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *primary
+stores:
+  yaml:
+    indent: 2
