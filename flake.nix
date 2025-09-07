@@ -83,11 +83,11 @@
     sops-nix,
     nix-darwin,
     ...
-  }: 
+  }:
   let
-    usernames = if (builtins.pathExists ./private.nix) then
+    basic_config = if (builtins.pathExists ./private.nix) then
       (import ./private.nix) else {};
-    
+
     inherit (nixpkgs.lib) nixosSystem;
     inherit (nix-darwin.lib) darwinSystem;
     # supportedSystems = [
@@ -144,6 +144,7 @@
       system,
       username,
       hostname,
+      homePath ? "/Users/${username}",
       modules ? [],
       includeHomeManager ? false,
       homeManagerModules ? []
@@ -172,7 +173,7 @@
               ++ homeManagerModules;
               extraSpecialArgs = {
                 inherit inputs;
-                inherit username hostname;
+                inherit username hostname homePath;
               };
               sharedModules = [
                 sops-nix.homeManagerModules.sops
@@ -184,12 +185,12 @@
       )
       ++ modules;
     };
-  in 
+  in
   {
     nixosConfigurations = {
       framework = createNixosConfiguration {
         system = "x86_64-linux";
-        username = "${usernames.bubule_username}";
+        username = "${basic_config.bubule.username}";
         hostname = "bubule";
         modules = [
           # Add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
@@ -201,7 +202,7 @@
           # }
           hyprland.nixosModules.default
           catppuccin.nixosModules.catppuccin
-          ({ pkgs, ... }: {
+          ({ ... }: {
             nixpkgs.overlays = [
               talhelper.overlays.default
             ];
@@ -215,7 +216,7 @@
 
       # desktop = createNixosConfiguration {
       #   system = "x86_64-linux";
-      #   username = "${usernames.monolith_username}";
+      #   username = "${basic_config.monolith.username}";
       #   hostname = "monolith";
       #   modules = [];
       #   includeHomeManager = true;
@@ -226,11 +227,11 @@
     darwinConfigurations = {
       work = createDarwinConfiguration {
         system = "aarch64-darwin";
-        username = "${usernames.ceramiq_username}";
+        username = "${basic_config.ceramiq.username}";
         hostname = "ceramiq";
+        homePath = "${basic_config.ceramiq.home_path}";
         modules = [
-          catppuccin.nixosModules.catppuccin
-          ({ pkgs, ... }: {
+          ({ ... }: {
             nixpkgs.overlays = [
               talhelper.overlays.default
             ];

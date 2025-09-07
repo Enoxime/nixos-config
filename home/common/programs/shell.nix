@@ -7,6 +7,4 @@ _: {
     enableShellIntegration = true;
     enableZshIntegration = true;
   };
-
-  programs = {};
 }

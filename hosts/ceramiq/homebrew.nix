@@ -18,7 +18,7 @@ _: {
       "Yubico Authenticator" = 1497506650;
     };
 
-    cask = [
+    casks = [
       {
         name = "librewolf";
         args = { "no-quarantine" = ""; };
