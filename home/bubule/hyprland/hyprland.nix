@@ -178,7 +178,7 @@ _: {
     #     kb_rules =
 
     #     follow_mouse = 1
-        
+
     #     touchpad {
     #       natural_scroll = yes
     #       tap-and-drag = true
@@ -228,7 +228,7 @@ _: {
     #           color = $teal
     #           color_inactive = 0xff$baseAlpha
     #       }
-          
+
     #       active_opacity = 0.7
     #       inactive_opacity = 0.7
     #       fullscreen_opacity = 0.7
@@ -308,7 +308,7 @@ _: {
     #   binde=,j,resizeactive,0 10
 
     #   # use reset to go back to the global submap
-    #   bind=,escape,submap,reset 
+    #   bind=,escape,submap,reset
 
     #   # will reset the submap, meaning end the current one and return to the global one
     #   submap=reset
@@ -331,7 +331,7 @@ _: {
     #   bind=,j,movewindow,d
 
     #   # use reset to go back to the global submap
-    #   bind=,escape,submap,reset 
+    #   bind=,escape,submap,reset
 
     #   # will reset the submap, meaning end the current one and return to the global one
     #   submap=reset

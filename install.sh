@@ -90,7 +90,7 @@ sgdisk --zap-all "${__disk_path}"
 # Partition, format and mount the disk #
 ########################################
 
-# TODO: Find why it does not work with disko. It format and 
+# TODO: Find why it does not work with disko. It format and
 # all but cannot boot properly on it
 # nix \
 #   --extra-experimental-features "nix-command flakes" \
@@ -215,7 +215,7 @@ nixos-install --root /mnt --flake "${__flake_path}#${__machine_name}"
 
 
 # Does not work if the intended idea is to partition, mount then
-# install the system. Instead, the setup will try to install everything 
+# install the system. Instead, the setup will try to install everything
 # and that will overload the space and, eventually, error out of space.
 # TODO: It would be nice if it works as I intended
 # sudo nix --extra-experimental-features "nix-command flakes" \

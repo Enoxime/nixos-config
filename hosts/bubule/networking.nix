@@ -32,10 +32,10 @@
     #   wait = "background";
     #   # avoid checking if IP is already taken to boot a few seconds faster
     #   extraConfig = "noarp";
-      
+
     #   persistent = true;
     # };
-    
+
     enableIPv6 = true;
 
     # vpn

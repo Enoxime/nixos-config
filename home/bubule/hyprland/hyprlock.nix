@@ -36,7 +36,7 @@ _: {
       #     shadow_passes = 2;
       #   }
 
-      #   # DATE 
+      #   # DATE
       #   {
       #     monitor = "";
       #     text = "cmd[update:43200000] echo \"\$(date +\"%A, %d %B %Y\")\"";

@@ -878,7 +878,7 @@ _: {
             | awk '{print $NF}' \
             | awk '{if(NR>1)print}'
           )
-          krr simple --cluster $CONTEXT --selector $LABELS 
+          krr simple --cluster $CONTEXT --selector $LABELS
           echo "Press 'q' to exit"
           while : ; do
           read -n 1 k <&1
@@ -929,12 +929,12 @@ _: {
           ''IG_VERSION=v0.34.0
           IG_IMAGE=ghcr.io/inspektor-gadget/ig:$IG_VERSION
           IG_FIELD=k8s.podName,src,dst,qr,qtype,name,rcode,latency_ns
-          
+
           GREEN='\033[0;32m'
           RED='\033[0;31m'
           BLUE='\033[0;34m'
           NC='\033[0m' # No Color
-          
+
           # Ensure kubectl version is 1.30 or later
           KUBECTL_VERSION=$(kubectl version --client | awk '/Client Version:/{print $3}')
           if [[ "$(echo "$KUBECTL_VERSION" | cut -d. -f2)" -lt 30 ]]; then
@@ -942,7 +942,7 @@ _: {
             sleep 3
             exit
           fi
-          
+
           clear
 
           # Handle containers
@@ -955,7 +955,7 @@ _: {
               --fields "$IG_FIELD"
               exit
           fi
-          
+
           # Handle pods
           if [[ -n "$NAMESPACE" ]]; then
             echo -e "''${GREEN}Tracing DNS requests for pod ''${BLUE}''${NAME}''${GREEN} in namespace ''${BLUE}''${NAMESPACE}''${NC}"
@@ -966,7 +966,7 @@ _: {
               --fields "$IG_FIELD"
               exit
           fi
-          
+
           # Handle nodes
           echo -e "''${GREEN}Tracing DNS requests for node ''${BLUE}''${NAME}''${NC}"
           kubectl debug --kubeconfig=$KUBECONFIG  --context=$CONTEXT -q \

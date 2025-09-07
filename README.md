@@ -37,33 +37,33 @@ reboot
 
 ## Resources
 
-https://home-manager-options.extranix.com/?query=&release=master
-https://search.nixos.org/packages
-https://mynixos.com/options
-https://wearewaylandnow.com/
-https://github.com/Alexays/Waybar/wiki/Module:-Hyprland#window
-https://nix.catppuccin.com/search/rolling/
+<https://home-manager-options.extranix.com/?query=&release=master>
+<https://search.nixos.org/packages>
+<https://mynixos.com/options>
+<https://wearewaylandnow.com/>
+<https://github.com/Alexays/Waybar/wiki/Module:-Hyprland#window>
+<https://nix.catppuccin.com/search/rolling/>
 
 ## Learn
 
-https://nix.dev/tutorials/packaging-existing-software
-https://nixos-and-flakes.thiscute.world/nix-store/intro
+<https://nix.dev/tutorials/packaging-existing-software>
+<https://nixos-and-flakes.thiscute.world/nix-store/intro>
 
 ## TODOs
 
 BORGbackup
 
-Check what path is important for NixOS. See https://nixos.wiki/wiki/Btrfs#Installation_with_encryption
-or https://notes.tiredofit.ca/books/linux/page/installing-nixos-encrypted-btrfs-impermanance
+Check what path is important for NixOS. See <https://nixos.wiki/wiki/Btrfs#Installation_with_encryption>
+or <https://notes.tiredofit.ca/books/linux/page/installing-nixos-encrypted-btrfs-impermanance>
 
 Impermanence:
-https://github.com/nix-community/impermanence
-https://nixos.wiki/wiki/Impermanence
+<https://github.com/nix-community/impermanence>
+<https://nixos.wiki/wiki/Impermanence>
 
 incus:
-https://linuxcontainers.org/
-https://linuxcontainers.org/incus/
-https://wiki.nixos.org/wiki/Incus
+<https://linuxcontainers.org/>
+<https://linuxcontainers.org/incus/>
+<https://wiki.nixos.org/wiki/Incus>
 
 ## Sources
 
@@ -75,17 +75,17 @@ etc...
 
 ## Inspirations
 
-https://github.com/Misterio77/nix-starter-configs/tree/main
-https://github.com/aurreland/nix-config/tree/master
-https://github.com/tiredofit/nixos-config/tree/main
-https://github.com/clementpoiret/nixos-config/tree/main
-https://github.com/XNM1/linux-nixos-hyprland-config-dotfiles/tree/main
-https://github.com/JaKooLit/Hyprland-Dots/tree/main
-https://github.com/HeinzDev/Hyprland-dotfiles
-https://github.com/redyf/nixdots/tree/main
-https://github.com/gpskwlkr/nixos-hyprland-flake/tree/main
-https://flarexes.com/hyprland-getting-started-configure-screen-lock-brightness-volume-authentication-and-more
-https://github.com/sejjy/mechabar/tree/main
+<https://github.com/Misterio77/nix-starter-configs/tree/main>
+<https://github.com/aurreland/nix-config/tree/master>
+<https://github.com/tiredofit/nixos-config/tree/main>
+<https://github.com/clementpoiret/nixos-config/tree/main>
+<https://github.com/XNM1/linux-nixos-hyprland-config-dotfiles/tree/main>
+<https://github.com/JaKooLit/Hyprland-Dots/tree/main>
+<https://github.com/HeinzDev/Hyprland-dotfiles>
+<https://github.com/redyf/nixdots/tree/main>
+<https://github.com/gpskwlkr/nixos-hyprland-flake/tree/main>
+<https://flarexes.com/hyprland-getting-started-configure-screen-lock-brightness-volume-authentication-and-more>
+<https://github.com/sejjy/mechabar/tree/main>
 
 ## Install or remove apps
 

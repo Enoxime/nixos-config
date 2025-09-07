@@ -6,7 +6,7 @@ _: {
     systemd.enable = true;
     style = ''
       * {
-        font-family: FantasqueSansM Nerd Font; 
+        font-family: FantasqueSansM Nerd Font;
         min-height: 0;
       }
 
@@ -42,7 +42,7 @@ _: {
         border-radius: 1rem;
         padding: 0 .5rem 0 .5rem;
       }
-      
+
       #workspaces button:hover {
         color: @sapphire;
       }
@@ -299,7 +299,7 @@ _: {
           "on-click" = "~/.config/waybar/scripts/wifi_toggle.sh";
           "on-click-right" = "iwgtk";
         };
-        
+
         "bluetooth" = {
           "format" = "󰂯";
           "format-disabled" = "󰂲";
@@ -962,7 +962,7 @@ _: {
         __COUNT_DISPLAYED=$(dunstctl count displayed)
         __ENABLED="{ \"text\": \"󰂜\", \"tooltip\": \"notifications <span color='#a6da95'>on</span>\", \"class\": \"on\" }"
         __DISABLED="{ \"text\": \"󰪑\", \"tooltip\": \"notifications <span color='#ee99a0'>off</span>\", \"class\": \"off\" }"
-        
+
         if [[ "''${__COUNT_DISPLAYED}" != 0 ]]; then
             set ENABLED "{ \"text\": \"󰂚''${__COUNT_DISPLAYED}\", \"tooltip\": \"''${__COUNT_DISPLAYED} notifications\", \"class\": \"on\" }"
         fi

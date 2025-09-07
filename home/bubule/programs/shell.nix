@@ -34,7 +34,7 @@ in
       dirHashes = {
         src = "$HOME/src";
       };
-      initContent = ''  
+      initContent = ''
         # battery
         RPROMPT='$(battery_pct_prompt) ...'
         BATTERY_CHARGING="⚡️"

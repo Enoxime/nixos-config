@@ -18,7 +18,7 @@
         shell = pkgs.zsh;
       };
     };
-    
+
     groups = {
       "${username}" = {
         name = "${username}";

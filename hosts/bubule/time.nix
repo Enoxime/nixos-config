@@ -7,5 +7,5 @@
   time = {
     hardwareClockInLocalTime = true;
     timeZone = "${config.sops.secrets.timezone.path}";
-  }; 
+  };
 }

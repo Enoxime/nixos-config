@@ -34,7 +34,7 @@ in
       dirHashes = {
         src = "$HOME/src";
       };
-      initContent = ''  
+      initContent = ''
         # krew
         export PATH="''${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
