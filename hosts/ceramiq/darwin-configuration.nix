@@ -12,23 +12,13 @@
   nix = {
     gc = {
       automatic = true;
-      dates = "weekly";
+      interval = [{ Weekday = 7; }];
       options = "--delete-older-than 1w";
     };
 
     settings = {
       # https://github.com/NixOS/nix/issues/7273
       auto-optimise-store = false;
-
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-
-      extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
     };
   };
 
@@ -70,7 +60,7 @@
       enableBashCompletion = true;
       enableCompletion = true;
       enableSyntaxHighlighting = true;
-      shellInit = ''  
+      shellInit = ''
         # krew
         export PATH="''${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
@@ -138,5 +128,5 @@
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = 1; # Did you read the comment?
 }

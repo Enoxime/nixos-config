@@ -152,7 +152,7 @@
       inherit system;
       specialArgs = {
         inherit inputs;
-        inherit username hostname;
+        inherit username hostname homePath;
       };
       modules = [
         ./hosts/${hostname}
