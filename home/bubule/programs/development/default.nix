@@ -1,8 +1,4 @@
 { pkgs, ... }: {
-  imports = [
-    ./vscodium.nix
-  ];
-
   # Nice reference: https://github.com/the-nix-way/dev-templates/tree/main
 
   home.packages = with pkgs; [
@@ -14,11 +10,8 @@
     libffi
     ncurses
     openssl
-    pipenv
     pkg-config
-    nodejs # Needed for pre-commit for whatever reasons
     readline
-    shellcheck
     waydroid
     zlib
   ];

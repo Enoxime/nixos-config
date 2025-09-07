@@ -4,16 +4,13 @@
     ./devops
     ./development
     ./games.nix
-    ./git.nix
     ./shell.nix
-    ./ssh.nix
     # ./starship.nix
   ];
 
   programs = {
     # A lightweight multi-protocol & multi-source command-line download utility
     aria2.enable = true;
-    bat.enable = true;
     # Another process monitor but seems nice
     bottom.enable = true;
     fastfetch.enable = true;
@@ -23,12 +20,8 @@
       enableBashIntegration = true;
       enableZshIntegration = true;
     };
-    gpg.enable = true;
-    # A lightweight and flexible command-line JSON processor
-    jq.enable = true;
     # https://github.com/catppuccin/firefox
     librewolf.enable = true;
-    lsd.enable = true;
     mpv = {
       enable = true;
       config = {
@@ -37,12 +30,6 @@
         profile = "gpu-hq";
         gpu-context = "wayland";
       };
-    };
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
     };
     # https://home-manager-options.extranix.com/?query=spotify-player&release=master
     # https://github.com/aome510/spotify-player
@@ -63,14 +50,6 @@
   home.packages = with pkgs; [
     # here is some command line tools I use frequently
 
-    # archives
-    zip
-    xz
-    unzip
-    p7zip
-    gnutar
-    lz4
-
     # utils
     yq-go # yaml processor https://github.com/mikefarah/yq
     eza # A modern replacement for ‘ls’
@@ -82,7 +61,6 @@
     ldns # replacement of `dig`, it provide the command `drill`
     socat # replacement of openbsd-netcat
     nmap # A utility for network discovery and security auditing
-    ipcalc  # it is a calculator for the IPv4/v6 addresses
     iproute2 # Collection of utilities for controlling TCP/IP networking and traffic control in Linux (include bridge)
     vlan
     tcpdump
@@ -153,10 +131,6 @@
     pciutils # lspci
     usbutils # lsusb
     parted
-
-    # security/encrypt
-    sops
-    age
   ];
 
   services = {

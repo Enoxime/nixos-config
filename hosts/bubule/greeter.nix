@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   environment.systemPackages = [
-    pkgs.greetd.tuigreet
+    pkgs.tuigreet
   ];
 
   # programs.regreet = {
@@ -28,7 +28,7 @@
       default_session = {
         # https://github.com/apognu/tuigreet?tab=readme-ov-file
         command = ''
-          ${pkgs.greetd.tuigreet}/bin/tuigreet \
+          ${pkgs.tuigreet}/bin/tuigreet \
             --time --time-format '%H:%M | %a • %h | %F' \
             --cmd Hyprland
         '';

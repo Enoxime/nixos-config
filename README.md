@@ -26,7 +26,7 @@ requirements:
 - patience
 - a large vocabulary of insults just in case you lost patience
 
-### Secure erase the disk and install
+### Secure erase the disk and install (GNU/Linux only)
 
 ```bash
 ./install.sh -s true -m MACHINENAME -d /dev/nvme0n0 -f "github:Enoxime/nixos-config"
@@ -90,12 +90,21 @@ https://github.com/sejjy/mechabar/tree/main
 ## Install or remove apps
 
 ```bash
-sudo nixos-rebuild switch --flake .#framework
+sudo nixos-rebuild switch --flake path:.#framework
 sudo nixos-rebuild switch --flake github:Enoxime/nixos-config#framework
+
+sudo darwin-rebuild switch --flake path:.#work
+sudo darwin-rebuild switch --flake github:Enoxime/nixos-config#work
 ```
 
 ## Upgrade
 
 ```bash
+sudo nix flake update
+
+sudo nixos-rebuild switch --flake path:.#framework --upgrade-all
 sudo nixos-rebuild switch --flake github:Enoxime/nixos-config#framework --upgrade-all
+
+sudo darwin-rebuild switch --flake path:.#work --upgrade-all
+sudo darwin-rebuild switch --flake github:Enoxime/nixos-config#work --upgrade-all
 ```

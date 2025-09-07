@@ -63,6 +63,11 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{
@@ -76,6 +81,7 @@
     catppuccin,
     talhelper,
     sops-nix,
+    nix-darwin,
     ...
   }: 
   let
@@ -83,9 +89,9 @@
       (import ./private.nix) else {};
     
     inherit (nixpkgs.lib) nixosSystem;
+    inherit (nix-darwin.lib) darwinSystem;
     # supportedSystems = [
     #   "x86_64-linux"
-    #   "x86_64-darwin"
     #   "aarch64-darwin"
     # ];
 
@@ -115,6 +121,52 @@
               # https://github.com/nix-community/home-manager/blob/8c3b2a0cab64a464de9e41a470eecf1318ccff57/nixos/common.nix#L55
               backupFileExtension = "backup";
               users."${username}".imports = [
+                ./home/common
+                ./home/${hostname}/home.nix
+              ]
+              ++ homeManagerModules;
+              extraSpecialArgs = {
+                inherit inputs;
+                inherit username hostname;
+              };
+              sharedModules = [
+                sops-nix.homeManagerModules.sops
+              ];
+            };
+          }
+        ]
+        else []
+      )
+      ++ modules;
+    };
+
+    createDarwinConfiguration = {
+      system,
+      username,
+      hostname,
+      modules ? [],
+      includeHomeManager ? false,
+      homeManagerModules ? []
+    }: darwinSystem {
+      inherit system;
+      specialArgs = {
+        inherit inputs;
+        inherit username hostname;
+      };
+      modules = [
+        ./hosts/${hostname}
+        sops-nix.darwinModules.sops
+      ]
+      ++ (
+        if includeHomeManager then [
+          home-manager.darwinModules.home-manager {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              # https://github.com/nix-community/home-manager/blob/8c3b2a0cab64a464de9e41a470eecf1318ccff57/nixos/common.nix#L55
+              backupFileExtension = "backup";
+              users."${username}".imports = [
+                ./home/common
                 ./home/${hostname}/home.nix
               ]
               ++ homeManagerModules;
@@ -169,15 +221,26 @@
       #   includeHomeManager = true;
       #   homeManagerModules = [];
       # };
+    };
 
-      # work = createNixosConfiguration {
-      #   system = "";
-      #   username = "${usernames.ceramiq_username}";
-      #   hostname = "ceramiq";
-      #   modules = [];
-      #   includeHomeManager = true;
-      #   homeManagerModules = [];
-      # };
+    darwinConfigurations = {
+      work = createDarwinConfiguration {
+        system = "aarch64-darwin";
+        username = "${usernames.ceramiq_username}";
+        hostname = "ceramiq";
+        modules = [
+          catppuccin.nixosModules.catppuccin
+          ({ pkgs, ... }: {
+            nixpkgs.overlays = [
+              talhelper.overlays.default
+            ];
+          })
+        ];
+        includeHomeManager = true;
+        homeManagerModules = [
+          catppuccin.homeModules.catppuccin
+        ];
+      };
     };
   };
 }
