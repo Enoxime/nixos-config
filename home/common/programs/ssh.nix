@@ -20,13 +20,13 @@
           Hostname github.com
           User git
           Port 22
-          IdentityFile "''${HOME}/${username}/.ssh/${username}_${hostname}"
+          IdentityFile "''${HOME}/.ssh/${username}_${hostname}"
 
         Host bitbucket.org
           Hostname bitbucket.org
           User git
           port 22
-          IdentityFile "''${HOME}/${username}/.ssh/${username}_${hostname}"
+          IdentityFile "''${HOME}/.ssh/${username}_${hostname}"
       '';
     };
   };
