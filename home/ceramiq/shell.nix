@@ -35,11 +35,6 @@ in
         src = "$HOME/src";
       };
       initContent = ''
-        # battery
-        RPROMPT='$(battery_pct_prompt) ...'
-        BATTERY_CHARGING="⚡️"
-        ZSH_AUTOSUGGEST_USE_ASYNC="true"
-
         # krew
         export PATH="''${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
@@ -65,7 +60,6 @@ in
         # theme = "bira";
         theme = "lukerandall";
         plugins = [
-          "battery"
           "command-not-found"
           "fluxcd"
           "git"
@@ -96,8 +90,6 @@ in
   };
 
   home.packages = with pkgs; [
-    acpi
-    acpitool
     xterm
   ];
 }

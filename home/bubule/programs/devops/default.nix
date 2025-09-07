@@ -1,49 +1,23 @@
 { pkgs, ... }: {
-  imports = [
-    ./kubectl-plugins.nix
-    ./k9s.nix
-    ./virtualisation.nix
-  ];
-
   home.packages = with pkgs; [
-    cilium-cli
-    cmctl # https://github.com/cert-manager/cmctl
-    dive # https://github.com/wagoodman/dive
-    fluxcd
-    krew
-    # Trigger error for now. To try again later
-    # krr # https://github.com/robusta-dev/krr
-    kubectl
-    kubernetes-helm
-    kubernetes-helmPlugins.helm-diff
-    kubeseal
-    kubevirt
-    kustomize
-    minio-client
-    talhelper
-    talosctl
-    tenv
-    velero
+    buildah # https://buildah.io/
+    firecracker # https://firecracker-microvm.github.io/
+    firectl # https://github.com/firecracker-microvm/firectl
+    flintlock # https://github.com/liquidmetal-dev/flintlock
+    podman-compose
+    podman-tui
+    virt-manager # https://wiki.nixos.org/wiki/Virt-manager
+    virt-viewer
   ];
 
-  programs = {
-    kubecolor = {
-      enable = true;
-      enableAlias = true;
-      settings = {
-        paging = "auto";
-      };
-    };
-  };
+  # programs = {
+  #   # https://distrobox.it/
+  #   distrobox.enable = true;
+  # };
 
-  # kubecolor catppuccin theme
-  # See https://github.com/vkhitrin/kubecolor-catppuccin/tree/main
-  home.file."color.yaml" = {
-    enable = true;
-    target = "./.kube/color.yaml";
-    source = pkgs.fetchurl {
-      url = "https://github.com/vkhitrin/kubecolor-catppuccin/raw/main/catppuccin-mocha.yaml";
-      sha256 = "sha256-BPU8gq1RjwZ3j76OSDVWgY7hOSCq14zmgchT2OQ6Vq8=";
+  services = {
+    podman = {
+      enable = true;
     };
   };
 }

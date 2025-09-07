@@ -1,13 +1,10 @@
-{username, hostname, ...}: {
+{ username, hostname, homePath, ... }: {
   imports = [
-    ./bluetooth.nix
-    ./programs
-    ./hyprland
-    ./security.nix
+    ./shell.nix
   ];
 
   sops = {
-    age.keyFile = "/home/${username}/.config/sops/age/keys.txt";
+    age.keyFile = "${homePath}/.config/sops/age/keys.txt";
     defaultSopsFile = ../../secrets/${hostname}/secrets.yaml;
   };
 
@@ -20,21 +17,12 @@
     flavor = "mocha";
   };
 
-  # dconf.settings = {
-  #   # virt-manager auto connect to local
-  #   "org/virt-manager/virt-manager/connections" = {
-  #     autoconnect = ["qemu:///system"];
-  #     uris = ["qemu:///system"];
-  #   };
-  # };
-
   home = {
     username = "${username}";
-    # homeDirectory = "/home/${username}";
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
   };
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
 
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage

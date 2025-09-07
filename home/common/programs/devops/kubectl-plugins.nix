@@ -3,7 +3,7 @@ _: {
     sessionPath = [
       "$HOME/.kube/plugins/bin"
     ];
-    
+
     file = {
       kubectl-purge = {
         enable = true;
@@ -17,7 +17,7 @@ _: {
           Release is acquired from the pod's 'describe' information in the 'tags' section.
           Examples:
             kubectl purge my-namespace my-namespace-pod1-123: Purge the release associated with 'my-namespace-pod1-123' pod"
-          
+
           while getopts ':h' option; do
             case "$option" in
               h) echo "$usage"
