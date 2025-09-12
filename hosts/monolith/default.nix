@@ -1,12 +1,12 @@
 _: {
   imports = [
     ./configuration.nix
-    # ./disko-configuration.nix
-    # ./dns.nix
+    ./disko-configuration.nix
     ./filesystems.nix
-    ./framework.nix
     ./hardware-configuration.nix
+    ./impermanence.nix
     ./networking.nix
-    ./services.nix
+    ./nvidia.nix
+    ./games.nix
   ];
 }

@@ -10,6 +10,8 @@
       "127.0.0.1" = ["garage.garage"];
     };
 
+    # networkmanager.ensureProfiles.profiles = {};
+
     # vpn
     wg-quick.interfaces.homelab-mgmt = {
       autostart = false;

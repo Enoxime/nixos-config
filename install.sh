@@ -136,8 +136,8 @@ btrfs subvolume create /mnt/@nix
 # btrfs subvolume create /mnt/@var_cache
 btrfs subvolume create /mnt/@var_log
 # btrfs subvolume create /mnt/@var_tmp
-btrfs subvolume create /mnt/@swap
-btrfs subvolume create /mnt/@tmp
+# btrfs subvolume create /mnt/@swap
+# btrfs subvolume create /mnt/@tmp
 btrfs subvolume create /mnt/@snapshots
 btrfs subvolume create /mnt/@persist
 
@@ -167,16 +167,16 @@ mount \
   --options defaults,x-mount.mkdir,compress=zstd,ssd,noatime,subvol=@var_log \
   LABEL=system \
   /mnt/var/log
-mount \
-  --types btrfs \
-  --options defaults,x-mount.mkdir,compress=zstd,ssd,noatime,subvol=@swap \
-  LABEL=system \
-  /mnt/swap
-mount \
-  --types btrfs \
-  --options defaults,x-mount.mkdir,compress=zstd,ssd,noatime,subvol=@tmp \
-  LABEL=system \
-  /mnt/tmp
+# mount \
+#   --types btrfs \
+#   --options defaults,x-mount.mkdir,compress=zstd,ssd,noatime,subvol=@swap \
+#   LABEL=system \
+#   /mnt/swap
+# mount \
+#   --types btrfs \
+#   --options defaults,x-mount.mkdir,compress=zstd,ssd,noatime,subvol=@tmp \
+#   LABEL=system \
+#   /mnt/tmp
 mount \
   --types btrfs \
   --options defaults,x-mount.mkdir,compress=zstd,ssd,noatime,subvol=@snapshots \

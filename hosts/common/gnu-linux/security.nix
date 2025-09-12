@@ -1,6 +1,6 @@
 { pkgs, config, ... }: {
   sops.secrets.ca_url = {
-    sopsFile = ../../secrets/secrets.yaml;
+    sopsFile = ../../../secrets/secrets.yaml;
   };
 
   # TODO

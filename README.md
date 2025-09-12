@@ -65,6 +65,10 @@ incus:
 <https://linuxcontainers.org/incus/>
 <https://wiki.nixos.org/wiki/Incus>
 
+Find a way to commit private.nix securely.
+
+Check <https://github.com/nix-community/nixpkgs-xr>
+
 ## Sources
 
 hyprland
