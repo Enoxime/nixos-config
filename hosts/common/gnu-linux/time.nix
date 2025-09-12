@@ -1,6 +1,6 @@
 {config, ...}: {
   sops.secrets.timezone = {
-    sopsFile = ../../secrets/secrets.yaml;
+    sopsFile = ../../../secrets/secrets.yaml;
   };
 
   # Set your time zone.

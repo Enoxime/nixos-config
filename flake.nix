@@ -9,10 +9,14 @@
     extra-substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
+      "https://hyprland.cachix.org"
+      # "https://nix-gaming.cachix.org"
     ];
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      # "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
     ];
   };
 
@@ -38,10 +42,10 @@
 
     # TODO: Disko does not work properly with my setup. I don't know why though
     # Disko: Partition and format your disks
-    # disko = {
-    #   url = "github:nix-community/disko/latest";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    disko = {
+      url = "github:nix-community/disko/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprland.url = "github:hyprwm/Hyprland";
     # TODO: Test hyprland-plugins
@@ -68,6 +72,15 @@
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # https://github.com/nix-community/impermanence
+    impermanence.url = "github:nix-community/impermanence";
+
+    # https://github.com/fufexan/nix-gaming
+    nix-gaming.url = "github:fufexan/nix-gaming";
+
+    # # https://github.com/nix-community/nixpkgs-xr
+    # nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
   };
 
   outputs = inputs@{
@@ -75,18 +88,31 @@
     nixpkgs,
     nixos-hardware,
     home-manager,
-    # disko,
+    disko,
     hyprland,
     # pyprland,
     catppuccin,
     talhelper,
     sops-nix,
     nix-darwin,
+    impermanence,
     ...
   }:
   let
-    basic_config = if (builtins.pathExists ./private.nix) then
+    basicConfig = if (builtins.pathExists ./private.nix) then
       (import ./private.nix) else {};
+
+    basicExtraGroups = [
+      "docker"
+      "podman"
+      "input"
+      "incus-admin"
+      "kvm"
+      "libvirtd"
+      "networkmanager"
+      "qemu"
+      "wheel"
+    ];
 
     inherit (nixpkgs.lib) nixosSystem;
     inherit (nix-darwin.lib) darwinSystem;
@@ -99,16 +125,34 @@
       system,
       username,
       hostname,
+      extraGroups ? [],
       modules ? [],
       includeHomeManager ? false,
-      homeManagerModules ? []
-    }: nixosSystem {
+      homeManagerModules ? [],
+      installDiskName ? ""
+    }:
+    let
+      sopsSecretPath =
+        if (builtins.getEnv "sops_secret_path" != "") then
+          (builtins.getEnv "sops_secret_path")
+        else
+          "/home/${username}/.config/sops/age/keys.txt";
+
+      userExtraGroups =
+        if (extraGroups != []) then
+          basicExtraGroups ++ extraGroups
+        else
+          basicExtraGroups;
+    in
+    nixosSystem {
       inherit system;
       specialArgs = {
         inherit inputs;
-        inherit username hostname;
+        inherit username hostname userExtraGroups sopsSecretPath installDiskName;
       };
       modules = [
+        ./hosts/common
+        ./hosts/common/gnu-linux
         ./hosts/${hostname}
         sops-nix.nixosModules.sops
       ]
@@ -122,6 +166,7 @@
               backupFileExtension = "backup";
               users."${username}".imports = [
                 ./home/common
+                ./home/common/gnu-linux
                 ./home/${hostname}/home.nix
               ]
               ++ homeManagerModules;
@@ -148,13 +193,22 @@
       modules ? [],
       includeHomeManager ? false,
       homeManagerModules ? []
-    }: darwinSystem {
+    }:
+    let
+      sopsSecretPath =
+        if (builtins.getEnv "sops_secret_path" != "") then
+          (builtins.getEnv "sops_secret_path")
+        else
+          "${homePath}/.config/sops/age/keys.txt";
+    in
+    darwinSystem {
       inherit system;
       specialArgs = {
         inherit inputs;
-        inherit username hostname homePath;
+        inherit username hostname homePath sopsSecretPath;
       };
       modules = [
+        ./hosts/common
         ./hosts/${hostname}
         sops-nix.darwinModules.sops
       ]
@@ -190,7 +244,7 @@
     nixosConfigurations = {
       framework = createNixosConfiguration {
         system = "x86_64-linux";
-        username = "${basic_config.bubule.username}";
+        username = "${basicConfig.bubule.username}";
         hostname = "bubule";
         modules = [
           # Add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
@@ -214,22 +268,38 @@
         ];
       };
 
-      # desktop = createNixosConfiguration {
-      #   system = "x86_64-linux";
-      #   username = "${basic_config.monolith.username}";
-      #   hostname = "monolith";
-      #   modules = [];
-      #   includeHomeManager = true;
-      #   homeManagerModules = [];
-      # };
+      desktop = createNixosConfiguration {
+        system = "x86_64-linux";
+        username = "${basicConfig.monolith.username}";
+        hostname = "monolith";
+        extraGroups = ["adbusers"];
+        modules = [
+          disko.nixosModules.disko
+          {
+            imports = [ ./hosts/monolith/disko-configuration.nix ];
+          }
+          impermanence.nixosModules.impermanence
+          hyprland.nixosModules.default
+          catppuccin.nixosModules.catppuccin
+          ({ ... }: {
+            nixpkgs.overlays = [
+              talhelper.overlays.default
+            ];
+          })
+        ];
+        includeHomeManager = true;
+        homeManagerModules = [
+          catppuccin.homeModules.catppuccin
+        ];
+      };
     };
 
     darwinConfigurations = {
       work = createDarwinConfiguration {
         system = "aarch64-darwin";
-        username = "${basic_config.ceramiq.username}";
+        username = "${basicConfig.ceramiq.username}";
         hostname = "ceramiq";
-        homePath = "${basic_config.ceramiq.home_path}";
+        homePath = "${basicConfig.ceramiq.home_path}";
         modules = [
           ({ ... }: {
             nixpkgs.overlays = [

@@ -1,6 +1,6 @@
-{username, hostname, ...}: {
+{ username, hostname, ... }: {
   imports = [
-    # ./programs
+    ./games.nix
     ./hyprland.nix
   ];
 
