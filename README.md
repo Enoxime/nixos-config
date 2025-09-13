@@ -94,6 +94,17 @@ etc...
 ## Install or remove apps
 
 ```bash
+sudo nix \
+  --extra-experimental-features "nix-command flakes" \
+  run github:nix-community/disko/latest -- \
+    --mode destroy,format,mount \
+    --flake path:.#framework
+sudo btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
+sudo nixos-install --root /mnt --flake path:.#framework
+sudo nixos-enter --root /mnt -c 'passwd USERNAME'
+sudo reboot
+
+# After installing
 sudo nixos-rebuild switch --flake path:.#framework
 sudo nixos-rebuild switch --flake github:Enoxime/nixos-config#framework
 

@@ -14,7 +14,7 @@
         bierner.markdown-mermaid
         bierner.markdown-preview-github-styles
         catppuccin.catppuccin-vsc
-        catppuccin.catppuccin-vsc-icons
+        # catppuccin.catppuccin-vsc-icons
         davidanson.vscode-markdownlint
         hashicorp.terraform
         jnoortheen.nix-ide

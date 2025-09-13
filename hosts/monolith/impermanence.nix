@@ -63,7 +63,7 @@
 
       # We first mount the BTRFS root to /mnt
       # so we can manipulate btrfs subvolumes.
-      mount -o subvol=/ /dev/mapper/enc /mnt
+      mount -o subvol=@root /dev/mapper/cryptsystem /mnt
 
       # While we're tempted to just delete /root and create
       # a new snapshot from /root-blank, /root is already
@@ -75,16 +75,16 @@
       # - /root/var/lib/portables
       # - /root/var/lib/machines
 
-      btrfs subvolume list -o /mnt/root |
+      btrfs subvolume list -o /mnt |
         cut -f9 -d' ' |
         while read subvolume; do
           echo "deleting /$subvolume subvolume..."
           btrfs subvolume delete "/mnt/$subvolume"
         done &&
-        echo "deleting /root subvolume..." &&
-        btrfs subvolume delete /mnt/root
+        echo "deleting /@root subvolume..." &&
+        btrfs subvolume delete /mnt
       echo "restoring blank /root subvolume..."
-      btrfs subvolume snapshot /mnt/root-blank /mnt/root
+      btrfs subvolume snapshot /mnt/root-blank /mnt
 
       # Once we're done rolling back to a blank snapshot,
       # we can unmount /mnt and continue on the boot process.

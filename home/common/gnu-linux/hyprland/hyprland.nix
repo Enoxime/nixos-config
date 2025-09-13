@@ -7,6 +7,11 @@ _: {
     };
     xwayland.enable = true;
     settings = {
+      ecosystem = {
+        no_update_news = true;
+        no_donation_nag = true;
+      };
+
       exec-once = [
         "swww query || swww-daemon & $HOME/.config/swww/swww_randomize.sh $HOME/.config/swww/wallpapers/wallpapers 60"
         "systemctl --user start hyprpolkitagent"
