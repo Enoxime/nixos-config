@@ -12,11 +12,25 @@
   ];
 
   programs = {
+    # https://nixos.wiki/wiki/Android
+    adb.enable = true;
     gamescope = {
       enable = true;
       capSysNice = true;
     };
     gamemode.enable = true;
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+      gamescopeSession.enable = true;
+    };
+    # VR headset
+    alvr = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -36,19 +50,29 @@
     # wineWowPackages.waylandFull
   ];
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-    gamescopeSession.enable = true;
+  hardware = {
+    # support for the xbox controller USB dongle
+    xone.enable = true;
+    # Epic in Lutris
+    graphics.enable32Bit = true;
   };
 
-  hardware.xone.enable = true; # support for the xbox controller USB dongle
-
-  # VR headset
-  programs.alvr = {
+  # https://wiki.nixos.org/wiki/VR#WiVRn
+  services.wivrn = {
     enable = true;
     openFirewall = true;
+
+    # Write information to /etc/xdg/openxr/1/active_runtime.json, VR applications
+    # will automatically read this and work with WiVRn (Note: This does not currently
+    # apply for games run in Valve's Proton)
+    defaultRuntime = true;
+
+    # Run WiVRn as a systemd service on startup
+    autoStart = true;
+
+    # note for steam command:
+    # Like Monado, you will also have to add the launch argument for WiVRn to
+    # allow access to the socket:
+    # PRESSURE_VESSEL_FILESYSTEMS_RW=$XDG_RUNTIME_DIR/wivrn/comp_ipc %command%
   };
 }

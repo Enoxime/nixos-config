@@ -136,7 +136,7 @@
         if (builtins.getEnv "sops_secret_path" != "") then
           (builtins.getEnv "sops_secret_path")
         else
-          "/home/${username}/.config/sops/age/keys.txt";
+          builtins.getEnv "HOME" + "/.config/sops/age/keys.txt";
 
       userExtraGroups =
         if (extraGroups != []) then
@@ -151,6 +151,7 @@
         inherit username hostname userExtraGroups sopsSecretPath installDiskName;
       };
       modules = [
+        # ./hosts/functions
         ./hosts/common
         ./hosts/common/gnu-linux
         ./hosts/${hostname}
