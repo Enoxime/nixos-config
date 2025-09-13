@@ -1,4 +1,4 @@
-{ pkgs, config, username, hostname, ... }: {
+{ config, username, ... }: {
   sops.secrets."wireguard/homelab" = {
     mode = "0440";
     owner = "${username}";

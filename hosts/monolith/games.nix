@@ -27,10 +27,10 @@
       gamescopeSession.enable = true;
     };
     # VR headset
-    alvr = {
-      enable = true;
-      openFirewall = true;
-    };
+    # alvr = {
+    #   enable = true;
+    #   openFirewall = true;
+    # };
   };
 
   environment.systemPackages = with pkgs; [
