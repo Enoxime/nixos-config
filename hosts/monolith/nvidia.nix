@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, ... }: {
   # references:
   # https://nixos.wiki/wiki/Nvidia
 

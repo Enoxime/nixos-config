@@ -1,5 +1,5 @@
 { pkgs, config, ... }: {
-  sops.secrets.ca_url = {
+  sops.secrets."homelab/ca" = {
     sopsFile = ../../../secrets/secrets.yaml;
   };
 
@@ -17,12 +17,7 @@
   #   };
   # };
 
-  security.pki.certificateFiles = [
-    (pkgs.fetchurl {
-      url = "${config.sops.secrets.ca_url.path}/roots.pem";
-      name = "homelab.crt";
-      hash = "sha256-5mZoCAUuvVHhLYxl3Lol05tqOH32Rly1e7FTSRTIvas=";
-      curlOpts = "--insecure";
-    })
+  security.pki.certificates = [
+    "${config.sops.secrets."homelab/ca".path}"
   ];
 }
