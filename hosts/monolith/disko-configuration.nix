@@ -9,7 +9,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/nvme1n1";
+        device = "/dev/disk/by-id/nvme-eui.0025385981b0d512";
         content = {
           type = "gpt";
           partitions = {
@@ -30,10 +30,10 @@
             };
             luks = {
               size = "100%";
-              label = "system";
+              label = "cryptsystem";
               content = {
                 type = "luks";
-                name = "cryptsystem";
+                name = "system";
                 settings.allowDiscards = true;
                 # disable settings.keyFile if you want to use interactive password entry
                 #passwordFile = "/tmp/secret.key"; # Interactive
@@ -45,8 +45,8 @@
                 content = {
                   type = "btrfs";
                   extraArgs = [
-                    "--label"
-                    "system"
+                    # "--label"
+                    # "system"
                     "--force"
                   ];
                   subvolumes = {
