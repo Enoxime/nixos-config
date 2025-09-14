@@ -99,7 +99,9 @@
     ...
   }:
   let
-    basicConfig = if (builtins.pathExists ./private.nix) then
+    basicConfig = if (builtins.getEnv "private_file_path" != "") then
+      (builtins.getEnv "private_file_path" != "") else
+      if (builtins.pathExists ./private.nix) then
       (import ./private.nix) else {};
 
     basicExtraGroups = [
@@ -136,7 +138,7 @@
         if (builtins.getEnv "sops_secret_path" != "") then
           (builtins.getEnv "sops_secret_path")
         else
-          builtins.getEnv "HOME" + "/.config/sops/age/keys.txt";
+          "/home/${username}/.config/sops/age/keys.txt";
 
       userExtraGroups =
         if (extraGroups != []) then
