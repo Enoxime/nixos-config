@@ -14,6 +14,7 @@
           type = "gpt";
           partitions = {
             ESP = {
+              label ="boot";
               size = "1G";
               type = "EF00";
               content = {
@@ -30,6 +31,7 @@
             luks = {
               size = "100%";
               content = {
+                label = "system";
                 type = "luks";
                 name = "cryptsystem";
                 settings.allowDiscards = true;
@@ -57,6 +59,9 @@
                         "ssd"
                         "noatime"
                       ];
+                    };
+                    "@root-blank" = {
+                      mountOptions = ["subvol=root-blank" "nodatacow" "noatime"];
                     };
                     "@home" = {
                       mountpoint = "/home";
