@@ -30,8 +30,8 @@
             };
             luks = {
               size = "100%";
+              label = "system";
               content = {
-                label = "system";
                 type = "luks";
                 name = "cryptsystem";
                 settings.allowDiscards = true;
