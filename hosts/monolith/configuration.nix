@@ -18,7 +18,7 @@
       # luks.devices."system".device = "/dev/disk/by-partlabel/cryptsystem";
       # luks.devices."system".device = "/dev/disk/by-partlabel/disk-main-luks";
       luks.devices."cryptsystem" = {
-        device = "/dev/disk/by-label/system";
+        device = "/dev/disk/by-partlabel/system";
         allowDiscards = true;
       };
       # To get a fresh clean root device

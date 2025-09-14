@@ -99,7 +99,15 @@ sudo nix \
   run github:nix-community/disko/latest -- \
     --mode destroy,format,mount \
     --flake path:.#framework
-sudo btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
+sudo umount -R /mnt
+sudo mount /dev/mapper/cryptsystem /mnt
+sudo btrfs subvolume snapshot -r /mnt/@root /mnt/@root-blank
+sudo umount /mnt
+sudo nix \
+  --extra-experimental-features "nix-command flakes" \
+  run github:nix-community/disko/latest -- \
+    --mode mount \
+    --flake path:.#framework
 sudo nixos-install --root /mnt --flake path:.#framework
 sudo nixos-enter --root /mnt -c 'passwd USERNAME'
 sudo reboot
