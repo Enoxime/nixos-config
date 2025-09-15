@@ -10,7 +10,7 @@ _: {
     # See https://github.com/Zygo/bees/blob/master/docs/config.md
     beesd.filesystems = {
       "@root" = {
-        spec = "LABEL=system";
+        spec = "/";
         hashTableSizeMB = 128;
         verbosity = "crit";
         extraOptions = [ "--loadavg-target" "5.0" ];
