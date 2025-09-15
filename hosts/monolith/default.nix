@@ -1,4 +1,4 @@
-_: {
+{ pkgs, ... }: {
   imports = [
     ./configuration.nix
     ./disko-configuration.nix
@@ -8,5 +8,9 @@ _: {
     ./networking.nix
     ./nvidia.nix
     ./games.nix
+  ];
+
+  environment.systemPackages = with pkgs; [
+    deskflow
   ];
 }
