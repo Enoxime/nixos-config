@@ -95,6 +95,8 @@ etc...
 
 ```bash
 # Easy way
+# Ensure you have Internet then
+# Copy somewhere your sops key then run
 bash <( curl \
   --silent \
   https://raw.githubusercontent.com/Enoxime/nixos-config/main/install.sh ) --help

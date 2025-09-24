@@ -37,6 +37,7 @@ Flags:
       --secure              Fill the disk zeros by opening the disk with cryptsetup. Default to false
   -s  --sops-secret-path    Path of the sops file
   -u  --username            Username for the system
+  -v  --version             Specify a tag or a branch. Set to latest by default
 "
 }
 
@@ -84,14 +85,14 @@ fun linux_private(m: Text, u: Text): Bool {
 }
 
 
-fun linux_disko(configuration_name: Text): Bool {
+fun linux_disko(configuration_name: Text, version: Text = "latest"): Bool {
   // Destroy, format and mount the disk via disko
   if len(configuration_name) > 0 {
     $ nix \
       --extra-experimental-features "nix-command flakes" \
       run github:nix-community/disko/latest \
       -- --mode destroy,format,mount \
-        --flake {nixos_config_github}#{configuration_name} $ failed {
+        --flake {nixos_config_github}/{version}#{configuration_name} $ failed {
       echo "Something went wrong with disko! Error: {status}"
       exit 1
     }
@@ -124,7 +125,7 @@ fun linux_disko(configuration_name: Text): Bool {
     --extra-experimental-features "nix-command flakes" \
     run github:nix-community/disko/latest \
     -- --mode mount \
-      --flake {nixos_config_github}#{configuration_name} $ failed {
+      --flake {nixos_config_github}/{version}#{configuration_name} $ failed {
     echo "Something went wrong with disko! Error: {status}"
     exit 1
   }
@@ -140,6 +141,7 @@ fun linux_install(opts: []): Bool {
   let secure_erase = false
   let sops_secret_path = ""
   let username = ""
+  let version = "latest"
 
   for i, opt in opts {
     if {
@@ -195,6 +197,11 @@ fun linux_install(opts: []): Bool {
           exit 1
         }
       }
+
+      opt == "-v" or opt == "--version" {
+        let v_opt = opts[i+1]
+        if len(v_opt) > 0: version = v_opt
+      }
     }
   }
 
@@ -207,7 +214,7 @@ fun linux_install(opts: []): Bool {
     exit 1
   }
 
-  linux_disko(configuration_name)
+  linux_disko(configuration_name, version)
 
   // Copy the sops secret in the permanent directory
   dir_create("/mnt/persist/sops/age")
@@ -217,7 +224,7 @@ fun linux_install(opts: []): Bool {
   }
 
   // Install NixOS
-  $ nixos-install --root /mnt --flake {nixos_config_github}#{configuration_name} $ failed {
+  $ nixos-install --root /mnt --flake {nixos_config_github}/{version}#{configuration_name} $ failed {
     echo "Something went wrong with nixos-install! Error: {status}"
     exit 1
   }

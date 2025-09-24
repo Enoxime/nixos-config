@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Written in [Amber](https://amber-lang.com/)
 # version: 0.4.0-alpha
-# date: 2025-09-23 22:44:02
+# date: 2025-09-24 17:18:46
 dir_exists__32_v0() {
 
 # bshchk (https://git.blek.codes/blek/bshchk)
-deps=('[' '[' 'return' 'return' '[' '[' 'return' 'return' '[' 'return' 'return' '[' 'return' 'return' '[' 'bc' 'sed' 'mkdir' '[' 'return' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' 'exit' '[' '[' 'exit' '[' 'exit' '[' 'exit' 'return' '[' 'bc' 'sed' 'nix' '[' 'exit' 'exit' 'umount' '[' 'exit' 'mount' '[' 'exit' 'btrfs' '[' 'exit' 'umount' '[' 'exit' 'nix' '[' 'exit' 'return' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' 'true' '[' 'nvme' '[' 'exit' 'cp' '[' 'exit' 'nixos-install' '[' 'exit' 'return' ':' '[' 'bc' 'sed' 'exit' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit')
+deps=('[' '[' 'return' 'return' '[' '[' 'return' 'return' '[' 'return' 'return' '[' 'return' 'return' '[' 'bc' 'sed' 'mkdir' '[' 'return' 'id' '[' '[' 'return' 'return' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' 'exit' '[' '[' 'exit' '[' 'exit' '[' 'exit' 'return' '[' 'bc' 'sed' 'nix' '[' 'exit' 'exit' 'umount' '[' 'exit' 'mount' '[' 'exit' 'btrfs' '[' 'exit' 'umount' '[' 'exit' 'nix' '[' 'exit' 'return' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'true' '[' 'nvme' '[' 'exit' 'cp' '[' 'exit' 'nixos-install' '[' 'exit' 'return' ':' '[' 'bc' 'sed' 'exit' '[' 'bc' 'sed' 'exit' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit')
 non_ok=()
 
 for d in $deps
@@ -95,6 +95,19 @@ env_var_set__94_v0() {
         return $__AS
     fi
 }
+is_root__102_v0() {
+    __AMBER_VAL_2=$(id -u)
+    __AS=$?
+    if [ $(
+        [ "_${__AMBER_VAL_2}" != "_0" ]
+        echo $?
+    ) != 0 ]; then
+        __AF_is_root102_v0=1
+        return 0
+    fi
+    __AF_is_root102_v0=0
+    return 0
+}
 __0_nixos_config_github="github:Enoxime/nixos-config"
 menu__116_v0() {
     echo "
@@ -128,6 +141,7 @@ Flags:
       --secure              Fill the disk zeros by opening the disk with cryptsetup. Default to false
   -s  --sops-secret-path    Path of the sops file
   -u  --username            Username for the system
+  -v  --version             Specify a tag or a branch. Set to latest by default
 "
 }
 linux_private__118_v0() {
@@ -150,19 +164,19 @@ linux_private__118_v0() {
         exit 1
     fi
     dir_create__38_v0 "${dir_path}"
-    __AF_dir_create38_v0__63_3="$__AF_dir_create38_v0"
-    echo "$__AF_dir_create38_v0__63_3" >/dev/null 2>&1
+    __AF_dir_create38_v0__64_3="$__AF_dir_create38_v0"
+    echo "$__AF_dir_create38_v0__64_3" >/dev/null 2>&1
     file_exists__33_v0 "${dir_path}/${file_name}"
-    __AF_file_exists33_v0__65_6="$__AF_file_exists33_v0"
-    if [ "$__AF_file_exists33_v0__65_6" != 0 ]; then
+    __AF_file_exists33_v0__66_6="$__AF_file_exists33_v0"
+    if [ "$__AF_file_exists33_v0__66_6" != 0 ]; then
         file_write__35_v0 "${dir_path}/${file_name}" "${content}"
         __AS=$?
         if [ $__AS != 0 ]; then
             echo "File: ${dir_path}/${file_name}. Was not created"'!'" Status: $__AS"
             exit 1
         fi
-        __AF_file_write35_v0__66_5="${__AF_file_write35_v0}"
-        echo "${__AF_file_write35_v0__66_5}" >/dev/null 2>&1
+        __AF_file_write35_v0__67_5="${__AF_file_write35_v0}"
+        echo "${__AF_file_write35_v0__67_5}" >/dev/null 2>&1
     else
         file_append__36_v0 "${dir_path}/${file_name}" "${content}"
         __AS=$?
@@ -170,8 +184,8 @@ linux_private__118_v0() {
             echo "File: ${dir_path}/${file_name}. Was not created"'!'" Status: $__AS"
             exit 1
         fi
-        __AF_file_append36_v0__72_5="${__AF_file_append36_v0}"
-        echo "${__AF_file_append36_v0__72_5}" >/dev/null 2>&1
+        __AF_file_append36_v0__73_5="${__AF_file_append36_v0}"
+        echo "${__AF_file_append36_v0__73_5}" >/dev/null 2>&1
     fi
     env_var_set__94_v0 "private_path" "${dir_path}/${file_name}"
     __AS=$?
@@ -179,17 +193,18 @@ linux_private__118_v0() {
         echo "Something went wrong during the env_var_set of private_path"'!'""
         exit 1
     fi
-    __AF_env_var_set94_v0__78_3="$__AF_env_var_set94_v0"
-    echo "$__AF_env_var_set94_v0__78_3" >/dev/null 2>&1
+    __AF_env_var_set94_v0__79_3="$__AF_env_var_set94_v0"
+    echo "$__AF_env_var_set94_v0__79_3" >/dev/null 2>&1
     __AF_linux_private118_v0=1
     return 0
 }
 linux_disko__119_v0() {
     local configuration_name=$1
+    local version=$2
     # Destroy, format and mount the disk via disko
     __AMBER_LEN="${configuration_name}"
     if [ $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-        nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount --flake ${__0_nixos_config_github}#${configuration_name}
+        nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount --flake ${__0_nixos_config_github}/${version}#${configuration_name}
         __AS=$?
         if [ $__AS != 0 ]; then
             echo "Something went wrong with disko"'!'" Error: $__AS"
@@ -225,7 +240,7 @@ linux_disko__119_v0() {
         exit 1
     fi
     # Mount back the system
-    nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode mount --flake ${__0_nixos_config_github}#${configuration_name}
+    nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode mount --flake ${__0_nixos_config_github}/${version}#${configuration_name}
     __AS=$?
     if [ $__AS != 0 ]; then
         echo "Something went wrong with disko"'!'" Error: $__AS"
@@ -242,6 +257,7 @@ linux_install__120_v0() {
     local secure_erase=0
     local sops_secret_path=""
     local username=""
+    local version="latest"
     i=0
     for opt in "${opts[@]}"; do
         if [ $(echo $(
@@ -262,8 +278,8 @@ linux_install__120_v0() {
                 configuration_name="${c_opt}"
             else
                 linux_menu__117_v0
-                __AF_linux_menu117_v0__151_11="${__AF_linux_menu117_v0}"
-                echo "${__AF_linux_menu117_v0__151_11}" >/dev/null 2>&1
+                __AF_linux_menu117_v0__153_11="${__AF_linux_menu117_v0}"
+                echo "${__AF_linux_menu117_v0__153_11}" >/dev/null 2>&1
                 echo "Wrong configuration name"'!'""
                 exit 1
             fi
@@ -276,13 +292,13 @@ linux_install__120_v0() {
         ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
             local d_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
             file_exists__33_v0 "${d_opt}"
-            __AF_file_exists33_v0__159_12="$__AF_file_exists33_v0"
-            if [ "$__AF_file_exists33_v0__159_12" != 0 ]; then
+            __AF_file_exists33_v0__161_12="$__AF_file_exists33_v0"
+            if [ "$__AF_file_exists33_v0__161_12" != 0 ]; then
                 disk_path="${d_opt}"
             else
                 linux_menu__117_v0
-                __AF_linux_menu117_v0__162_11="${__AF_linux_menu117_v0}"
-                echo "${__AF_linux_menu117_v0__162_11}" >/dev/null 2>&1
+                __AF_linux_menu117_v0__164_11="${__AF_linux_menu117_v0}"
+                echo "${__AF_linux_menu117_v0__164_11}" >/dev/null 2>&1
                 echo "Disk path doesn't exists"'!'""
                 exit 1
             fi
@@ -294,8 +310,8 @@ linux_install__120_v0() {
             echo $?
         ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
             linux_menu__117_v0
-            __AF_linux_menu117_v0__169_9="${__AF_linux_menu117_v0}"
-            echo "${__AF_linux_menu117_v0__169_9}" >/dev/null 2>&1
+            __AF_linux_menu117_v0__171_9="${__AF_linux_menu117_v0}"
+            echo "${__AF_linux_menu117_v0__171_9}" >/dev/null 2>&1
             exit 0
         elif [ $(echo $(
             [ "_${opt}" != "_-m" ]
@@ -319,13 +335,13 @@ linux_install__120_v0() {
         ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
             local s_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
             file_exists__33_v0 "${s_opt}"
-            __AF_file_exists33_v0__179_12="$__AF_file_exists33_v0"
-            if [ "$__AF_file_exists33_v0__179_12" != 0 ]; then
+            __AF_file_exists33_v0__181_12="$__AF_file_exists33_v0"
+            if [ "$__AF_file_exists33_v0__181_12" != 0 ]; then
                 sops_secret_path="${s_opt}"
             else
                 linux_menu__117_v0
-                __AF_linux_menu117_v0__182_11="${__AF_linux_menu117_v0}"
-                echo "${__AF_linux_menu117_v0__182_11}" >/dev/null 2>&1
+                __AF_linux_menu117_v0__184_11="${__AF_linux_menu117_v0}"
+                echo "${__AF_linux_menu117_v0__184_11}" >/dev/null 2>&1
                 echo "Sops secret file not found"'!'""
                 exit 1
             fi
@@ -342,10 +358,22 @@ linux_install__120_v0() {
                 username="${u_opt}"
             else
                 linux_menu__117_v0
-                __AF_linux_menu117_v0__193_11="${__AF_linux_menu117_v0}"
-                echo "${__AF_linux_menu117_v0__193_11}" >/dev/null 2>&1
+                __AF_linux_menu117_v0__195_11="${__AF_linux_menu117_v0}"
+                echo "${__AF_linux_menu117_v0__195_11}" >/dev/null 2>&1
                 echo "Username is empty"'!'""
                 exit 1
+            fi
+        elif [ $(echo $(
+            [ "_${opt}" != "_-v" ]
+            echo $?
+        ) '||' $(
+            [ "_${opt}" != "_--version" ]
+            echo $?
+        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+            local v_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
+            __AMBER_LEN="${v_opt}"
+            if [ $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+                version="${v_opt}"
             fi
         fi
         ((i++)) || true
@@ -355,23 +383,23 @@ linux_install__120_v0() {
         __AS=$?
     fi
     linux_private__118_v0 "${machine_name}" "${username}"
-    __AF_linux_private118_v0__203_3="$__AF_linux_private118_v0"
-    echo "$__AF_linux_private118_v0__203_3" >/dev/null 2>&1
+    __AF_linux_private118_v0__210_3="$__AF_linux_private118_v0"
+    echo "$__AF_linux_private118_v0__210_3" >/dev/null 2>&1
     env_var_set__94_v0 "sops_secret_path" "${sops_secret_path}"
     __AS=$?
     if [ $__AS != 0 ]; then
         echo "Something went wrong during the env_var_set of sops_secret_path"'!'""
         exit 1
     fi
-    __AF_env_var_set94_v0__205_3="$__AF_env_var_set94_v0"
-    echo "$__AF_env_var_set94_v0__205_3" >/dev/null 2>&1
-    linux_disko__119_v0 "${configuration_name}"
-    __AF_linux_disko119_v0__210_3="$__AF_linux_disko119_v0"
-    echo "$__AF_linux_disko119_v0__210_3" >/dev/null 2>&1
+    __AF_env_var_set94_v0__212_3="$__AF_env_var_set94_v0"
+    echo "$__AF_env_var_set94_v0__212_3" >/dev/null 2>&1
+    linux_disko__119_v0 "${configuration_name}" "${version}"
+    __AF_linux_disko119_v0__217_3="$__AF_linux_disko119_v0"
+    echo "$__AF_linux_disko119_v0__217_3" >/dev/null 2>&1
     # Copy the sops secret in the permanent directory
     dir_create__38_v0 "/mnt/persist/sops/age"
-    __AF_dir_create38_v0__213_3="$__AF_dir_create38_v0"
-    echo "$__AF_dir_create38_v0__213_3" >/dev/null 2>&1
+    __AF_dir_create38_v0__220_3="$__AF_dir_create38_v0"
+    echo "$__AF_dir_create38_v0__220_3" >/dev/null 2>&1
     cp "${sops_secret_path}" "/mnt/persist/sops/age/keys.txt"
     __AS=$?
     if [ $__AS != 0 ]; then
@@ -379,7 +407,7 @@ linux_install__120_v0() {
         exit 1
     fi
     # Install NixOS
-    nixos-install --root /mnt --flake ${__0_nixos_config_github}#${configuration_name}
+    nixos-install --root /mnt --flake ${__0_nixos_config_github}/${version}#${configuration_name}
     __AS=$?
     if [ $__AS != 0 ]; then
         echo "Something went wrong with nixos-install"'!'" Error: $__AS"
@@ -394,41 +422,43 @@ darwin_install__122_v0() {
     :
 }
 declare -r args=("$0" "$@")
-# if not is_root() {
-# echo "This script requires root permissions!"
-# exit 1
-# }
+is_root__102_v0
+__AF_is_root102_v0__247_10="$__AF_is_root102_v0"
+if [ $(echo '!' "$__AF_is_root102_v0__247_10" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+    echo "This script requires root permissions"'!'""
+    exit 1
+fi
 if [ $(echo "${#args[@]}" '<' 2 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
     menu__116_v0
-    __AF_menu116_v0__247_7="${__AF_menu116_v0}"
-    echo "${__AF_menu116_v0__247_7}" >/dev/null 2>&1
+    __AF_menu116_v0__254_7="${__AF_menu116_v0}"
+    echo "${__AF_menu116_v0__254_7}" >/dev/null 2>&1
     exit 0
 elif [ $(
     [ "_${args[1]}" != "_linux_install" ]
     echo $?
 ) != 0 ]; then
-    __SLICE_UPPER_2=$(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
-    __SLICE_OFFSET_3=2
-    __SLICE_OFFSET_3=$((__SLICE_OFFSET_3 > 0 ? __SLICE_OFFSET_3 : 0))
-    __SLICE_LENGTH_4=$(echo $(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') '-' $__SLICE_OFFSET_3 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
-    __SLICE_LENGTH_4=$((__SLICE_LENGTH_4 > 0 ? __SLICE_LENGTH_4 : 0))
-    linux_args=("${args[@]:$__SLICE_OFFSET_3:$__SLICE_LENGTH_4}")
+    __SLICE_UPPER_3=$(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
+    __SLICE_OFFSET_4=2
+    __SLICE_OFFSET_4=$((__SLICE_OFFSET_4 > 0 ? __SLICE_OFFSET_4 : 0))
+    __SLICE_LENGTH_5=$(echo $(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') '-' $__SLICE_OFFSET_4 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
+    __SLICE_LENGTH_5=$((__SLICE_LENGTH_5 > 0 ? __SLICE_LENGTH_5 : 0))
+    linux_args=("${args[@]:$__SLICE_OFFSET_4:$__SLICE_LENGTH_5}")
     linux_install__120_v0 linux_args[@]
-    __AF_linux_install120_v0__253_7="$__AF_linux_install120_v0"
-    echo "$__AF_linux_install120_v0__253_7" >/dev/null 2>&1
+    __AF_linux_install120_v0__260_7="$__AF_linux_install120_v0"
+    echo "$__AF_linux_install120_v0__260_7" >/dev/null 2>&1
 elif [ $(
     [ "_${args[1]}" != "_darwin_install" ]
     echo $?
 ) != 0 ]; then
-    __SLICE_UPPER_5=$(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
-    __SLICE_OFFSET_6=2
-    __SLICE_OFFSET_6=$((__SLICE_OFFSET_6 > 0 ? __SLICE_OFFSET_6 : 0))
-    __SLICE_LENGTH_7=$(echo $(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') '-' $__SLICE_OFFSET_6 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
-    __SLICE_LENGTH_7=$((__SLICE_LENGTH_7 > 0 ? __SLICE_LENGTH_7 : 0))
-    darwin_args=("${args[@]:$__SLICE_OFFSET_6:$__SLICE_LENGTH_7}")
+    __SLICE_UPPER_6=$(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
+    __SLICE_OFFSET_7=2
+    __SLICE_OFFSET_7=$((__SLICE_OFFSET_7 > 0 ? __SLICE_OFFSET_7 : 0))
+    __SLICE_LENGTH_8=$(echo $(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') '-' $__SLICE_OFFSET_7 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
+    __SLICE_LENGTH_8=$((__SLICE_LENGTH_8 > 0 ? __SLICE_LENGTH_8 : 0))
+    darwin_args=("${args[@]:$__SLICE_OFFSET_7:$__SLICE_LENGTH_8}")
     darwin_install__122_v0 darwin_args[@]
-    __AF_darwin_install122_v0__258_7="$__AF_darwin_install122_v0"
-    echo "$__AF_darwin_install122_v0__258_7" >/dev/null 2>&1
+    __AF_darwin_install122_v0__265_7="$__AF_darwin_install122_v0"
+    echo "$__AF_darwin_install122_v0__265_7" >/dev/null 2>&1
 elif [ $(echo $(
     [ "_${args[1]}" != "_-h" ]
     echo $?
@@ -437,11 +467,11 @@ elif [ $(echo $(
     echo $?
 ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
     menu__116_v0
-    __AF_menu116_v0__261_45="${__AF_menu116_v0}"
-    echo "${__AF_menu116_v0__261_45}" >/dev/null 2>&1
+    __AF_menu116_v0__268_45="${__AF_menu116_v0}"
+    echo "${__AF_menu116_v0__268_45}" >/dev/null 2>&1
 else
     menu__116_v0
-    __AF_menu116_v0__263_11="${__AF_menu116_v0}"
-    echo "${__AF_menu116_v0__263_11}" >/dev/null 2>&1
+    __AF_menu116_v0__270_11="${__AF_menu116_v0}"
+    echo "${__AF_menu116_v0__270_11}" >/dev/null 2>&1
 fi
 exit 1
