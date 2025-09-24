@@ -1,7 +1,10 @@
 import { file_exists, dir_create, file_append, file_write } from "std/fs"
 import { env_var_set, is_root } from "std/env"
+import { file_download } from "std/http"
 
 const nixos_config_github = "github:Enoxime/nixos-config"
+const raw_nixos_config_github = "https://raw.githubusercontent.com/Enoxime/nixos-config/refs/heads"
+const dir_path = "/tmp/nixos-config"
 
 fun menu(): Text {
   echo "
@@ -43,7 +46,6 @@ Flags:
 
 
 fun linux_private(m: Text, u: Text): Bool {
-  let dir_path = "/tmp/nixos-config"
   let file_name = "private.nix"
   let content = ""
 
@@ -60,8 +62,6 @@ fun linux_private(m: Text, u: Text): Bool {
     echo "machine_name or username empty!"
     exit 1
   }
-
-  dir_create(dir_path)
 
   if file_exists("{dir_path}/{file_name}") {
     file_write("{dir_path}/{file_name}", content) failed {
@@ -85,14 +85,23 @@ fun linux_private(m: Text, u: Text): Bool {
 }
 
 
-fun linux_disko(configuration_name: Text, version: Text = "latest"): Bool {
+fun linux_disko(
+  configuration_name: Text,
+  machine_name: Text,
+  version: Text = "latest"): Bool {
+
+  file_download(
+    "{raw_nixos_config_github}/{version}/hosts/{machine_name}/disko-configuration.nix",
+    "{dir_path}/disko-configuration.nix"
+  )
+
   // Destroy, format and mount the disk via disko
   if len(configuration_name) > 0 {
     $ nix \
       --extra-experimental-features "nix-command flakes" \
       run github:nix-community/disko/latest \
       -- --mode destroy,format,mount \
-        --flake {nixos_config_github}/{version}#{configuration_name} $ failed {
+        {dir_path}/disko-configuration.nix $ failed {
       echo "Something went wrong with disko! Error: {status}"
       exit 1
     }
@@ -125,7 +134,7 @@ fun linux_disko(configuration_name: Text, version: Text = "latest"): Bool {
     --extra-experimental-features "nix-command flakes" \
     run github:nix-community/disko/latest \
     -- --mode mount \
-      --flake {nixos_config_github}/{version}#{configuration_name} $ failed {
+      {dir_path}/disko-configuration.nix $ failed {
     echo "Something went wrong with disko! Error: {status}"
     exit 1
   }
@@ -142,6 +151,8 @@ fun linux_install(opts: []): Bool {
   let sops_secret_path = ""
   let username = ""
   let version = "latest"
+
+  dir_create(dir_path)
 
   for i, opt in opts {
     if {
@@ -214,7 +225,7 @@ fun linux_install(opts: []): Bool {
     exit 1
   }
 
-  linux_disko(configuration_name, version)
+  linux_disko(configuration_name, machine_name, version)
 
   // Copy the sops secret in the permanent directory
   dir_create("/mnt/persist/sops/age")
