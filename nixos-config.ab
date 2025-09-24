@@ -237,10 +237,10 @@ fun darwin_install(opts: []): Bool {}
 
 
 main(args) {
-  // if not is_root() {
-  //   echo "This script requires root permissions!"
-  //   exit 1
-  // }
+  if not is_root() {
+    echo "This script requires root permissions!"
+    exit 1
+  }
 
   if {
     len(args) < 2 {
