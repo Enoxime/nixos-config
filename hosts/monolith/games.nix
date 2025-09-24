@@ -41,7 +41,7 @@
         pkgs.gamemode
       ];
     })
-    itch # itch.io
+    # itch # itch.io
     mangohud
     protonup-qt
     # support both 32-bit and 64-bit applications

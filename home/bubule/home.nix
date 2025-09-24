@@ -1,7 +1,7 @@
 {username, hostname, ...}: {
   imports = [
     # ./programs
-    ./hyprland.nix
+    ./hyprland
   ];
 
   sops = {

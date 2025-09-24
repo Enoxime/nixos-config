@@ -81,6 +81,12 @@
 
     # # https://github.com/nix-community/nixpkgs-xr
     # nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
+
+    # https://amber-lang.com/
+    amber.url = "github:amber-lang/Amber";
+
+    # https://github.com/nix-community/nix-vscode-extensions
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
   outputs = inputs@{
@@ -96,11 +102,17 @@
     sops-nix,
     nix-darwin,
     impermanence,
+    amber,
+    nix-vscode-extensions,
     ...
   }:
   let
     basicConfig = if (builtins.pathExists ./private.nix) then
-      (import ./private.nix) else {};
+      (import ./private.nix)
+    else
+      if (builtins.getEnv "private_path" != "") then
+        (import builtins.getEnv "private_path")
+      else {};
 
     basicExtraGroups = [
       "docker"
@@ -133,10 +145,14 @@
     }:
     let
       sopsSecretPath =
-        if (builtins.getEnv "sops_secret_path" != "") then
-          (builtins.getEnv "sops_secret_path")
+        if builtins.pathExists /persist/sops/age/keys.txt then
+          "/persist/sops/age/keys.txt"
         else
-          "/home/${username}/.config/sops/age/keys.txt";
+          if (builtins.getEnv "sops_secret_path" != "") then
+            (builtins.getEnv "sops_secret_path")
+          else
+            "/home/${username}/.config/sops/age/keys.txt"
+        ;
 
       userExtraGroups =
         if (extraGroups != []) then
@@ -260,6 +276,7 @@
           ({ ... }: {
             nixpkgs.overlays = [
               talhelper.overlays.default
+              nix-vscode-extensions.overlays.default
             ];
           })
         ];
@@ -285,6 +302,7 @@
           ({ ... }: {
             nixpkgs.overlays = [
               talhelper.overlays.default
+              nix-vscode-extensions.overlays.default
             ];
           })
         ];
@@ -305,6 +323,7 @@
           ({ ... }: {
             nixpkgs.overlays = [
               talhelper.overlays.default
+              nix-vscode-extensions.overlays.default
             ];
           })
         ];

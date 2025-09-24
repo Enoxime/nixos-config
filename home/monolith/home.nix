@@ -1,7 +1,7 @@
 { username, hostname, ... }: {
   imports = [
     ./games.nix
-    ./hyprland.nix
+    ./hyprland
   ];
 
   sops = {

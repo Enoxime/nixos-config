@@ -94,6 +94,13 @@ etc...
 ## Install or remove apps
 
 ```bash
+# Easy way
+bash <( curl \
+  --silent \
+  https://raw.githubusercontent.com/Enoxime/nixos-config/main/install.sh ) --help
+
+# or
+
 sudo nix \
   --extra-experimental-features "nix-command flakes" \
   run github:nix-community/disko/latest -- \
