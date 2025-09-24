@@ -158,11 +158,11 @@ fun linux_install(opts: []): Bool {
 
       opt == "-d" or opt == "--disk-path" {
         let d_opt = opts[i+1]
-        if file_exists(d_opt) {
+        if len(d_opt) > 0 {
           disk_path = d_opt
         } else {
           linux_menu()
-          echo "Disk path doesn't exists!"
+          echo "Disk path not specified!"
           exit 1
         }
       }

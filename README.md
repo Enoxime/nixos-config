@@ -96,10 +96,21 @@ etc...
 ```bash
 # Easy way
 # Ensure you have Internet then
+nix-env --install bc
 # Copy somewhere your sops key then run
 bash <( curl \
   --silent \
   https://raw.githubusercontent.com/Enoxime/nixos-config/main/install.sh ) --help
+bash <( curl \
+  --silent \
+  https://raw.githubusercontent.com/Enoxime/nixos-config/main/install.sh ) \
+  linux_install \
+    -c desktop \
+    -d DISK_PATH \
+    -m MACHINE_NAME \
+    --secure \
+    -s SOPS_SECRET_PATH \
+    -u USERNAME
 
 # or
 
