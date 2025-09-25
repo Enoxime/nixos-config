@@ -5,12 +5,7 @@
     group = username;
     path = "/home/${username}/.ssh/${username}_${hostname}";
   };
-  sops.secrets.password_hash = {
-    mode = "0400";
-    owner = "root";
-    group = "root";
-    neededForUsers = true;
-  };
+  sops.secrets.password_hash.neededForUsers = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
