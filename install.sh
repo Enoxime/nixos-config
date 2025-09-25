@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Written in [Amber](https://amber-lang.com/)
 # version: 0.4.0-alpha
-# date: 2025-09-24 20:45:15
+# date: 2025-09-24 21:00:22
 dir_exists__32_v0() {
 
 # bshchk (https://git.blek.codes/blek/bshchk)
-deps=('[' '[' 'return' 'return' '[' '[' 'return' 'return' '[' 'return' 'return' '[' 'return' 'return' '[' 'bc' 'sed' 'mkdir' '[' 'return' '[' '[' 'return' 'return' 'id' '[' '[' 'return' 'return' '[' 'curl' '[' 'wget' '[' 'aria2c' 'return' 'return' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' 'exit' '[' '[' 'exit' '[' 'exit' '[' 'exit' 'return' '[' 'bc' 'sed' 'nix' '[' 'exit' 'exit' 'umount' '[' 'exit' 'mount' '[' 'exit' 'btrfs' '[' 'exit' 'umount' '[' 'exit' 'nix' '[' 'exit' 'return' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'true' '[' 'nvme' '[' 'exit' '[' 'exit' 'cp' '[' 'exit' 'nixos-install' '[' 'exit' 'return' ':' '[' 'bc' 'sed' 'exit' '[' 'bc' 'sed' 'exit' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit')
+deps=('[' '[' 'return' 'return' '[' '[' 'return' 'return' '[' 'return' 'return' '[' 'return' 'return' '[' 'bc' 'sed' 'mkdir' '[' 'return' '[' '[' 'return' 'return' 'id' '[' '[' 'return' 'return' '[' 'curl' '[' 'wget' '[' 'aria2c' 'return' 'return' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' 'exit' '[' '[' 'exit' '[' 'exit' '[' 'exit' 'return' '[' 'bc' 'sed' 'nix' '[' 'exit' 'exit' 'umount' '[' 'exit' 'mount' '[' 'exit' 'btrfs' '[' 'exit' 'umount' '[' 'exit' 'nix' '[' 'exit' 'return' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'true' '[' 'nvme' '[' 'exit' '[' 'exit' 'cp' '[' 'exit' 'bash' '[' 'exit' 'return' ':' '[' 'bc' 'sed' 'exit' '[' 'bc' 'sed' 'exit' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit')
 non_ok=()
 
 for d in $deps
@@ -455,7 +455,7 @@ linux_install__147_v0() {
         exit 1
     fi
     # Install NixOS
-    nixos-install --root /mnt --flake ${__0_nixos_config_github}/${version}#${configuration_name}
+    private_path="${private_path}" sops_secret_path="${sops_secret_path}" bash -c 'nixos-install --root /mnt --flake ${__0_nixos_config_github}/${version}#${configuration_name}'
     __AS=$?
     if [ $__AS != 0 ]; then
         echo "Something went wrong with nixos-install"'!'" Error: $__AS"
@@ -471,15 +471,15 @@ darwin_install__149_v0() {
 }
 declare -r args=("$0" "$@")
 is_root__102_v0
-__AF_is_root102_v0__263_10="$__AF_is_root102_v0"
-if [ $(echo '!' "$__AF_is_root102_v0__263_10" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+__AF_is_root102_v0__265_10="$__AF_is_root102_v0"
+if [ $(echo '!' "$__AF_is_root102_v0__265_10" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
     echo "This script requires root permissions"'!'""
     exit 1
 fi
 if [ $(echo "${#args[@]}" '<' 2 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
     menu__143_v0
-    __AF_menu143_v0__270_7="${__AF_menu143_v0}"
-    echo "${__AF_menu143_v0__270_7}" >/dev/null 2>&1
+    __AF_menu143_v0__272_7="${__AF_menu143_v0}"
+    echo "${__AF_menu143_v0__272_7}" >/dev/null 2>&1
     exit 0
 elif [ $(
     [ "_${args[1]}" != "_linux_install" ]
@@ -492,8 +492,8 @@ elif [ $(
     __SLICE_LENGTH_5=$((__SLICE_LENGTH_5 > 0 ? __SLICE_LENGTH_5 : 0))
     linux_args=("${args[@]:$__SLICE_OFFSET_4:$__SLICE_LENGTH_5}")
     linux_install__147_v0 linux_args[@]
-    __AF_linux_install147_v0__276_7="$__AF_linux_install147_v0"
-    echo "$__AF_linux_install147_v0__276_7" >/dev/null 2>&1
+    __AF_linux_install147_v0__278_7="$__AF_linux_install147_v0"
+    echo "$__AF_linux_install147_v0__278_7" >/dev/null 2>&1
 elif [ $(
     [ "_${args[1]}" != "_darwin_install" ]
     echo $?
@@ -505,8 +505,8 @@ elif [ $(
     __SLICE_LENGTH_8=$((__SLICE_LENGTH_8 > 0 ? __SLICE_LENGTH_8 : 0))
     darwin_args=("${args[@]:$__SLICE_OFFSET_7:$__SLICE_LENGTH_8}")
     darwin_install__149_v0 darwin_args[@]
-    __AF_darwin_install149_v0__281_7="$__AF_darwin_install149_v0"
-    echo "$__AF_darwin_install149_v0__281_7" >/dev/null 2>&1
+    __AF_darwin_install149_v0__283_7="$__AF_darwin_install149_v0"
+    echo "$__AF_darwin_install149_v0__283_7" >/dev/null 2>&1
 elif [ $(echo $(
     [ "_${args[1]}" != "_-h" ]
     echo $?
@@ -515,11 +515,11 @@ elif [ $(echo $(
     echo $?
 ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
     menu__143_v0
-    __AF_menu143_v0__284_45="${__AF_menu143_v0}"
-    echo "${__AF_menu143_v0__284_45}" >/dev/null 2>&1
+    __AF_menu143_v0__286_45="${__AF_menu143_v0}"
+    echo "${__AF_menu143_v0__286_45}" >/dev/null 2>&1
 else
     menu__143_v0
-    __AF_menu143_v0__286_11="${__AF_menu143_v0}"
-    echo "${__AF_menu143_v0__286_11}" >/dev/null 2>&1
+    __AF_menu143_v0__288_11="${__AF_menu143_v0}"
+    echo "${__AF_menu143_v0__288_11}" >/dev/null 2>&1
 fi
 exit 1

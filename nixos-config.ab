@@ -240,7 +240,9 @@ fun linux_install(opts: []): Bool {
   }
 
   // Install NixOS
-  $ nixos-install --root /mnt --flake {nixos_config_github}/{version}#{configuration_name} $ failed {
+  $ private_path="{private_path}" sops_secret_path="{sops_secret_path}" \
+    bash -c \
+    'nixos-install --root /mnt --flake {nixos_config_github}/{version}#{configuration_name}' $ failed {
     echo "Something went wrong with nixos-install! Error: {status}"
     exit 1
   }
