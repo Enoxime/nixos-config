@@ -53,7 +53,7 @@ fun linux_private(m: Text, u: Text): Bool {
     content =
 "\{
   {m} = \{
-    username = \"{u}\"
+    username = \"{u}\";
   };
 }
 "

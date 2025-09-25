@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Written in [Amber](https://amber-lang.com/)
 # version: 0.4.0-alpha
-# date: 2025-09-24 20:07:39
+# date: 2025-09-24 20:18:44
 dir_exists__32_v0() {
 
 # bshchk (https://git.blek.codes/blek/bshchk)
@@ -192,7 +192,7 @@ linux_private__145_v0() {
     if [ $(echo $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') '&&' $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
         content="{
   ${m} = {
-    username = \"${u}\"
+    username = \"${u}\";
   };
 }
 "
