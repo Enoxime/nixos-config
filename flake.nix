@@ -40,7 +40,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO: Disko does not work properly with my setup. I don't know why though
     # Disko: Partition and format your disks
     disko = {
       url = "github:nix-community/disko/latest";
@@ -107,12 +106,13 @@
     ...
   }:
   let
-    basicConfig = if (builtins.getEnv "private_path" != "") then
-        (import builtins.getEnv "private_path")
+    basicConfig = if builtins.pathExists ./private.nix then
+        import ./private.nix
     else
-      if (builtins.pathExists ./private.nix) then
-        (import ./private.nix)
-      else {};
+      if builtins.pathExists /tmp/nixos-config/private.nix then
+        import /tmp/nixos-config/private.nix
+      else {}
+    ;
 
     basicExtraGroups = [
       "docker"
@@ -145,13 +145,13 @@
     }:
     let
       sopsSecretPath =
-        if builtins.pathExists /persist/sops/age/keys.txt then
-          "/persist/sops/age/keys.txt"
+        if builtins.pathExists /home/${username}/.config/sops/age/keys.txt then
+          "/home/${username}/.config/sops/age/keys.txt"
         else
-          if (builtins.getEnv "sops_secret_path" != "") then
-            (builtins.getEnv "sops_secret_path")
+          if builtins.pathExists /persist/sops/age/keys.txt then
+            "/persist/sops/age/keys.txt"
           else
-            "/home/${username}/.config/sops/age/keys.txt"
+            "/tmp/nixos-config/keys.txt"
         ;
 
       userExtraGroups =

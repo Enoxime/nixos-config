@@ -232,6 +232,12 @@ fun linux_install(opts: []): Bool {
 
   linux_disko(configuration_name, machine_name, version)
 
+  // Copy the sops secret in the temporary directory
+  $ cp "{sops_secret_path}" "{dir_path}/keys.txt" $ failed {
+    echo "Something went wrong during the copy of the age key file!"
+    exit 1
+  }
+
   // Copy the sops secret in the permanent directory
   dir_create("/mnt/persist/sops/age")
   $ cp "{sops_secret_path}" "/mnt/persist/sops/age/keys.txt" $ failed {
@@ -240,9 +246,7 @@ fun linux_install(opts: []): Bool {
   }
 
   // Install NixOS
-  $ private_path="{private_path}" sops_secret_path="{sops_secret_path}" \
-    bash -c \
-    'nixos-install --root /mnt --flake {nixos_config_github}/{version}#{configuration_name}' $ failed {
+  $ nixos-install --root /mnt --flake {nixos_config_github}/{version}#{configuration_name} --impure $ failed {
     echo "Something went wrong with nixos-install! Error: {status}"
     exit 1
   }
