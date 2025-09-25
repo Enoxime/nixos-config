@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Written in [Amber](https://amber-lang.com/)
 # version: 0.4.0-alpha
-# date: 2025-09-24 19:23:49
+# date: 2025-09-24 20:07:39
 dir_exists__32_v0() {
 
 # bshchk (https://git.blek.codes/blek/bshchk)
@@ -259,10 +259,10 @@ linux_disko__146_v0() {
         echo "Something went wrong with the recursive umount"'!'""
         exit 1
     fi
-    mount /dev/mapper/cryptsystem /mnt
+    mount /dev/mapper/system /mnt
     __AS=$?
     if [ $__AS != 0 ]; then
-        echo "Something went wrong with the mount of the cryptsystem"'!'""
+        echo "Something went wrong with the mount of the system"'!'""
         exit 1
     fi
     btrfs subvolume snapshot -r /mnt/@root /mnt/@root-blank

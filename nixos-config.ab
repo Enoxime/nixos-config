@@ -116,8 +116,8 @@ fun linux_disko(
     echo "Something went wrong with the recursive umount!"
     exit 1
   }
-  $ mount /dev/mapper/cryptsystem /mnt $ failed {
-    echo "Something went wrong with the mount of the cryptsystem!"
+  $ mount /dev/mapper/system /mnt $ failed {
+    echo "Something went wrong with the mount of the system!"
     exit 1
   }
   $ btrfs subvolume snapshot -r /mnt/@root /mnt/@root-blank $ failed {
