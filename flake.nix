@@ -107,11 +107,11 @@
     ...
   }:
   let
-    basicConfig = if (builtins.pathExists ./private.nix) then
-      (import ./private.nix)
-    else
-      if (builtins.getEnv "private_path" != "") then
+    basicConfig = if (builtins.getEnv "private_path" != "") then
         (import builtins.getEnv "private_path")
+    else
+      if (builtins.pathExists ./private.nix) then
+        (import ./private.nix)
       else {};
 
     basicExtraGroups = [
