@@ -45,7 +45,7 @@ Flags:
 }
 
 
-fun linux_private(m: Text, u: Text): Bool {
+fun linux_private(m: Text, u: Text): Text {
   let file_name = "private.nix"
   let content = ""
 
@@ -81,7 +81,7 @@ fun linux_private(m: Text, u: Text): Bool {
     exit 1
   }
 
-  return true
+  return "{dir_path}/{file_name}"
 }
 
 
@@ -218,7 +218,12 @@ fun linux_install(opts: []): Bool {
 
   if secure_erase: trust $ nvme format --force {disk_path} $
 
-  linux_private(machine_name, username)
+  let private_path = linux_private(machine_name, username)
+
+  env_var_set("private_path", private_path) failed {
+    echo "Something went wrong during the env_var_set of private_path!"
+    exit 1
+  }
 
   env_var_set("sops_secret_path", sops_secret_path) failed {
     echo "Something went wrong during the env_var_set of sops_secret_path!"
