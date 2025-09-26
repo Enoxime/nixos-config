@@ -45,57 +45,38 @@
     # };
   };
 
-  # boot.initrd.postDeviceCommands = lib.mkAfter ''
-  #   echo "Rollback running"
-  #   mkdir -p /mnt
-  #   mount -t btrfs /dev/mapper/system /mnt
+  # TODO: Does not work. I don't know why. To investigate
+  # boot.initrd.systemd.services.rollback = {
+  #   description = "Rollback BTRFS root subvolume to a pristine state";
+  #   wantedBy = ["initrd.target"];
 
-  #   # Recursively delete all nested subvolumes inside /mnt/root
-  #   btrfs subvolume list -o /mnt/@root | cut -f9 -d' ' | while read subvolume; do
-  #     echo "Deleting @$subvolume subvolume..."
-  #     btrfs subvolume delete "/mnt/$subvolume"
-  #   done
+  #   # LUKS/TPM process. If you have named your device mapper something other
+  #   # than 'enc', then @enc will have a different name. Adjust accordingly.
+  #   after = ["systemd-cryptsetup@enc.service"];
 
-  #   echo "Deleting @root subvolume..."
-  #   btrfs subvolume delete /mnt/@root
+  #   # Before mounting the system root (/sysroot) during the early boot process
+  #   before = ["sysroot.mount"];
 
-  #   echo "Restoring blank @root subvolume..."
-  #   btrfs subvolume snapshot /mnt/@root-blank /mnt/@root
+  #   unitConfig.DefaultDependencies = "no";
+  #   serviceConfig.Type = "oneshot";
+  #   script = ''
+  #     echo "Rollback running"
+  #     mkdir -p /mnt
+  #     mount -t btrfs /dev/mapper/system /mnt
 
-  #   umount /mnt
-  # '';
+  #     # Recursively delete all nested subvolumes inside /mnt/root
+  #     btrfs subvolume list -o /mnt/@root | cut -f9 -d' ' | while read subvolume; do
+  #       echo "Deleting @$subvolume subvolume..."
+  #       btrfs subvolume delete "/mnt/$subvolume"
+  #     done
 
-  boot.initrd.systemd.services.rollback = {
-    description = "Rollback BTRFS root subvolume to a pristine state";
-    wantedBy = ["initrd.target"];
+  #     echo "Deleting @root subvolume..."
+  #     btrfs subvolume delete /mnt/@root
 
-    # LUKS/TPM process. If you have named your device mapper something other
-    # than 'enc', then @enc will have a different name. Adjust accordingly.
-    after = ["systemd-cryptsetup@enc.service"];
+  #     echo "Restoring blank @root subvolume..."
+  #     btrfs subvolume snapshot /mnt/@root-blank /mnt/@root
 
-    # Before mounting the system root (/sysroot) during the early boot process
-    before = ["sysroot.mount"];
-
-    unitConfig.DefaultDependencies = "no";
-    serviceConfig.Type = "oneshot";
-    script = ''
-      echo "Rollback running"
-      mkdir -p /mnt
-      mount -t btrfs /dev/mapper/system /mnt
-
-      # Recursively delete all nested subvolumes inside /mnt/root
-      btrfs subvolume list -o /mnt/@root | cut -f9 -d' ' | while read subvolume; do
-        echo "Deleting @$subvolume subvolume..."
-        btrfs subvolume delete "/mnt/$subvolume"
-      done
-
-      echo "Deleting @root subvolume..."
-      btrfs subvolume delete /mnt/@root
-
-      echo "Restoring blank @root subvolume..."
-      btrfs subvolume snapshot /mnt/@root-blank /mnt/@root
-
-      umount /mnt
-    '';
-  };
+  #     umount /mnt
+  #   '';
+  # };
 }
