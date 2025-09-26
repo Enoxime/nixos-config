@@ -109,9 +109,12 @@
     basicConfig = if builtins.pathExists ./private.nix then
         import ./private.nix
     else
-      if builtins.pathExists /tmp/nixos-config/private.nix then
-        import /tmp/nixos-config/private.nix
-      else {}
+      if builtins.pathExists /persist/private/private.nix then
+        import /persist/private/private.nix
+      else
+        if builtins.pathExists /tmp/nixos-config/private.nix then
+          import /tmp/nixos-config/private.nix
+        else {}
     ;
 
     basicExtraGroups = [

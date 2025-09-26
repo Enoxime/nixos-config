@@ -1,5 +1,5 @@
 import { file_exists, dir_create, file_append, file_write } from "std/fs"
-import { env_var_set, is_root } from "std/env"
+import { is_root } from "std/env"
 import { file_download } from "std/http"
 
 const nixos_config_github = "github:Enoxime/nixos-config"
@@ -76,17 +76,11 @@ fun linux_private(m: Text, u: Text): Text {
     }
   }
 
-  env_var_set("private_path", "{dir_path}/{file_name}") failed {
-    echo "Something went wrong during the env_var_set of private_path!"
-    exit 1
-  }
-
   return "{dir_path}/{file_name}"
 }
 
 
 fun linux_disko(
-  configuration_name: Text,
   machine_name: Text,
   version: Text = "latest"): Bool {
 
@@ -96,18 +90,12 @@ fun linux_disko(
   )
 
   // Destroy, format and mount the disk via disko
-  if len(configuration_name) > 0 {
-    $ nix \
-      --extra-experimental-features "nix-command flakes" \
-      run github:nix-community/disko/latest \
-      -- --mode destroy,format,mount \
-        {dir_path}/disko-configuration.nix $ failed {
-      echo "Something went wrong with disko! Error: {status}"
-      exit 1
-    }
-  }
-  else {
-    echo "configuration_name is empty!"
+  $ nix \
+    --extra-experimental-features "nix-command flakes" \
+    run github:nix-community/disko/latest \
+    -- --mode destroy,format,mount \
+      {dir_path}/disko-configuration.nix $ failed {
+    echo "Something went wrong with disko! Error: {status}"
     exit 1
   }
 
@@ -220,17 +208,14 @@ fun linux_install(opts: []): Bool {
 
   let private_path = linux_private(machine_name, username)
 
-  env_var_set("private_path", private_path) failed {
-    echo "Something went wrong during the env_var_set of private_path!"
+  // Copy the private.nix file in the permanent directory
+  dir_create("/mnt/persist/private")
+  $ cp "{private_path}" "/mnt/persist/private/private.nix" $ failed {
+    echo "Something went wrong during the copy of the private.nix file!"
     exit 1
   }
 
-  env_var_set("sops_secret_path", sops_secret_path) failed {
-    echo "Something went wrong during the env_var_set of sops_secret_path!"
-    exit 1
-  }
-
-  linux_disko(configuration_name, machine_name, version)
+  linux_disko(machine_name, version)
 
   // Copy the sops secret in the temporary directory
   $ cp "{sops_secret_path}" "{dir_path}/keys.txt" $ failed {
