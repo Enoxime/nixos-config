@@ -212,7 +212,8 @@ fun linux_install(opts: []): Bool {
 
   // Copy the private.nix file in the permanent directory
   dir_create("/mnt/persist/private")
-  $ cp "{private_path}" "/mnt/persist/private/private.nix" $ failed {
+  // $ cp "{private_path}" "/mnt/persist/private/private.nix" $ failed {
+  $ cp "{dir_path}/private/private.nix" "/mnt/persist/private/private.nix" $ failed {
     echo "Something went wrong during the copy of the private.nix file!"
     exit 1
   }

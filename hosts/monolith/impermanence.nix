@@ -1,4 +1,4 @@
-{ lib, ... }: {
+_: {
   # Sources:
   # https://www.notashelf.dev/posts/impermanence
   # https://github.com/nix-community/impermanence

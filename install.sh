@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Written in [Amber](https://amber-lang.com/)
 # version: 0.4.0-alpha
-# date: 2025-09-26 13:08:53
+# date: 2025-09-26 19:11:49
 dir_exists__32_v0() {
 
 # bshchk (https://git.blek.codes/blek/bshchk)
@@ -410,15 +410,16 @@ linux_install__146_v0() {
     dir_create__38_v0 "/mnt/persist/private"
     __AF_dir_create38_v0__214_3="$__AF_dir_create38_v0"
     echo "$__AF_dir_create38_v0__214_3" >/dev/null 2>&1
-    cp "${private_path}" "/mnt/persist/private/private.nix"
+    # $ cp "{private_path}" "/mnt/persist/private/private.nix" $ failed {
+    cp "${__2_dir_path}/private/private.nix" "/mnt/persist/private/private.nix"
     __AS=$?
     if [ $__AS != 0 ]; then
         echo "Something went wrong during the copy of the private.nix file"'!'""
         exit 1
     fi
     linux_disko__145_v0 "${machine_name}" "${version}"
-    __AF_linux_disko145_v0__220_3="$__AF_linux_disko145_v0"
-    echo "$__AF_linux_disko145_v0__220_3" >/dev/null 2>&1
+    __AF_linux_disko145_v0__221_3="$__AF_linux_disko145_v0"
+    echo "$__AF_linux_disko145_v0__221_3" >/dev/null 2>&1
     # Copy the sops secret in the temporary directory
     cp "${sops_secret_path}" "${__2_dir_path}/sops/age/keys.txt"
     __AS=$?
@@ -428,8 +429,8 @@ linux_install__146_v0() {
     fi
     # Copy the sops secret in the permanent directory
     dir_create__38_v0 "/mnt/persist/sops/age"
-    __AF_dir_create38_v0__229_3="$__AF_dir_create38_v0"
-    echo "$__AF_dir_create38_v0__229_3" >/dev/null 2>&1
+    __AF_dir_create38_v0__230_3="$__AF_dir_create38_v0"
+    echo "$__AF_dir_create38_v0__230_3" >/dev/null 2>&1
     cp "${sops_secret_path}" "/mnt/persist/sops/age/keys.txt"
     __AS=$?
     if [ $__AS != 0 ]; then
@@ -453,15 +454,15 @@ darwin_install__148_v0() {
 }
 declare -r args=("$0" "$@")
 is_root__102_v0
-__AF_is_root102_v0__256_10="$__AF_is_root102_v0"
-if [ $(echo '!' "$__AF_is_root102_v0__256_10" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+__AF_is_root102_v0__257_10="$__AF_is_root102_v0"
+if [ $(echo '!' "$__AF_is_root102_v0__257_10" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
     echo "This script requires root permissions"'!'""
     exit 1
 fi
 if [ $(echo "${#args[@]}" '<' 2 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
     menu__142_v0
-    __AF_menu142_v0__263_7="${__AF_menu142_v0}"
-    echo "${__AF_menu142_v0__263_7}" >/dev/null 2>&1
+    __AF_menu142_v0__264_7="${__AF_menu142_v0}"
+    echo "${__AF_menu142_v0__264_7}" >/dev/null 2>&1
     exit 0
 elif [ $(
     [ "_${args[1]}" != "_linux_install" ]
@@ -474,8 +475,8 @@ elif [ $(
     __SLICE_LENGTH_5=$((__SLICE_LENGTH_5 > 0 ? __SLICE_LENGTH_5 : 0))
     linux_args=("${args[@]:$__SLICE_OFFSET_4:$__SLICE_LENGTH_5}")
     linux_install__146_v0 linux_args[@]
-    __AF_linux_install146_v0__269_7="$__AF_linux_install146_v0"
-    echo "$__AF_linux_install146_v0__269_7" >/dev/null 2>&1
+    __AF_linux_install146_v0__270_7="$__AF_linux_install146_v0"
+    echo "$__AF_linux_install146_v0__270_7" >/dev/null 2>&1
 elif [ $(
     [ "_${args[1]}" != "_darwin_install" ]
     echo $?
@@ -487,8 +488,8 @@ elif [ $(
     __SLICE_LENGTH_8=$((__SLICE_LENGTH_8 > 0 ? __SLICE_LENGTH_8 : 0))
     darwin_args=("${args[@]:$__SLICE_OFFSET_7:$__SLICE_LENGTH_8}")
     darwin_install__148_v0 darwin_args[@]
-    __AF_darwin_install148_v0__274_7="$__AF_darwin_install148_v0"
-    echo "$__AF_darwin_install148_v0__274_7" >/dev/null 2>&1
+    __AF_darwin_install148_v0__275_7="$__AF_darwin_install148_v0"
+    echo "$__AF_darwin_install148_v0__275_7" >/dev/null 2>&1
 elif [ $(echo $(
     [ "_${args[1]}" != "_-h" ]
     echo $?
@@ -497,11 +498,11 @@ elif [ $(echo $(
     echo $?
 ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
     menu__142_v0
-    __AF_menu142_v0__277_45="${__AF_menu142_v0}"
-    echo "${__AF_menu142_v0__277_45}" >/dev/null 2>&1
+    __AF_menu142_v0__278_45="${__AF_menu142_v0}"
+    echo "${__AF_menu142_v0__278_45}" >/dev/null 2>&1
 else
     menu__142_v0
-    __AF_menu142_v0__279_11="${__AF_menu142_v0}"
-    echo "${__AF_menu142_v0__279_11}" >/dev/null 2>&1
+    __AF_menu142_v0__280_11="${__AF_menu142_v0}"
+    echo "${__AF_menu142_v0__280_11}" >/dev/null 2>&1
 fi
 exit 1
