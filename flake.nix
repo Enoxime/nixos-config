@@ -111,10 +111,7 @@
     else
       if builtins.pathExists /persist/private/private.nix then
         import /persist/private/private.nix
-      else
-        if builtins.pathExists /tmp/nixos-config/private.nix then
-          import /tmp/nixos-config/private.nix
-        else {}
+      else {}
     ;
 
     basicExtraGroups = [
@@ -151,10 +148,7 @@
         if builtins.pathExists /home/${username}/.config/sops/age/keys.txt then
           "/home/${username}/.config/sops/age/keys.txt"
         else
-          if builtins.pathExists /persist/sops/age/keys.txt then
-            "/persist/sops/age/keys.txt"
-          else
-            "/tmp/nixos-config/keys.txt"
+          "/persist/sops/age/keys.txt"
         ;
 
       userExtraGroups =
@@ -215,11 +209,7 @@
       homeManagerModules ? []
     }:
     let
-      sopsSecretPath =
-        if (builtins.getEnv "sops_secret_path" != "") then
-          (builtins.getEnv "sops_secret_path")
-        else
-          "${homePath}/.config/sops/age/keys.txt";
+      sopsSecretPath = "${homePath}/.config/sops/age/keys.txt";
     in
     darwinSystem {
       inherit system;

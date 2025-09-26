@@ -59,20 +59,20 @@
     unitConfig.DefaultDependencies = "no";
     serviceConfig.Type = "oneshot";
     script = ''
-      echo "Rollback running" > /mnt/rollback.log
+      echo "Rollback running"
       mkdir -p /mnt
       mount -t btrfs /dev/mapper/cryptsystem /mnt
 
       # Recursively delete all nested subvolumes inside /mnt/root
       btrfs subvolume list -o /mnt/@root | cut -f9 -d' ' | while read subvolume; do
-        echo "Deleting @$subvolume subvolume..." >> /mnt/rollback.log
+        echo "Deleting @$subvolume subvolume..."
         btrfs subvolume delete "/mnt/$subvolume"
       done
 
-      echo "Deleting @root subvolume..." >> /mnt/rollback.log
+      echo "Deleting @root subvolume..."
       btrfs subvolume delete /mnt/@root
 
-      echo "Restoring blank @root subvolume..." >> /mnt/rollback.log
+      echo "Restoring blank @root subvolume..."
       btrfs subvolume snapshot /mnt/@root-blank /mnt/@root
 
       umount /mnt

@@ -4,7 +4,7 @@ import { file_download } from "std/http"
 
 const nixos_config_github = "github:Enoxime/nixos-config"
 const raw_nixos_config_github = "https://raw.githubusercontent.com/Enoxime/nixos-config/refs/heads"
-const dir_path = "/tmp/nixos-config"
+const dir_path = "/persist"
 
 fun menu(): Text {
   echo "
@@ -63,20 +63,20 @@ fun linux_private(m: Text, u: Text): Text {
     exit 1
   }
 
-  if file_exists("{dir_path}/{file_name}") {
-    file_write("{dir_path}/{file_name}", content) failed {
-      echo "File: {dir_path}/{file_name}. Was not created! Status: {status}"
+  if file_exists("{dir_path}/private/{file_name}") {
+    file_write("{dir_path}/private/{file_name}", content) failed {
+      echo "File: {dir_path}/private/{file_name}. Was not created! Status: {status}"
       exit 1
     }
   }
   else {
-    file_append("{dir_path}/{file_name}", content) failed {
-      echo "File: {dir_path}/{file_name}. Was not created! Status: {status}"
+    file_append("{dir_path}/private/{file_name}", content) failed {
+      echo "File: {dir_path}/private/{file_name}. Was not created! Status: {status}"
       exit 1
     }
   }
 
-  return "{dir_path}/{file_name}"
+  return "{dir_path}/private/{file_name}"
 }
 
 
@@ -141,6 +141,8 @@ fun linux_install(opts: []): Bool {
   let version = "latest"
 
   dir_create(dir_path)
+  dir_create("{dir_path}/private")
+  dir_create("{dir_path}/sops/age")
 
   for i, opt in opts {
     if {
@@ -218,7 +220,7 @@ fun linux_install(opts: []): Bool {
   linux_disko(machine_name, version)
 
   // Copy the sops secret in the temporary directory
-  $ cp "{sops_secret_path}" "{dir_path}/keys.txt" $ failed {
+  $ cp "{sops_secret_path}" "{dir_path}/sops/age/keys.txt" $ failed {
     echo "Something went wrong during the copy of the age key file!"
     exit 1
   }
