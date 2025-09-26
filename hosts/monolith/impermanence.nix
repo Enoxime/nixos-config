@@ -61,7 +61,7 @@
     script = ''
       echo "Rollback running"
       mkdir -p /mnt
-      mount -t btrfs /dev/mapper/cryptsystem /mnt
+      mount -t btrfs /dev/mapper/system /mnt
 
       # Recursively delete all nested subvolumes inside /mnt/root
       btrfs subvolume list -o /mnt/@root | cut -f9 -d' ' | while read subvolume; do
