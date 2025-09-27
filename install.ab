@@ -210,15 +210,14 @@ fun linux_install(opts: []): Bool {
 
   let private_path = linux_private(machine_name, username)
 
+  linux_disko(machine_name, version)
+
   // Copy the private.nix file in the permanent directory
   dir_create("/mnt/persist/private")
-  // $ cp "{private_path}" "/mnt/persist/private/private.nix" $ failed {
-  $ cp "{dir_path}/private/private.nix" "/mnt/persist/private/private.nix" $ failed {
+  $ cp "{private_path}" "/mnt/persist/private/private.nix" $ failed {
     echo "Something went wrong during the copy of the private.nix file!"
     exit 1
   }
-
-  linux_disko(machine_name, version)
 
   // Copy the sops secret in the temporary directory
   $ cp "{sops_secret_path}" "{dir_path}/sops/age/keys.txt" $ failed {
