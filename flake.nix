@@ -40,7 +40,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO: Disko does not work properly with my setup. I don't know why though
     # Disko: Partition and format your disks
     disko = {
       url = "github:nix-community/disko/latest";
@@ -81,6 +80,12 @@
 
     # # https://github.com/nix-community/nixpkgs-xr
     # nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
+
+    # https://amber-lang.com/
+    amber.url = "github:amber-lang/Amber";
+
+    # https://github.com/nix-community/nix-vscode-extensions
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
   outputs = inputs@{
@@ -96,11 +101,18 @@
     sops-nix,
     nix-darwin,
     impermanence,
+    amber,
+    nix-vscode-extensions,
     ...
   }:
   let
-    basicConfig = if (builtins.pathExists ./private.nix) then
-      (import ./private.nix) else {};
+    basicConfig = if builtins.pathExists ./private.nix then
+        import ./private.nix
+    else
+      if builtins.pathExists /persist/private/private.nix then
+        import /persist/private/private.nix
+      else {}
+    ;
 
     basicExtraGroups = [
       "docker"
@@ -133,10 +145,11 @@
     }:
     let
       sopsSecretPath =
-        if (builtins.getEnv "sops_secret_path" != "") then
-          (builtins.getEnv "sops_secret_path")
+        if builtins.pathExists /home/${username}/.config/sops/age/keys.txt then
+          "/home/${username}/.config/sops/age/keys.txt"
         else
-          "/home/${username}/.config/sops/age/keys.txt";
+          "/persist/sops/age/keys.txt"
+        ;
 
       userExtraGroups =
         if (extraGroups != []) then
@@ -196,11 +209,7 @@
       homeManagerModules ? []
     }:
     let
-      sopsSecretPath =
-        if (builtins.getEnv "sops_secret_path" != "") then
-          (builtins.getEnv "sops_secret_path")
-        else
-          "${homePath}/.config/sops/age/keys.txt";
+      sopsSecretPath = "${homePath}/.config/sops/age/keys.txt";
     in
     darwinSystem {
       inherit system;
@@ -260,6 +269,7 @@
           ({ ... }: {
             nixpkgs.overlays = [
               talhelper.overlays.default
+              nix-vscode-extensions.overlays.default
             ];
           })
         ];
@@ -285,6 +295,7 @@
           ({ ... }: {
             nixpkgs.overlays = [
               talhelper.overlays.default
+              nix-vscode-extensions.overlays.default
             ];
           })
         ];
@@ -305,6 +316,7 @@
           ({ ... }: {
             nixpkgs.overlays = [
               talhelper.overlays.default
+              nix-vscode-extensions.overlays.default
             ];
           })
         ];

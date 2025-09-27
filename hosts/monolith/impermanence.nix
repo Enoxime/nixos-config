@@ -1,4 +1,4 @@
-{ lib, ... }: {
+_: {
   # Sources:
   # https://www.notashelf.dev/posts/impermanence
   # https://github.com/nix-community/impermanence
@@ -51,7 +51,7 @@
 
     # LUKS/TPM process. If you have named your device mapper something other
     # than 'enc', then @enc will have a different name. Adjust accordingly.
-    after = ["systemd-cryptsetup@enc.service"];
+    after = ["systemd-cryptsetup@system.service"];
 
     # Before mounting the system root (/sysroot) during the early boot process
     before = ["sysroot.mount"];
@@ -59,20 +59,20 @@
     unitConfig.DefaultDependencies = "no";
     serviceConfig.Type = "oneshot";
     script = ''
-      echo "Rollback running" > /mnt/rollback.log
+      echo "Rollback running"
       mkdir -p /mnt
-      mount -t btrfs /dev/mapper/cryptsystem /mnt
+      mount -t btrfs /dev/mapper/system /mnt
 
       # Recursively delete all nested subvolumes inside /mnt/root
       btrfs subvolume list -o /mnt/@root | cut -f9 -d' ' | while read subvolume; do
-        echo "Deleting @$subvolume subvolume..." >> /mnt/rollback.log
+        echo "Deleting @$subvolume subvolume..."
         btrfs subvolume delete "/mnt/$subvolume"
       done
 
-      echo "Deleting @root subvolume..." >> /mnt/rollback.log
+      echo "Deleting @root subvolume..."
       btrfs subvolume delete /mnt/@root
 
-      echo "Restoring blank @root subvolume..." >> /mnt/rollback.log
+      echo "Restoring blank @root subvolume..."
       btrfs subvolume snapshot /mnt/@root-blank /mnt/@root
 
       umount /mnt

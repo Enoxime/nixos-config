@@ -19,6 +19,7 @@
       viAlias = true;
       vimAlias = true;
     };
+    yt-dlp.enable = true;
   };
 
   home.packages = with pkgs; [

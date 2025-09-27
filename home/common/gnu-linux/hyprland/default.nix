@@ -4,7 +4,6 @@
     ./config.nix
     ./dunst.nix
     ./gammastep.nix
-    ./hypridle.nix
     ./hyprland.nix
     ./hyprlock.nix
     ./rofi.nix
@@ -99,6 +98,5 @@
     swappy
     swww
     wl-clipboard
-    xdg-desktop-portal-hyprland
   ];
 }

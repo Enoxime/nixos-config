@@ -33,5 +33,9 @@ _: {
     };
 
     rpcbind.enable = true; # needed for NFS
+
+    logrotate = {
+      enable = true;
+    };
   };
 }

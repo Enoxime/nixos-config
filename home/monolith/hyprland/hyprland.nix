@@ -1,8 +1,8 @@
 _: {
   wayland.windowManager.hyprland.settings = {
     monitor = [
-      "DP-2, 5120x1440@120, 0x0, 1"
-      "DP-1, preferred, 5120x0, 1"
+      "DP-1, 5120x1440@120, 0x0, 1"
+      "DP-2, preferred, 5120x0, 1"
     ];
 
     env = [

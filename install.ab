@@ -1,0 +1,283 @@
+import { file_exists, dir_create, file_append, file_write } from "std/fs"
+import { is_root } from "std/env"
+import { file_download } from "std/http"
+
+const nixos_config_github = "github:Enoxime/nixos-config"
+const raw_nixos_config_github = "https://raw.githubusercontent.com/Enoxime/nixos-config/refs/heads"
+const dir_path = "/persist"
+
+fun menu(): Text {
+  echo "
+################
+# nixos-config #
+################
+
+Script that install and setup NixOS or nix in the Macbook case
+
+Available Commands:
+  linux_install   Install NixOS for a GNU/Linux setup
+  darwin_install  Install nix for a Darwin setup
+
+Flags:
+  -h  --help    Show help for this script
+"
+}
+
+
+fun linux_menu(): Text {
+  echo "
+###############################
+# nixos-config: linux_install #
+###############################
+
+Install NixOS on a system
+
+Flags:
+  -c  --configuration-name  Name of the configuration to use. Could be \"desktop\" or \"framework\"
+  -d  --disk-path           Udev path of the disk where to install NixOS
+  -h  --help                Show help for linux_install
+  -m  --machine-name        Name of the machine also known as the hostname
+      --secure              Fill the disk zeros by opening the disk with cryptsetup. Default to false
+  -s  --sops-secret-path    Path of the sops file
+  -u  --username            Username for the system
+  -v  --version             Specify a tag or a branch. Set to latest by default
+"
+}
+
+
+fun linux_private(m: Text, u: Text): Text {
+  let file_name = "private.nix"
+  let content = ""
+
+  if len(m) > 0 and len(u) > 0 {
+    content =
+"\{
+  {m} = \{
+    username = \"{u}\";
+  };
+}
+"
+  }
+  else {
+    echo "machine_name or username empty!"
+    exit 1
+  }
+
+  if file_exists("{dir_path}/private/{file_name}") {
+    file_write("{dir_path}/private/{file_name}", content) failed {
+      echo "File: {dir_path}/private/{file_name}. Was not created! Status: {status}"
+      exit 1
+    }
+  }
+  else {
+    file_append("{dir_path}/private/{file_name}", content) failed {
+      echo "File: {dir_path}/private/{file_name}. Was not created! Status: {status}"
+      exit 1
+    }
+  }
+
+  return "{dir_path}/private/{file_name}"
+}
+
+
+fun linux_disko(
+  machine_name: Text,
+  version: Text = "latest"): Bool {
+
+  file_download(
+    "{raw_nixos_config_github}/{version}/hosts/{machine_name}/disko-configuration.nix",
+    "{dir_path}/disko-configuration.nix"
+  )
+
+  // Destroy, format and mount the disk via disko
+  $ nix \
+    --extra-experimental-features "nix-command flakes" \
+    run github:nix-community/disko/latest \
+    -- --mode destroy,format,mount \
+      {dir_path}/disko-configuration.nix $ failed {
+    echo "Something went wrong with disko! Error: {status}"
+    exit 1
+  }
+
+  // Make a snapshot of the root filesystem
+  $ umount -R /mnt $ failed {
+    echo "Something went wrong with the recursive umount!"
+    exit 1
+  }
+  $ mount /dev/mapper/system /mnt $ failed {
+    echo "Something went wrong with the mount of the system!"
+    exit 1
+  }
+  $ btrfs subvolume snapshot -r /mnt/@root /mnt/@root-blank $ failed {
+    echo "Something went wrong during the root snapshot!"
+    exit 1
+  }
+  $ umount /mnt $ failed {
+    echo "Something went wrong with the root umount!"
+    exit 1
+  }
+
+  // Mount back the system
+  $ nix \
+    --extra-experimental-features "nix-command flakes" \
+    run github:nix-community/disko/latest \
+    -- --mode mount \
+      {dir_path}/disko-configuration.nix $ failed {
+    echo "Something went wrong with disko! Error: {status}"
+    exit 1
+  }
+
+  return true
+}
+
+
+fun linux_install(opts: []): Bool {
+  let configuration_name = ""
+  let disk_path = ""
+  let machine_name = ""
+  let secure_erase = false
+  let sops_secret_path = ""
+  let username = ""
+  let version = "latest"
+
+  dir_create(dir_path)
+  dir_create("{dir_path}/private")
+  dir_create("{dir_path}/sops/age")
+
+  for i, opt in opts {
+    if {
+      opt == "-c" or opt == "--configuration-name" {
+        let c_opt = opts[i+1]
+        if c_opt == "desktop" or c_opt == "framework" {
+          configuration_name = c_opt
+        } else {
+          linux_menu()
+          echo "Wrong configuration name!"
+          exit 1
+        }
+      }
+
+      opt == "-d" or opt == "--disk-path" {
+        let d_opt = opts[i+1]
+        if len(d_opt) > 0 {
+          disk_path = d_opt
+        } else {
+          linux_menu()
+          echo "Disk path not specified!"
+          exit 1
+        }
+      }
+
+      opt == "-h" or opt == "--help" {
+        linux_menu()
+        exit 0
+      }
+
+      opt == "-m" or opt == "--machine-name": machine_name = opts[i+1]
+
+      opt == "--secure": secure_erase = true
+
+      opt == "-s" or opt == "--sops-secret-path" {
+        let s_opt = opts[i+1]
+        if file_exists(s_opt) {
+          sops_secret_path = s_opt
+        } else {
+          linux_menu()
+          echo "Sops secret file not found!"
+          exit 1
+        }
+      }
+
+      opt == "-u" or opt == "--username" {
+        let u_opt = opts[i+1]
+        if len(u_opt) > 0 {
+          username = u_opt
+        } else {
+          linux_menu()
+          echo "Username is empty!"
+          exit 1
+        }
+      }
+
+      opt == "-v" or opt == "--version" {
+        let v_opt = opts[i+1]
+        if len(v_opt) > 0: version = v_opt
+      }
+    }
+  }
+
+  if secure_erase: trust $ nvme format --force {disk_path} $
+
+  let private_path = linux_private(machine_name, username)
+
+  linux_disko(machine_name, version)
+
+  // Copy the private.nix file in the permanent directory
+  dir_create("/mnt/persist/private")
+  $ cp "{private_path}" "/mnt/persist/private/private.nix" $ failed {
+    echo "Something went wrong during the copy of the private.nix file!"
+    exit 1
+  }
+
+  // Copy the sops secret in the temporary directory
+  $ cp "{sops_secret_path}" "{dir_path}/sops/age/keys.txt" $ failed {
+    echo "Something went wrong during the copy of the age key file!"
+    exit 1
+  }
+
+  // Copy the sops secret in the permanent directory
+  dir_create("/mnt/persist/sops/age")
+  $ cp "{sops_secret_path}" "/mnt/persist/sops/age/keys.txt" $ failed {
+    echo "Something went wrong during the copy of the age key file!"
+    exit 1
+  }
+
+  // Install NixOS
+  $ nixos-install --root /mnt --flake {nixos_config_github}/{version}#{configuration_name} --impure $ failed {
+    echo "Something went wrong with nixos-install! Error: {status}"
+    exit 1
+  }
+
+  echo "Ready to reboot. Don't forget to remove the usb key"
+
+  return true
+}
+
+
+fun darwin_menu(): Text {
+  echo "darwin menu"
+}
+
+
+fun darwin_install(opts: []): Bool {}
+
+
+main(args) {
+  if not is_root() {
+    echo "This script requires root permissions!"
+    exit 1
+  }
+
+  if {
+    len(args) < 2 {
+      menu()
+      exit 0
+    }
+
+    args[1] == "linux_install" {
+      let linux_args = args[2..=len(args)]
+      linux_install(linux_args)
+    }
+
+    args[1] == "darwin_install" {
+      let darwin_args = args[2..=len(args)]
+      darwin_install(darwin_args)
+    }
+
+    args[1] == "-h" or args[1] == "--help": menu()
+
+    else: menu()
+  }
+
+  exit 1
+}

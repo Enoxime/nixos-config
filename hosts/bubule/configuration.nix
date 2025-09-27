@@ -39,6 +39,8 @@
       "resume_offset=533760" # For hibernation
     ];
 
+    kernelModules = [ "nfs" ];
+
     loader = {
       systemd-boot = {
         enable = true;
@@ -54,11 +56,18 @@
       font = "${pkgs.jetbrains-mono}/share/fonts/truetype/JetBrainsMono-Regular.ttf";
       themePackages = [ pkgs.catppuccin-plymouth ];
       theme = "catppuccin-macchiato";
+      # logo = "";
     };
 
     resumeDevice = "/dev/mapper/system";
 
     supportedFilesystems = [ "btrfs" ];
+
+    tmp = {
+      useTmpfs = true;
+      cleanOnBoot = true;
+      # tmpfsSize = "50%";
+    };
   };
 
   # Because libfprint and aspell are not free....
@@ -69,7 +78,7 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 1w";
+      options = "--delete-older-than 7d";
     };
 
     optimise.automatic = true;
@@ -119,6 +128,7 @@
       curl
       git
       libevdev
+      nfs-utils
       vim
       wget
       zstd

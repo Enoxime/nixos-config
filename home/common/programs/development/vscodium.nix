@@ -10,7 +10,7 @@
     profiles."default" = {
       enableUpdateCheck = true;
       enableExtensionUpdateCheck = true;
-      extensions = with pkgs.vscode-extensions; [
+      extensions = with pkgs.nix-vscode-extensions.vscode-marketplace; [
         bierner.markdown-mermaid
         bierner.markdown-preview-github-styles
         catppuccin.catppuccin-vsc
@@ -20,6 +20,7 @@
         jnoortheen.nix-ide
         ms-python.python
         ms-python.debugpy
+        ph0enixkm.amber-language
         redhat.ansible
         redhat.vscode-yaml
         # streetsidesoftware.code-spell-checker

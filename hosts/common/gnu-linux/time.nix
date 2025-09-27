@@ -1,11 +1,12 @@
-{config, ...}: {
-  sops.secrets.timezone = {
-    sopsFile = ../../../secrets/secrets.yaml;
-  };
+_: {
+  # sops.secrets.timezone = {
+  #   sopsFile = ../../../secrets/secrets.yaml;
+  # };
 
   # Set your time zone.
   time = {
     hardwareClockInLocalTime = true;
-    timeZone = "${config.sops.secrets.timezone.path}";
+    # timeZone = "${config.sops.secrets.timezone.path}";
+    timeZone = "America/New_York";
   };
 }
