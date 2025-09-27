@@ -34,5 +34,7 @@
 
   systemd.tmpfiles.rules = [
     "d /home/${username}/.ssh 0750 ${username} ${username} -"
+    "d /home/${username}/mnt 0750 ${username} ${username} -"
+    "d /home/${username}/mnt/tempon 0750 ${username} ${username} -"
   ];
 }
