@@ -31,4 +31,8 @@
   };
 
   programs.zsh.enable = true;
+
+  systemd.tmpfiles.rules = [
+    "d /home/${username}/.ssh 0750 ${username} ${username} -"
+  ];
 }
