@@ -109,7 +109,8 @@
     localHostName = "${hostname}";
   };
 
-  time.timeZone = "${config.sops.secrets.timezone.path}";
+  # time.timeZone = "${config.sops.secrets.timezone.path}";
+  time.timeZone = "America/New_York";
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

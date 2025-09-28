@@ -2,7 +2,7 @@
   imports = [
     ./sops.nix
     ./darwin-configuration.nix
-    ./system.nix
+    # ./system.nix
     ./homebrew.nix
   ];
 

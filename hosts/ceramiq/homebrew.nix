@@ -15,7 +15,7 @@ _: {
     masApps = {
       # "keeper" = "1231242r";
       Xcode = 497799835;
-      "Yubico Authenticator" = 1497506650;
+      # "Yubico Authenticator" = 1497506650;
     };
 
     casks = [

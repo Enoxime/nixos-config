@@ -320,7 +320,8 @@
             ];
           })
         ];
-        includeHomeManager = true;
+        # includeHomeManager = true;
+        includeHomeManager = false;
         homeManagerModules = [
           catppuccin.homeModules.catppuccin
         ];
