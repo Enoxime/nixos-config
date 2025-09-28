@@ -134,10 +134,10 @@ sudo reboot
 
 # After installing
 sudo nixos-rebuild switch --flake path:.#framework
-sudo nixos-rebuild switch --flake github:Enoxime/nixos-config#framework
+sudo nixos-rebuild switch --flake github:Enoxime/nixos-config#framework --impure
 
 sudo darwin-rebuild switch --flake path:.#work
-sudo darwin-rebuild switch --flake github:Enoxime/nixos-config#work
+sudo darwin-rebuild switch --flake github:Enoxime/nixos-config#work --impure
 ```
 
 ## Upgrade
