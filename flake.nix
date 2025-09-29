@@ -203,19 +203,18 @@
       system,
       username,
       hostname,
-      homePath ? "/Users/${username}",
       modules ? [],
       includeHomeManager ? false,
       homeManagerModules ? []
     }:
     let
-      sopsSecretPath = "${homePath}/.config/sops/age/keys.txt";
+      sopsSecretPath = "/Users/${username}/.config/sops/age/keys.txt";
     in
     darwinSystem {
       inherit system;
       specialArgs = {
         inherit inputs;
-        inherit username hostname homePath sopsSecretPath;
+        inherit username hostname sopsSecretPath;
       };
       modules = [
         ./hosts/common
@@ -237,7 +236,7 @@
               ++ homeManagerModules;
               extraSpecialArgs = {
                 inherit inputs;
-                inherit username hostname homePath;
+                inherit username hostname;
               };
               sharedModules = [
                 sops-nix.homeManagerModules.sops
@@ -311,7 +310,6 @@
         system = "aarch64-darwin";
         username = "${basicConfig.ceramiq.username}";
         hostname = "ceramiq";
-        homePath = "${basicConfig.ceramiq.home_path}";
         modules = [
           ({ ... }: {
             nixpkgs.overlays = [
@@ -320,8 +318,7 @@
             ];
           })
         ];
-        # includeHomeManager = true;
-        includeHomeManager = false;
+        includeHomeManager = true;
         homeManagerModules = [
           catppuccin.homeModules.catppuccin
         ];

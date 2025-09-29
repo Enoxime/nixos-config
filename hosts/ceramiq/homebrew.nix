@@ -7,21 +7,19 @@ _: {
     };
 
     taps = [
-      "homebrew/cask"
-      "homebrew/core"
+      # "homebrew/cask"
+      # "homebrew/core"
       "nrlquaker/createzap"
     ];
 
     masApps = {
-      # "keeper" = "1231242r";
-      Xcode = 497799835;
       # "Yubico Authenticator" = 1497506650;
     };
 
     casks = [
       {
         name = "librewolf";
-        args = { "no-quarantine" = ""; };
+        args = { "no_quarantine" = true; };
       }
     ];
   };

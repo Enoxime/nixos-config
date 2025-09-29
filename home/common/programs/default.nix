@@ -2,7 +2,6 @@
   imports = [
     ./devops
     ./development
-    ./git.nix
     ./shell.nix
     ./ssh.nix
   ];

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Written in [Amber](https://amber-lang.com/)
 # version: 0.4.0-alpha
-# date: 2025-09-27 09:04:30
+# date: 2025-09-29 10:48:15
 dir_exists__32_v0() {
 
 # bshchk (https://git.blek.codes/blek/bshchk)
-deps=('[' '[' 'return' 'return' '[' '[' 'return' 'return' '[' 'return' 'return' '[' 'return' 'return' '[' 'bc' 'sed' 'mkdir' '[' '[' 'return' 'return' 'id' '[' '[' 'return' 'return' '[' 'curl' '[' 'wget' '[' 'aria2c' 'return' 'return' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' 'exit' '[' '[' 'exit' '[' 'exit' 'return' 'nix' '[' 'exit' 'umount' '[' 'exit' 'mount' '[' 'exit' 'btrfs' '[' 'exit' 'umount' '[' 'exit' 'nix' '[' 'exit' 'return' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'true' '[' 'nvme' 'cp' '[' 'exit' 'cp' '[' 'exit' 'cp' '[' 'exit' 'nixos-install' '[' 'exit' 'return' ':' '[' 'bc' 'sed' 'exit' '[' 'bc' 'sed' 'exit' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit')
+deps=('[' '[' 'return' 'return' '[' '[' 'return' 'return' '[' 'return' 'return' '[' 'return' 'return' '[' 'bc' 'sed' 'mkdir' '[' '[' 'return' 'return' 'id' '[' '[' 'return' 'return' '[' 'curl' '[' 'wget' '[' 'aria2c' 'return' 'return' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' 'exit' '[' '[' 'exit' '[' 'exit' 'return' 'nix' '[' 'exit' 'umount' '[' 'exit' 'mount' '[' 'exit' 'btrfs' '[' 'exit' 'umount' '[' 'exit' 'nix' '[' 'exit' 'return' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'true' '[' 'nvme' 'cp' '[' 'exit' 'cp' '[' 'exit' 'cp' '[' 'exit' 'nixos-install' '[' 'exit' 'return' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' 'exit' '[' '[' 'exit' '[' 'exit' 'return' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'true' 'cp' '[' 'exit' 'cd' 'exit' 'bsdtar' '[' 'exit' 'cd' 'exit' 'curl' 'sh' '[' 'exit' 'nix' '[' 'exit' 'return' '[' 'bc' 'sed' 'exit' '[' 'bc' 'sed' 'exit' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit')
 non_ok=()
 
 for d in $deps
@@ -447,21 +447,206 @@ linux_install__146_v0() {
     __AF_linux_install146_v0=1
     return 0
 }
-darwin_install__148_v0() {
+darwin_private__148_v0() {
+    local machine_name=$1
+    local username=$2
+    local content=""
+    local private_path=""
+    __AMBER_LEN="${machine_name}"
+    __AMBER_LEN="${username}"
+    if [ $(echo $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') '&&' $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+        private_path="/Users/${username}/src/perso/darwin/private.nix"
+        content="{
+  ${machine_name} = {
+    username = \"${username}\";
+  };
+}
+"
+    else
+        echo "machine_name or username empty"'!'""
+        exit 1
+    fi
+    file_exists__33_v0 "${private_path}"
+    __AF_file_exists33_v0__285_6="$__AF_file_exists33_v0"
+    if [ "$__AF_file_exists33_v0__285_6" != 0 ]; then
+        file_write__35_v0 "${private_path}" "${content}"
+        __AS=$?
+        if [ $__AS != 0 ]; then
+            echo "File: ${private_path}. Was not created"'!'" Status: $__AS"
+            exit 1
+        fi
+        __AF_file_write35_v0__286_5="${__AF_file_write35_v0}"
+        echo "${__AF_file_write35_v0__286_5}" >/dev/null 2>&1
+    else
+        file_append__36_v0 "${private_path}" "${content}"
+        __AS=$?
+        if [ $__AS != 0 ]; then
+            echo "File: ${private_path}. Was not created"'!'" Status: $__AS"
+            exit 1
+        fi
+        __AF_file_append36_v0__292_5="${__AF_file_append36_v0}"
+        echo "${__AF_file_append36_v0__292_5}" >/dev/null 2>&1
+    fi
+    __AF_darwin_private148_v0="${private_path}"
+    return 0
+}
+darwin_install__149_v0() {
     local opts=("${!1}")
-    :
+    local configuration_name=""
+    local machine_name=""
+    local sops_secret_path=""
+    local username=""
+    local version="main"
+    i=0
+    for opt in "${opts[@]}"; do
+        if [ $(echo $(
+            [ "_${opt}" != "_-c" ]
+            echo $?
+        ) '||' $(
+            [ "_${opt}" != "_--configuration-name" ]
+            echo $?
+        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+            local c_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
+            if [ $(
+                [ "_${c_opt}" != "_work" ]
+                echo $?
+            ) != 0 ]; then
+                configuration_name="${c_opt}"
+            else
+                linux_menu__143_v0
+                __AF_linux_menu143_v0__316_11="${__AF_linux_menu143_v0}"
+                echo "${__AF_linux_menu143_v0__316_11}" >/dev/null 2>&1
+                echo "Wrong configuration name"'!'""
+                exit 1
+            fi
+        elif [ $(echo $(
+            [ "_${opt}" != "_-h" ]
+            echo $?
+        ) '||' $(
+            [ "_${opt}" != "_--help" ]
+            echo $?
+        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+            linux_menu__143_v0
+            __AF_linux_menu143_v0__323_9="${__AF_linux_menu143_v0}"
+            echo "${__AF_linux_menu143_v0__323_9}" >/dev/null 2>&1
+            exit 0
+        elif [ $(echo $(
+            [ "_${opt}" != "_-m" ]
+            echo $?
+        ) '||' $(
+            [ "_${opt}" != "_--machine-name" ]
+            echo $?
+        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+            machine_name="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
+        elif [ $(echo $(
+            [ "_${opt}" != "_-s" ]
+            echo $?
+        ) '||' $(
+            [ "_${opt}" != "_--sops-secret-path" ]
+            echo $?
+        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+            local s_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
+            file_exists__33_v0 "${s_opt}"
+            __AF_file_exists33_v0__331_12="$__AF_file_exists33_v0"
+            if [ "$__AF_file_exists33_v0__331_12" != 0 ]; then
+                sops_secret_path="${s_opt}"
+            else
+                linux_menu__143_v0
+                __AF_linux_menu143_v0__334_11="${__AF_linux_menu143_v0}"
+                echo "${__AF_linux_menu143_v0__334_11}" >/dev/null 2>&1
+                echo "Sops secret file not found"'!'""
+                exit 1
+            fi
+        elif [ $(echo $(
+            [ "_${opt}" != "_-u" ]
+            echo $?
+        ) '||' $(
+            [ "_${opt}" != "_--username" ]
+            echo $?
+        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+            local u_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
+            __AMBER_LEN="${u_opt}"
+            if [ $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+                username="${u_opt}"
+            else
+                linux_menu__143_v0
+                __AF_linux_menu143_v0__345_11="${__AF_linux_menu143_v0}"
+                echo "${__AF_linux_menu143_v0__345_11}" >/dev/null 2>&1
+                echo "Username is empty"'!'""
+                exit 1
+            fi
+        elif [ $(echo $(
+            [ "_${opt}" != "_-v" ]
+            echo $?
+        ) '||' $(
+            [ "_${opt}" != "_--version" ]
+            echo $?
+        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+            local v_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
+            __AMBER_LEN="${v_opt}"
+            if [ $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+                version="${v_opt}"
+            fi
+        fi
+        ((i++)) || true
+    done
+    # Copy the sops secret in the permanent directory
+    dir_create__38_v0 "/Users/${username}/.config/sops/age"
+    __AF_dir_create38_v0__359_3="$__AF_dir_create38_v0"
+    echo "$__AF_dir_create38_v0__359_3" >/dev/null 2>&1
+    cp "${sops_secret_path}" "/Users/${username}/.config/sops/age/keys.txt"
+    __AS=$?
+    if [ $__AS != 0 ]; then
+        echo "Something went wrong during the copy of the age key file"'!'""
+        exit 1
+    fi
+    # Create source directory
+    dir_create__38_v0 "/Users/${username}/src/perso/darwin"
+    __AF_dir_create38_v0__366_3="$__AF_dir_create38_v0"
+    echo "$__AF_dir_create38_v0__366_3" >/dev/null 2>&1
+    # Setup the repository for installation
+    file_download__140_v0 "https://github.com/Enoxime/nixos-config/archive/refs/heads/${version}.zip" "/Users/${username}/src/perso/darwin.zip"
+    __AF_file_download140_v0__369_3="$__AF_file_download140_v0"
+    echo "$__AF_file_download140_v0__369_3" >/dev/null 2>&1
+    cd "/Users/${username}/src/perso" || exit
+    bsdtar -x --strip-components=1 --directory darwin -f darwin.zip
+    __AS=$?
+    if [ $__AS != 0 ]; then
+        echo "Something went wrong with unzip darwin.zip"'!'" Error: $__AS"
+        exit 1
+    fi
+    cd "/Users/${username}/src/perso/darwin" || exit
+    darwin_private__148_v0 "${machine_name}" "${username}"
+    __AF_darwin_private148_v0__379_3="${__AF_darwin_private148_v0}"
+    echo "${__AF_darwin_private148_v0__379_3}" >/dev/null 2>&1
+    # Install Nix darwin
+    curl -fsSL https://install.determinate.systems.nix | sh -s -- install --determinate
+    __AS=$?
+    if [ $__AS != 0 ]; then
+        echo "Something went wrong with installing darwin"'!'" Error: $__AS"
+        exit 1
+    fi
+    nix run nix-darwin/master#darwwin-rebuild -- switch --flake path:.#${configuration_name}
+    __AS=$?
+    if [ $__AS != 0 ]; then
+        echo "Something went wrong with installing darwin"'!'" Error: $__AS"
+        exit 1
+    fi
+    echo "Ready to reboot"
+    __AF_darwin_install149_v0=1
+    return 0
 }
 declare -r args=("$0" "$@")
 is_root__102_v0
-__AF_is_root102_v0__256_10="$__AF_is_root102_v0"
-if [ $(echo '!' "$__AF_is_root102_v0__256_10" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+__AF_is_root102_v0__398_10="$__AF_is_root102_v0"
+if [ $(echo '!' "$__AF_is_root102_v0__398_10" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
     echo "This script requires root permissions"'!'""
     exit 1
 fi
 if [ $(echo "${#args[@]}" '<' 2 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
     menu__142_v0
-    __AF_menu142_v0__263_7="${__AF_menu142_v0}"
-    echo "${__AF_menu142_v0__263_7}" >/dev/null 2>&1
+    __AF_menu142_v0__405_7="${__AF_menu142_v0}"
+    echo "${__AF_menu142_v0__405_7}" >/dev/null 2>&1
     exit 0
 elif [ $(
     [ "_${args[1]}" != "_linux_install" ]
@@ -474,8 +659,8 @@ elif [ $(
     __SLICE_LENGTH_5=$((__SLICE_LENGTH_5 > 0 ? __SLICE_LENGTH_5 : 0))
     linux_args=("${args[@]:$__SLICE_OFFSET_4:$__SLICE_LENGTH_5}")
     linux_install__146_v0 linux_args[@]
-    __AF_linux_install146_v0__269_7="$__AF_linux_install146_v0"
-    echo "$__AF_linux_install146_v0__269_7" >/dev/null 2>&1
+    __AF_linux_install146_v0__411_7="$__AF_linux_install146_v0"
+    echo "$__AF_linux_install146_v0__411_7" >/dev/null 2>&1
 elif [ $(
     [ "_${args[1]}" != "_darwin_install" ]
     echo $?
@@ -486,9 +671,9 @@ elif [ $(
     __SLICE_LENGTH_8=$(echo $(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') '-' $__SLICE_OFFSET_7 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
     __SLICE_LENGTH_8=$((__SLICE_LENGTH_8 > 0 ? __SLICE_LENGTH_8 : 0))
     darwin_args=("${args[@]:$__SLICE_OFFSET_7:$__SLICE_LENGTH_8}")
-    darwin_install__148_v0 darwin_args[@]
-    __AF_darwin_install148_v0__274_7="$__AF_darwin_install148_v0"
-    echo "$__AF_darwin_install148_v0__274_7" >/dev/null 2>&1
+    darwin_install__149_v0 darwin_args[@]
+    __AF_darwin_install149_v0__416_7="$__AF_darwin_install149_v0"
+    echo "$__AF_darwin_install149_v0__416_7" >/dev/null 2>&1
 elif [ $(echo $(
     [ "_${args[1]}" != "_-h" ]
     echo $?
@@ -497,11 +682,11 @@ elif [ $(echo $(
     echo $?
 ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
     menu__142_v0
-    __AF_menu142_v0__277_45="${__AF_menu142_v0}"
-    echo "${__AF_menu142_v0__277_45}" >/dev/null 2>&1
+    __AF_menu142_v0__419_45="${__AF_menu142_v0}"
+    echo "${__AF_menu142_v0__419_45}" >/dev/null 2>&1
 else
     menu__142_v0
-    __AF_menu142_v0__279_11="${__AF_menu142_v0}"
-    echo "${__AF_menu142_v0__279_11}" >/dev/null 2>&1
+    __AF_menu142_v0__421_11="${__AF_menu142_v0}"
+    echo "${__AF_menu142_v0__421_11}" >/dev/null 2>&1
 fi
 exit 1

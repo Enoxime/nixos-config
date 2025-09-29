@@ -2,6 +2,7 @@
   lib,
   pkgs,
   hostname,
+  username,
   config,
   ...
 }: {
@@ -9,21 +10,9 @@
     sopsFile = ../../secrets/secrets.yaml;
   };
 
-  nix = {
-    gc = {
-      automatic = true;
-      interval = [{ Weekday = 7; }];
-      options = "--delete-older-than 7d";
-    };
-
-    settings = {
-      # https://github.com/NixOS/nix/issues/7273
-      auto-optimise-store = false;
-    };
-  };
-
-  # Don't need channels since I use flakes
-  nix.channel.enable = false;
+  # Turn off nix-darwin's management of the nix installation to let Derterminate
+  # manage it by itself.
+  nix.enable = false;
 
   # Fonts
   fonts.packages = with pkgs; [
@@ -32,10 +21,6 @@
   ];
 
   environment = {
-    variables = {
-      EDITOR = "vim";
-    };
-
     shells = with pkgs; [
       bashInteractive
       zsh
@@ -84,7 +69,9 @@
   };
 
   # Add ability to used TouchID for sudo authentication
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
+
+  system.primaryUser = "${username}";
 
   networking = {
     applicationFirewall = {
@@ -129,5 +116,5 @@
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = 1; # Did you read the comment?
+  system.stateVersion = 6; # Did you read the comment?
 }
