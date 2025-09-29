@@ -111,6 +111,15 @@ bash <( curl \
     --secure \
     -s SOPS_SECRET_PATH \
     -u USERNAME
+# or
+bash <( curl \
+  --silent \
+  https://raw.githubusercontent.com/Enoxime/nixos-config/main/install.sh ) \
+  linux_install \
+    -c work \
+    -m MACHINE_NAME \
+    -s SOPS_SECRET_PATH \
+    -u USERNAME
 
 # or
 
@@ -137,7 +146,6 @@ sudo nixos-rebuild switch --flake path:.#framework
 sudo nixos-rebuild switch --flake github:Enoxime/nixos-config#framework --impure
 
 sudo darwin-rebuild switch --flake path:.#work
-sudo darwin-rebuild switch --flake github:Enoxime/nixos-config#work --impure
 ```
 
 ## Upgrade
@@ -149,5 +157,4 @@ sudo nixos-rebuild switch --flake path:.#framework --upgrade-all
 sudo nixos-rebuild switch --flake github:Enoxime/nixos-config#framework --upgrade-all
 
 sudo darwin-rebuild switch --flake path:.#work --upgrade-all
-sudo darwin-rebuild switch --flake github:Enoxime/nixos-config#work --upgrade-all
 ```

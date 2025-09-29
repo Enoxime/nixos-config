@@ -3,7 +3,9 @@
     ./development
     ./devops
     ./games.nix
+    ./git.nix
     ./shell.nix
+    ./ssh.nix
   ];
 
   programs = {

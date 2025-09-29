@@ -245,11 +245,153 @@ fun linux_install(opts: []): Bool {
 
 
 fun darwin_menu(): Text {
-  echo "darwin menu"
+  echo "
+################################
+# nixos-config: darwin_install #
+################################
+
+Install Nix on a mac
+
+Flags:
+  -c  --configuration-name  Name of the configuration to use. Could be \"desktop\" or \"framework\"
+  -h  --help                Show help for linux_install
+  -m  --machine-name        Name of the machine also known as the hostname
+  -s  --sops-secret-path    Path of the sops file
+  -u  --username            Username for the system
+  -v  --version             Specify a tag or a branch. Set to latest by default
+"
 }
 
 
-fun darwin_install(opts: []): Bool {}
+fun darwin_private(machine_name: Text, username: Text): Text {
+  let content = ""
+  let private_path = ""
+
+  if len(machine_name) > 0 and len(username) > 0 {
+    private_path = "/Users/{username}/src/perso/darwin/private.nix"
+    content =
+"\{
+  {machine_name} = \{
+    username = \"{username}\";
+  };
+}
+"
+  }
+  else {
+    echo "machine_name or username empty!"
+    exit 1
+  }
+
+  if file_exists("{private_path}") {
+    file_write("{private_path}", content) failed {
+      echo "File: {private_path}. Was not created! Status: {status}"
+      exit 1
+    }
+  }
+  else {
+    file_append("{private_path}", content) failed {
+      echo "File: {private_path}. Was not created! Status: {status}"
+      exit 1
+    }
+  }
+
+  return "{private_path}"
+}
+
+
+fun darwin_install(opts: []): Bool {
+  let configuration_name = ""
+  let machine_name = ""
+  let sops_secret_path = ""
+  let username = ""
+  let version = "main"
+
+  for i, opt in opts {
+    if {
+      opt == "-c" or opt == "--configuration-name" {
+        let c_opt = opts[i+1]
+        if c_opt == "work" {
+          configuration_name = c_opt
+        } else {
+          linux_menu()
+          echo "Wrong configuration name!"
+          exit 1
+        }
+      }
+
+      opt == "-h" or opt == "--help" {
+        linux_menu()
+        exit 0
+      }
+
+      opt == "-m" or opt == "--machine-name": machine_name = opts[i+1]
+
+      opt == "-s" or opt == "--sops-secret-path" {
+        let s_opt = opts[i+1]
+        if file_exists(s_opt) {
+          sops_secret_path = s_opt
+        } else {
+          linux_menu()
+          echo "Sops secret file not found!"
+          exit 1
+        }
+      }
+
+      opt == "-u" or opt == "--username" {
+        let u_opt = opts[i+1]
+        if len(u_opt) > 0 {
+          username = u_opt
+        } else {
+          linux_menu()
+          echo "Username is empty!"
+          exit 1
+        }
+      }
+
+      opt == "-v" or opt == "--version" {
+        let v_opt = opts[i+1]
+        if len(v_opt) > 0: version = v_opt
+      }
+    }
+  }
+
+  // Copy the sops secret in the permanent directory
+  dir_create("/Users/{username}/.config/sops/age")
+  $ cp "{sops_secret_path}" "/Users/{username}/.config/sops/age/keys.txt" $ failed {
+    echo "Something went wrong during the copy of the age key file!"
+    exit 1
+  }
+
+  // Create source directory
+  dir_create("/Users/{username}/src/perso/darwin")
+
+  // Setup the repository for installation
+  file_download(
+    "https://github.com/Enoxime/nixos-config/archive/refs/heads/{version}.zip",
+    "/Users/{username}/src/perso/darwin.zip"
+  )
+  cd "/Users/{username}/src/perso"
+  $ bsdtar -x --strip-components=1 --directory darwin -f darwin.zip $ failed {
+    echo "Something went wrong with unzip darwin.zip! Error: {status}"
+    exit 1
+  }
+  cd "/Users/{username}/src/perso/darwin"
+  darwin_private(machine_name, username)
+
+  // Install Nix darwin
+  $ curl -fsSL https://install.determinate.systems.nix | sh -s -- install --determinate $ failed {
+    echo "Something went wrong with installing darwin! Error: {status}"
+    exit 1
+  }
+  $ nix run nix-darwin/master#darwwin-rebuild -- switch --flake path:.#{configuration_name} $ failed {
+    echo "Something went wrong with installing darwin! Error: {status}"
+    exit 1
+  }
+
+  echo "Ready to reboot"
+
+  return true
+}
 
 
 main(args) {

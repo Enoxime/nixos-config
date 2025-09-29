@@ -26,6 +26,9 @@
         # streetsidesoftware.code-spell-checker
         tamasfe.even-better-toml
         wholroyd.jinja
+        github.copilot
+        github.copilot-chat
+        continue.continue
       ];
       userSettings = {
         "ansible.lightspeed.enabled" = false;
@@ -118,6 +121,63 @@
         workbench.preferredHighContrastLightColorTheme = "Catppuccin Latte";
         workbench.preferredLightColorTheme = "Catppuccin Latte";
         "workbench.iconTheme" = "catppuccin-mocha";
+        "yaml.schemas" = {
+          "file:///$HOME/.vscode-oss/extensions/continue.continue/config-yaml-schema.json" = [
+            ".continue/**/*.yaml"
+          ];
+        };
+        github.copilot = {
+          nextEditSuggestions.enabled = true;
+          advanced = {
+            # Enable GitHub Copilot
+            github.copilot.enable = true;
+
+            # Enable Copilot suggestions in comments
+            github.copilot.suggestionMode = "inline"; # Options: "inline", "ghostText", "none"
+
+            # Enable Copilot suggestion in strings
+            github.copilot.enableInStringLiterals = true;
+
+            # Enable Copilot suggestion in comments
+            github.copilot.enableInComments = true;
+
+            # Enable Copilot suggestion in documentation
+            github.copilot.enableInDocumentation = true;
+
+            # Control the delay before Copilot suggestion appear
+            github.copilot.suggestionDelay = 150;
+
+            # Enable Copilot for specific languages
+            github.copilot.enableLanguages = {
+              javascript = true;
+              typescript = true;
+              python = true;
+              go = true;
+              java = true;
+              ruby = true;
+              php = true;
+              csharp = true;
+              cpp = true;
+              plaintext = true;
+              markdown = true;
+            };
+
+            # Enable Copilot for specific file types
+            github.copilot.enableFileType = {
+              javascript = true;
+              typescript = true;
+              python = true;
+              go = true;
+              java = true;
+              ruby = true;
+              php = true;
+              csharp = true;
+              cpp = true;
+              plaintext = true;
+              markdown = true;
+            };
+          };
+        };
       };
     };
   };
