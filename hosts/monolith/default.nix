@@ -9,8 +9,4 @@
     ./nvidia.nix
     ./games.nix
   ];
-
-  environment.systemPackages = with pkgs; [
-    deskflow
-  ];
 }

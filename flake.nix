@@ -86,6 +86,9 @@
 
     # https://github.com/nix-community/nix-vscode-extensions
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
+    # https://github.com/feschber/lan-mouse
+    lan-mouse.url = "github:feschber/lan-mouse";
   };
 
   outputs = inputs@{
@@ -301,6 +304,7 @@
         includeHomeManager = true;
         homeManagerModules = [
           catppuccin.homeModules.catppuccin
+          inputs.lan-mouse.homeManagerModules.default
         ];
       };
     };
@@ -321,6 +325,7 @@
         includeHomeManager = true;
         homeManagerModules = [
           catppuccin.homeModules.catppuccin
+          inputs.lan-mouse.homeManagerModules.default
         ];
       };
     };

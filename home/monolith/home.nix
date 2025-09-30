@@ -1,7 +1,8 @@
 { username, hostname, ... }: {
   imports = [
-    ./games.nix
     ./hyprland
+    ./games.nix
+    ./programs.nix
   ];
 
   sops = {
