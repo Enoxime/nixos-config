@@ -21,6 +21,7 @@ _: {
         name = "librewolf";
         args = { "no_quarantine" = true; };
       }
+      { name = "deskflow"; }
     ];
   };
 }
