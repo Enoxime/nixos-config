@@ -1,6 +1,7 @@
 { username, hostname, ... }: {
   imports = [
     ./git.nix
+    ./programs.nix
     ./shell.nix
   ];
 

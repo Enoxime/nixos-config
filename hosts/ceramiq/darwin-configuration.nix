@@ -14,6 +14,8 @@
   # manage it by itself.
   nix.enable = false;
 
+  nixpkgs.config.allowUnfree = true;
+
   # Fonts
   fonts.packages = with pkgs; [
     recursive
