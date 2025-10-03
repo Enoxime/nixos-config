@@ -16,6 +16,7 @@
       br = "branch";
       ci = "commit";
       st = "status";
+      sw = "switch";
     };
     attributes = [
       "* text=auto"

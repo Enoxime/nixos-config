@@ -53,6 +53,10 @@ in
         }
 
         auto_pipenv_shell
+
+        function kconf {
+          export KUBECONFIG="$HOME/.kube/''${1}-''${2}-''${3}"
+        }
       '';
       oh-my-zsh = {
         enable = true;

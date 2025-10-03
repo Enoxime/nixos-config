@@ -43,6 +43,7 @@ reboot
 <https://wearewaylandnow.com/>
 <https://github.com/Alexays/Waybar/wiki/Module:-Hyprland#window>
 <https://nix.catppuccin.com/search/rolling/>
+<https://github.com/nix-community/impermanence>
 
 ## Learn
 
@@ -53,19 +54,10 @@ reboot
 
 BORGbackup
 
-Check what path is important for NixOS. See <https://nixos.wiki/wiki/Btrfs#Installation_with_encryption>
-or <https://notes.tiredofit.ca/books/linux/page/installing-nixos-encrypted-btrfs-impermanance>
-
-Impermanence:
-<https://github.com/nix-community/impermanence>
-<https://nixos.wiki/wiki/Impermanence>
-
 incus:
 <https://linuxcontainers.org/>
 <https://linuxcontainers.org/incus/>
 <https://wiki.nixos.org/wiki/Incus>
-
-Find a way to commit private.nix securely.
 
 Check <https://github.com/nix-community/nixpkgs-xr>
 
