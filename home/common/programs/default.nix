@@ -7,6 +7,7 @@
   ];
 
   programs = {
+    awscli.enable = true;
     bat.enable = true;
     gpg.enable = true;
     # A lightweight and flexible command-line JSON processor
