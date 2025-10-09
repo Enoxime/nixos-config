@@ -1,4 +1,4 @@
-{ username, hostname, ... }: {
+{ username, hostname, config, ... }: {
   imports = [
     ./git.nix
     ./programs.nix
@@ -6,7 +6,7 @@
   ];
 
   sops = {
-    age.keyFile = "/Users/${username}/.config/sops/age/keys.txt";
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
     defaultSopsFile = ../../secrets/${hostname}/secrets.yaml;
   };
 

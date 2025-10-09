@@ -1,16 +1,16 @@
-{ pkgs, username, ... }: {
+{ pkgs, username, config, ... }: {
   sops.secrets = {
     git_includes = {
       mode = "0444";
-      path = "/Users/${username}/.config/git/git_includes";
+      path = "${config.home.homeDirectory}/.config/git/git_includes";
     };
     gitconfig_bg = {
       mode = "0444";
-      path = "/Users/${username}/.config/git/gitconfig_bg";
+      path = "${config.home.homeDirectory}/.config/git/gitconfig_bg";
     };
     gitconfig_bs = {
       mode = "0444";
-      path = "/Users/${username}/.config/git/gitconfig_bs";
+      path = "${config.home.homeDirectory}/.config/git/gitconfig_bs";
     };
   };
 
