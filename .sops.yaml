@@ -14,6 +14,10 @@ creation_rules:
     key_groups:
       - age:
           - *primary
+  - path_regex: secrets/ceramiq/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *primary
 stores:
   yaml:
     indent: 2

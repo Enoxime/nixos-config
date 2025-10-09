@@ -1,4 +1,19 @@
-{ pkgs, ... }: {
+{ pkgs, username, config, ... }: {
+  sops.secrets = {
+    git_includes = {
+      mode = "0444";
+      path = "${config.home.homeDirectory}/.config/git/git_includes";
+    };
+    gitconfig_bg = {
+      mode = "0444";
+      path = "${config.home.homeDirectory}/.config/git/gitconfig_bg";
+    };
+    gitconfig_bs = {
+      mode = "0444";
+      path = "${config.home.homeDirectory}/.config/git/gitconfig_bs";
+    };
+  };
+
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
@@ -164,6 +179,9 @@
         insteadOf = "https://github.com/";
       };
     };
+    includes = [
+      { path = "~/.config/git/git_includes"; }
+    ];
   };
 
   home.packages = with pkgs; [
