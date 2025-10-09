@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+_: {
   imports = [
     ./configuration.nix
     ./disko-configuration.nix
