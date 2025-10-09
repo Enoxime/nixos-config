@@ -1,4 +1,4 @@
-{ pkgs, username, config, ... }: {
+{ pkgs, config, ... }: {
   sops.secrets = {
     git_includes = {
       mode = "0444";

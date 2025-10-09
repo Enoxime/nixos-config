@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   home.packages = with pkgs; [
     nixd
     nixpkgs-fmt
@@ -122,7 +122,7 @@
         workbench.preferredLightColorTheme = "Catppuccin Latte";
         "workbench.iconTheme" = "catppuccin-mocha";
         "yaml.schemas" = {
-          "file:///$HOME/.vscode-oss/extensions/continue.continue/config-yaml-schema.json" = [
+          "file://${config.home.homeDirectory}/.vscode-oss/extensions/continue.continue/config-yaml-schema.json" = [
             ".continue/**/*.yaml"
           ];
         };
