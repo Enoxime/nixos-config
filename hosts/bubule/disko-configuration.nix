@@ -58,6 +58,9 @@
                         "noatime"
                       ];
                     };
+                    "@root-blank" = {
+                      mountOptions = ["subvol=root-blank" "nodatacow" "noatime"];
+                    };
                     "@home" = {
                       mountpoint = "/home";
                       mountOptions = [
@@ -91,16 +94,6 @@
                     "@swap" = {
                       mountpoint = "/swap";
                       swap.swapfile.size = "38G";
-                    };
-                    "@tmp" = {
-                      mountpoint = "/tmp";
-                      mountOptions = [
-                        "defaults"
-                        "x-mount.mkdir"
-                        "compress=zstd"
-                        "ssd"
-                        "noatime"
-                      ];
                     };
                     "@snapshots" = {
                       mountpoint = "/.snapshots";
