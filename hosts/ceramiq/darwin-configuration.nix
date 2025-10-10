@@ -1,9 +1,7 @@
 {
-  lib,
   pkgs,
   hostname,
   username,
-  config,
   ...
 }: {
   sops.secrets.timezone = {

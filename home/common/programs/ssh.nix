@@ -16,17 +16,18 @@
         controlPersist = "no";
       };
       extraConfig = ''
-        Host github.com
-          Hostname github.com
-          User git
-          Port 22
-          IdentityFile "''${HOME}/.ssh/${username}_${hostname}"
 
-        Host bitbucket.org
-          Hostname bitbucket.org
-          User git
-          port 22
-          IdentityFile "''${HOME}/.ssh/${username}_${hostname}"
+      Host github.com
+        Hostname github.com
+        User git
+        Port 22
+        IdentityFile "''${HOME}/.ssh/${username}_${hostname}"
+
+      Host bitbucket.org
+        Hostname bitbucket.org
+        User git
+        port 22
+        IdentityFile "''${HOME}/.ssh/${username}_${hostname}"
       '';
     };
   };
