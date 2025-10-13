@@ -21,7 +21,6 @@
     # https://github.com/nix-community/vulnix
     vulnix       #scan command: vulnix --system
     clamav       #scan command: sudo freshclam; clamscan [options] [file/directory/-]
-    chkrootkit   #scan command: sudo chkrootkit
 
     # passphrase2pgp
     pass-wayland
