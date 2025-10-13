@@ -1,8 +1,6 @@
 { pkgs, ... }: {
   programs.rofi = {
     enable = true;
-    # https://github.com/lbonn/rofi
-    package = pkgs.rofi-wayland;
     font = "FantasqueSansM Nerd Font";
     location = "center";
     # pass ={};
@@ -11,7 +9,7 @@
       # pkgs.rofi-systemd
       # pkgs.rofi-screenshot
       # pkgs.rofi-file-browser
-      pkgs.rofi-emoji-wayland
+      pkgs.rofi-emoji
     ];
     terminal = "${pkgs.wezterm}/bin/wezterm";
     extraConfig = {

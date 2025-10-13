@@ -16,10 +16,6 @@
       qemu = {
         # Enable TPM emulation (optional)
         swtpm.enable = true;
-        ovmf = {
-          enable = true;
-          packages = [ pkgs.OVMFFull.fd ];
-        };
       };
     };
 

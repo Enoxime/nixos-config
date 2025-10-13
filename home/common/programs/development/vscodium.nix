@@ -178,6 +178,15 @@
             };
           };
         };
+        "[dockercompose]" = {
+          "editor.insertSpaces" = true;
+          "editor.tabSize" = 2;
+          "editor.autoIndent" = "advanced";
+          "editor.defaultFormatter" = "redhat.vscode-yaml";
+        };
+        "[github-actions-workflow]" = {
+          "editor.defaultFormatter" = "redhat.vscode-yaml";
+        };
       };
     };
   };
