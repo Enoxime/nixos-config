@@ -1,8 +1,4 @@
 { pkgs, ... }: {
-  imports = [
-    ./vscodium.nix
-  ];
-
   home.packages = with pkgs; [
     amber-lang
     # bshchk

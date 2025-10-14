@@ -89,6 +89,9 @@
 
     # https://github.com/feschber/lan-mouse
     lan-mouse.url = "github:feschber/lan-mouse";
+
+    # https://github.com/hraban/mac-app-util
+    mac-app-util.url = "github:hraban/mac-app-util";
   };
 
   outputs = inputs@{
@@ -106,6 +109,7 @@
     impermanence,
     amber,
     nix-vscode-extensions,
+    mac-app-util,
     ...
   }:
   let
@@ -223,6 +227,7 @@
         ./hosts/common
         ./hosts/${hostname}
         sops-nix.darwinModules.sops
+        mac-app-util.darwinModules.default
       ]
       ++ (
         if includeHomeManager then [
@@ -243,6 +248,7 @@
               };
               sharedModules = [
                 sops-nix.homeManagerModules.sops
+                mac-app-util.homeManagerModules.default
               ];
             };
           }

@@ -1,4 +1,8 @@
 { pkgs, ... }: {
+  imports = [
+    ./vscodium.nix
+  ];
+
   # Nice reference: https://github.com/the-nix-way/dev-templates/tree/main
 
   home.packages = with pkgs; [
