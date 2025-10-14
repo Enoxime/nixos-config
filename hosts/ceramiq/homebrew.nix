@@ -21,7 +21,11 @@ _: {
         name = "librewolf";
         args = { "no_quarantine" = true; };
       }
-      # { name = "minikube"; }
+      "iterm2"
+    ];
+
+    brews = [
+      "minikube"
     ];
   };
 }

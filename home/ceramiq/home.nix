@@ -3,6 +3,7 @@
     ./git.nix
     ./programs.nix
     ./shell.nix
+    ./vscode.nix
   ];
 
   sops = {

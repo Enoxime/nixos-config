@@ -32,7 +32,7 @@
     lz4
 
     # networking tools
-    ipcalc  # it is a calculator for the IPv4/v6 addresses
+    # ipcalc  # it is a calculator for the IPv4/v6 addresses
 
     # security/encrypt
     sops
