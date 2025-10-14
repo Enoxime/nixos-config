@@ -17,6 +17,9 @@
   #   };
   # };
 
+  # Smart card mode (CCID) of Yubikey
+  services.pcscd.enable = true;
+
   security.pki.certificates = [
     "${config.sops.secrets."homelab/ca".path}"
   ];

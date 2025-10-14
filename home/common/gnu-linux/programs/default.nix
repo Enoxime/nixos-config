@@ -99,6 +99,7 @@
     tree
     which
     wireguard-tools
+    yubikey-manager
 
     # language
     go
