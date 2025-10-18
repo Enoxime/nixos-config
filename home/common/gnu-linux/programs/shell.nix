@@ -58,6 +58,8 @@ in
         }
 
         auto_pipenv_shell
+
+        export TERM=xterm
       '';
       oh-my-zsh = {
         enable = true;
