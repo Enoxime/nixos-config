@@ -59,7 +59,7 @@ in
 
         auto_pipenv_shell
 
-        export TERM=xterm
+        export TERM=xterm-256color
       '';
       oh-my-zsh = {
         enable = true;
