@@ -22,10 +22,12 @@ _: {
         args = { "no_quarantine" = true; };
       }
       "iterm2"
+      "docker"
     ];
 
     brews = [
       "minikube"
+      "dive"
     ];
   };
 }
