@@ -8,7 +8,7 @@
     jetbrains-mono
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     nerd-fonts.arimo
     nerd-fonts.fantasque-sans-mono
     nerd-fonts.fira-code
