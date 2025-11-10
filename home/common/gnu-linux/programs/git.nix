@@ -4,7 +4,7 @@
     package = pkgs.gitFull;
     lfs.enable = true;
     settings = {
-      alias ={
+      alias = {
         co = "checkout";
         br = "branch";
         ci = "commit";
