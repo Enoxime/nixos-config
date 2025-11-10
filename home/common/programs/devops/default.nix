@@ -18,7 +18,6 @@
     kubeseal
     kubevirt
     kustomize
-    minio-client
     talhelper
     talosctl
     tenv

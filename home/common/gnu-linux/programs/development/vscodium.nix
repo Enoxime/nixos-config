@@ -15,6 +15,7 @@
         bierner.markdown-preview-github-styles
         catppuccin.catppuccin-vsc
         # catppuccin.catppuccin-vsc-icons
+        continue.continue
         davidanson.vscode-markdownlint
         hashicorp.terraform
         jnoortheen.nix-ide
@@ -26,7 +27,6 @@
         # streetsidesoftware.code-spell-checker
         tamasfe.even-better-toml
         wholroyd.jinja
-        continue.continue
       ];
       userSettings = {
         "ansible.lightspeed.enabled" = false;

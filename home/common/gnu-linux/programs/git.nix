@@ -3,86 +3,18 @@
     enable = true;
     package = pkgs.gitFull;
     lfs.enable = true;
-    delta = {
-      enable = true;
-      options = {
-        navigate = true;
-        dark = true;
-        light = false;
+    settings = {
+      alias ={
+        co = "checkout";
+        br = "branch";
+        ci = "commit";
+        st = "status";
+        sw = "switch";
       };
-    };
-    aliases = {
-      co = "checkout";
-      br = "branch";
-      ci = "commit";
-      st = "status";
-      sw = "switch";
-    };
-    attributes = [
-      "* text=auto"
-      "*.pdf diff=astextplain"
-      "*.PDF diff=astextplain"
-      "*.rtf diff=astextplain"
-      "*.RTF diff=astextplain"
-      "*.md text diff=markdown"
-      "*.mdx text diff=markdown"
-      "*.tex text diff=tex"
-      "*.adoc text"
-      "*.csv text"
-      "*.txt text"
-      "*.sql text"
-      "*.epub diff=astextplain"
-      "*.png binary"
-      "*.jpg binary"
-      "*.jpeg binary"
-      "*.gif binary"
-      "*.tif binary"
-      "*.tiff binary"
-      "*.ico binary"
-      "*.svg text"
-      "*.bash text eol=lf"
-      "*.fish text eol=lf"
-      "*.ksh text eol=lf"
-      "*.sh text eol=lf"
-      "*.zsh text eol=lf"
-      "*.bat text eol=crlf"
-      "*.cmd text eol=crlf"
-      "*.ps1 text eol=crlf"
-      "*.json text"
-      "*.toml text"
-      "*.xml text"
-      "*.yaml text"
-      "*.yml text"
-      "*.7z binary"
-      "*.bz binary"
-      "*.bz2 binary"
-      "*.bzip2 binary"
-      "*.gz binary"
-      "*.lz binary"
-      "*.lzma binary"
-      "*.rar binary"
-      "*.tar binary"
-      "*.taz binary"
-      "*.tbz binary"
-      "*.tbz2 binary"
-      "*.tgz binary"
-      "*.tlz binary"
-      "*.txz binary"
-      "*.xz binary"
-      "*.Z binary"
-      "*.zip binary"
-      "*.zst binary"
-      "*.patch -text"
-      ".gitattributes export-ignore"
-      ".gitignore export-ignore"
-      ".gitkeep export-ignore"
-    ];
-    ignores = [
-      ".vscode"
-    ];
-    userName = "Enoxime";
-    userEmail = "4358598+Enoxime@users.noreply.github.com";
-    extraConfig = {
+      user = {
+        name = "Enoxime";
+        email = "4358598+Enoxime@users.noreply.github.com";
+      };
       branch = {
         sort = "committerdate";
       };
@@ -163,6 +95,77 @@
       "url \"git@github.com:\"" = {
         insteadOf = "https://github.com/";
       };
+    };
+    attributes = [
+      "* text=auto"
+      "*.pdf diff=astextplain"
+      "*.PDF diff=astextplain"
+      "*.rtf diff=astextplain"
+      "*.RTF diff=astextplain"
+      "*.md text diff=markdown"
+      "*.mdx text diff=markdown"
+      "*.tex text diff=tex"
+      "*.adoc text"
+      "*.csv text"
+      "*.txt text"
+      "*.sql text"
+      "*.epub diff=astextplain"
+      "*.png binary"
+      "*.jpg binary"
+      "*.jpeg binary"
+      "*.gif binary"
+      "*.tif binary"
+      "*.tiff binary"
+      "*.ico binary"
+      "*.svg text"
+      "*.bash text eol=lf"
+      "*.fish text eol=lf"
+      "*.ksh text eol=lf"
+      "*.sh text eol=lf"
+      "*.zsh text eol=lf"
+      "*.bat text eol=crlf"
+      "*.cmd text eol=crlf"
+      "*.ps1 text eol=crlf"
+      "*.json text"
+      "*.toml text"
+      "*.xml text"
+      "*.yaml text"
+      "*.yml text"
+      "*.7z binary"
+      "*.bz binary"
+      "*.bz2 binary"
+      "*.bzip2 binary"
+      "*.gz binary"
+      "*.lz binary"
+      "*.lzma binary"
+      "*.rar binary"
+      "*.tar binary"
+      "*.taz binary"
+      "*.tbz binary"
+      "*.tbz2 binary"
+      "*.tgz binary"
+      "*.tlz binary"
+      "*.txz binary"
+      "*.xz binary"
+      "*.Z binary"
+      "*.zip binary"
+      "*.zst binary"
+      "*.patch -text"
+      ".gitattributes export-ignore"
+      ".gitignore export-ignore"
+      ".gitkeep export-ignore"
+    ];
+    ignores = [
+      ".vscode"
+    ];
+  };
+
+  programs.delta = {
+    enable = true;
+    options = {
+      navigate = true;
+      dark = true;
+      light = false;
     };
   };
 

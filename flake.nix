@@ -176,6 +176,14 @@
         ./hosts/common/gnu-linux
         ./hosts/${hostname}
         sops-nix.nixosModules.sops
+        hyprland.nixosModules.default
+        catppuccin.nixosModules.catppuccin
+        ({ ... }: {
+          nixpkgs.overlays = [
+            # talhelper.overlays.default
+            nix-vscode-extensions.overlays.default
+          ];
+        })
       ]
       ++ (
         if includeHomeManager then [
@@ -189,6 +197,7 @@
                 ./home/common
                 ./home/common/gnu-linux
                 ./home/${hostname}/home.nix
+                catppuccin.homeModules.catppuccin
               ]
               ++ homeManagerModules;
               extraSpecialArgs = {
@@ -228,6 +237,12 @@
         ./hosts/${hostname}
         sops-nix.darwinModules.sops
         mac-app-util.darwinModules.default
+        ({ ... }: {
+          nixpkgs.overlays = [
+            # talhelper.overlays.default
+            nix-vscode-extensions.overlays.default
+          ];
+        })
       ]
       ++ (
         if includeHomeManager then [
@@ -240,6 +255,7 @@
               users."${username}".imports = [
                 ./home/common
                 ./home/${hostname}/home.nix
+                catppuccin.homeModules.catppuccin
               ]
               ++ homeManagerModules;
               extraSpecialArgs = {
@@ -272,19 +288,9 @@
           # {
           #   imports = [ ./hosts/bubule/disko-configuration.nix ];
           # }
-          hyprland.nixosModules.default
-          catppuccin.nixosModules.catppuccin
-          ({ ... }: {
-            nixpkgs.overlays = [
-              talhelper.overlays.default
-              nix-vscode-extensions.overlays.default
-            ];
-          })
         ];
         includeHomeManager = true;
-        homeManagerModules = [
-          catppuccin.homeModules.catppuccin
-        ];
+        homeManagerModules = [];
       };
 
       desktop = createNixosConfiguration {
@@ -298,18 +304,9 @@
             imports = [ ./hosts/monolith/disko-configuration.nix ];
           }
           impermanence.nixosModules.impermanence
-          hyprland.nixosModules.default
-          catppuccin.nixosModules.catppuccin
-          ({ ... }: {
-            nixpkgs.overlays = [
-              talhelper.overlays.default
-              nix-vscode-extensions.overlays.default
-            ];
-          })
         ];
         includeHomeManager = true;
         homeManagerModules = [
-          catppuccin.homeModules.catppuccin
           inputs.lan-mouse.homeManagerModules.default
         ];
       };
@@ -320,17 +317,9 @@
         system = "aarch64-darwin";
         username = "${basicConfig.ceramiq.username}";
         hostname = "ceramiq";
-        modules = [
-          ({ ... }: {
-            nixpkgs.overlays = [
-              talhelper.overlays.default
-              nix-vscode-extensions.overlays.default
-            ];
-          })
-        ];
+        modules = [];
         includeHomeManager = true;
         homeManagerModules = [
-          catppuccin.homeModules.catppuccin
           inputs.lan-mouse.homeManagerModules.default
         ];
       };
