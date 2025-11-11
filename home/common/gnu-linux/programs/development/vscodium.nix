@@ -118,7 +118,7 @@
         workbench.preferredHighContrastColorTheme = "Catppuccin Frappé";
         workbench.preferredHighContrastLightColorTheme = "Catppuccin Latte";
         workbench.preferredLightColorTheme = "Catppuccin Latte";
-        "workbench.iconTheme" = "catppuccin-mocha";
+        workbench.iconTheme = "catppuccin-mocha";
         "yaml.schemas" = {
           "file://${config.home.homeDirectory}/.vscode-oss/extensions/continue.continue/config-yaml-schema.json" = [
             ".continue/**/*.yaml"

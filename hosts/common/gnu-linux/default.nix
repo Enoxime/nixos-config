@@ -10,4 +10,6 @@ _: {
     ./users.nix
     ./virtualisation.nix
   ];
+
+  environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
 }
