@@ -1,9 +1,8 @@
 { pkgs, inputs, ... }: {
   home.packages = with pkgs; [
-    protonup
+    protonup-ng
     sidequest
     inputs.nix-gaming.packages.${pkgs.system}.star-citizen
-
     # VR headset support
     opencomposite
     wlx-overlay-s
