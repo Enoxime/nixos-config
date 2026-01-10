@@ -180,7 +180,7 @@
         catppuccin.nixosModules.catppuccin
         ({ ... }: {
           nixpkgs.overlays = [
-            # talhelper.overlays.default
+            talhelper.overlays.default
             nix-vscode-extensions.overlays.default
           ];
         })
@@ -239,7 +239,7 @@
         mac-app-util.darwinModules.default
         ({ ... }: {
           nixpkgs.overlays = [
-            # talhelper.overlays.default
+            talhelper.overlays.default
             nix-vscode-extensions.overlays.default
           ];
         })

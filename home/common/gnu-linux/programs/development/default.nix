@@ -15,6 +15,7 @@
     ncurses
     openssl
     pkg-config
+    python3
     readline
     waydroid
     zlib

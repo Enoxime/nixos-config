@@ -9,10 +9,12 @@
     cmctl # https://github.com/cert-manager/cmctl
     dive # https://github.com/wagoodman/dive
     fluxcd
+    helm-docs
     krew
     # Trigger error for now. To try again later
     # krr # https://github.com/robusta-dev/krr
     kubectl
+    kubectl-cnpg
     kubernetes-helm
     kubernetes-helmPlugins.helm-diff
     kubeseal

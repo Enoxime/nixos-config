@@ -86,7 +86,7 @@
     gnused
     languagetool # Proofreading program for English, French German, Polish, and more
     libde265 # Open h.265 video codec implementation
-    libva1 # VAAPI library: Video Acceleration API
+    libva # VAAPI library: Video Acceleration API
     manix # https://github.com/mlvzk/manix
     nemo # https://github.com/linuxmint/nemo GUI file manager
     nnn # TUI file manager
