@@ -21,6 +21,8 @@ let
     testssl = "docker run -it --rm --name test_ssl drwetter/testssl.sh";
     tf = "tofu";
     trf = "terraform";
+    tal = "talosctl";
+    th = "talhelper";
   };
 in
 {
