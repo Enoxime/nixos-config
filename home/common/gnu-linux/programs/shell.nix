@@ -62,6 +62,11 @@ in
         auto_pipenv_shell
 
         export TERM=xterm-256color
+
+        # kubecolor
+        # TODO: find a better way via nix to concat those files
+        cat $HOME/.kube/kubecolor.yaml $HOME/.kube/kubecolor-catppuccin.yaml > $HOME/.kube/color.yaml
+        export KUBECOLOR_CONFIG="$HOME/.kube/color.yaml"
       '';
       oh-my-zsh = {
         enable = true;
