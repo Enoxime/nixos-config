@@ -50,4 +50,7 @@
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
+
+  # To permit GPU pass-through for docker
+  hardware.nvidia-container-toolkit.enable = true;
 }
