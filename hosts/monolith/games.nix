@@ -12,8 +12,6 @@
   ];
 
   programs = {
-    # https://nixos.wiki/wiki/Android
-    adb.enable = true;
     gamescope = {
       enable = true;
       capSysNice = true;
@@ -34,6 +32,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    # https://nixos.wiki/wiki/Android
+    android-tools
     bottles
     (heroic.override {
       extraPkgs = pkgs: [
@@ -45,9 +45,9 @@
     mangohud
     protonup-qt
     # support both 32-bit and 64-bit applications
-    wineWowPackages.stable
+    wineWow64Packages.stable
     # native wayland support (unstable)
-    # wineWowPackages.waylandFull
+    # wineWow64Packages.waylandFull
   ];
 
   hardware = {

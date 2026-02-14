@@ -2,10 +2,10 @@
   home.packages = with pkgs; [
     protonup-ng
     sidequest
-    inputs.nix-gaming.packages.${pkgs.system}.star-citizen
+    inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.star-citizen
     # VR headset support
     opencomposite
-    wlx-overlay-s
+    wayvr
   ];
 
   home.sessionVariables = {
