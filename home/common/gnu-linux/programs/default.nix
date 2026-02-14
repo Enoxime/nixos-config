@@ -66,7 +66,7 @@
     tcpdump
     wireshark
 
-    # CAD
+    # CAD / graphics
     blender
     freecad
     gimp
