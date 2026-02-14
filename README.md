@@ -38,7 +38,7 @@ reboot
 ## Resources
 
 <https://home-manager-options.extranix.com/?query=&release=master>
-<https://search.nixos.org/packages>
+<https://search.nixos.org/packages?channel=unstable>
 <https://mynixos.com/options>
 <https://wearewaylandnow.com/>
 <https://github.com/Alexays/Waybar/wiki/Module:-Hyprland#window>

@@ -66,6 +66,13 @@
     tcpdump
     wireshark
 
+    # CAD / graphics
+    blender
+    freecad
+    gimp
+    inkscape
+    orca-slicer
+
     # misc
     aspell # Command line spell checker. http://aspell.net/
     aspellDicts.en
