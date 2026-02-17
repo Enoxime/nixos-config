@@ -5,7 +5,10 @@
     group = username;
     path = "/home/${username}/.ssh/${username}_${hostname}";
   };
-  sops.secrets.password_hash.neededForUsers = true;
+  sops.secrets.password_hash ={
+    neededForUsers = true;
+    path = "/persist/home/${username}/hashedPasswordFile";
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
@@ -16,7 +19,7 @@
         group = "${username}";
         extraGroups = userExtraGroups;
         shell = pkgs.zsh;
-        hashedPasswordFile = config.sops.secrets.password_hash.path;
+        hashedPasswordFile = "/persist/home/${username}/hashedPasswordFile";
       };
     };
 
