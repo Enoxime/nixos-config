@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 # Written in [Amber](https://amber-lang.com/)
-# version: 0.4.0-alpha
-# date: 2025-09-29 10:48:15
-dir_exists__32_v0() {
+# version: 0.5.1-alpha
+# We cannot import `bash_version` from `env.ab` because it imports `text.ab` making a circular dependency.
 
 # bshchk (https://git.blek.codes/blek/bshchk)
-deps=('[' '[' 'return' 'return' '[' '[' 'return' 'return' '[' 'return' 'return' '[' 'return' 'return' '[' 'bc' 'sed' 'mkdir' '[' '[' 'return' 'return' 'id' '[' '[' 'return' 'return' '[' 'curl' '[' 'wget' '[' 'aria2c' 'return' 'return' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' 'exit' '[' '[' 'exit' '[' 'exit' 'return' 'nix' '[' 'exit' 'umount' '[' 'exit' 'mount' '[' 'exit' 'btrfs' '[' 'exit' 'umount' '[' 'exit' 'nix' '[' 'exit' 'return' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'true' '[' 'nvme' 'cp' '[' 'exit' 'cp' '[' 'exit' 'cp' '[' 'exit' 'nixos-install' '[' 'exit' 'return' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' 'exit' '[' '[' 'exit' '[' 'exit' 'return' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'exit' '[' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' 'bc' 'sed' 'true' 'cp' '[' 'exit' 'cd' 'exit' 'bsdtar' '[' 'exit' 'cd' 'exit' 'curl' 'sh' '[' 'exit' 'nix' '[' 'exit' 'return' '[' 'bc' 'sed' 'exit' '[' 'bc' 'sed' 'exit' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' 'bc' 'sed' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'bc' 'sed' 'exit')
+deps=('[' 'return' '[' 'return' '[' 'return' 'return' '[' 'return' 'return' '[' 'mkdir' '[' 'return' '[' '[' 'return' 'return' 'id' '[' '[' 'return' 'return' '[' 'curl' '[' 'wget' '[' 'aria2c' 'return' '[' 'mkpasswd' '[' 'exit' '[' 'exit' 'return' '[' 'exit' '[' '[' 'exit' '[' 'exit' 'return' '[' 'nix' '[' 'exit' 'umount' '[' 'exit' 'mount' '[' 'exit' 'btrfs' '[' 'exit' 'umount' '[' 'exit' 'nix' '[' 'exit' 'return' '[' '[' '[' '[' '[' '[' '[' '[' '[' 'exit' '[' '[' '[' '[' 'exit' '[' '[' '[' 'exit' '[' '[' '[' '[' '[' '[' '[' 'exit' '[' '[' '[' '[' '[' '[' 'exit' '[' '[' '[' '[' 'exit' '[' '[' '[' '[' 'true' '[' 'nvme' '[' 'cp' '[' 'exit' 'cp' '[' 'exit' '[' 'cp' '[' 'exit' 'nixos-install' '[' 'exit' 'return' '[' 'exit' '[' '[' 'exit' '[' 'exit' 'return' '[' '[' '[' '[' '[' 'exit' '[' '[' '[' 'exit' '[' '[' '[' '[' '[' '[' '[' 'exit' '[' '[' '[' '[' 'exit' '[' '[' '[' '[' 'true' '[' 'cp' '[' 'exit' '[' '[' 'cd' 'exit' 'bsdtar' '[' 'exit' 'cd' 'exit' 'curl' 'sh' '[' 'exit' 'nix' '[' 'exit' 'return' '[' 'exit' '[' 'exit' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' 'bc' 'sed' 'bc' 'sed' '[' '[' '[' 'exit')
 non_ok=()
 
 for d in $deps
@@ -31,113 +30,114 @@ unset deps
 # Dependencies are OK at this point
 
 
+# This is a workaround to avoid that issue and the import system should be improved in the future.
+dir_exists__36_v0() {
     local path=$1
     [ -d "${path}" ]
-    __AS=$?
-    if [ $__AS != 0 ]; then
-        __AF_dir_exists32_v0=0
-        return 0
-    fi
-    __AF_dir_exists32_v0=1
+    __status=$?
+    ret_dir_exists36_v0="$(( ${__status} == 0 ))"
     return 0
 }
-file_exists__33_v0() {
+
+file_exists__37_v0() {
     local path=$1
     [ -f "${path}" ]
-    __AS=$?
-    if [ $__AS != 0 ]; then
-        __AF_file_exists33_v0=0
-        return 0
-    fi
-    __AF_file_exists33_v0=1
+    __status=$?
+    ret_file_exists37_v0="$(( ${__status} == 0 ))"
     return 0
 }
-file_write__35_v0() {
+
+file_write__39_v0() {
     local path=$1
     local content=$2
-    __AMBER_VAL_0=$(echo "${content}" >"${path}")
-    __AS=$?
-    if [ $__AS != 0 ]; then
-        __AF_file_write35_v0=''
-        return $__AS
+    command_0="$(echo "${content}" > "${path}")"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+        ret_file_write39_v0=''
+        return "${__status}"
     fi
-    __AF_file_write35_v0="${__AMBER_VAL_0}"
+    ret_file_write39_v0="${command_0}"
     return 0
 }
-file_append__36_v0() {
+
+file_append__40_v0() {
     local path=$1
     local content=$2
-    __AMBER_VAL_1=$(echo "${content}" >>"${path}")
-    __AS=$?
-    if [ $__AS != 0 ]; then
-        __AF_file_append36_v0=''
-        return $__AS
+    command_1="$(echo "${content}" >> "${path}")"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+        ret_file_append40_v0=''
+        return "${__status}"
     fi
-    __AF_file_append36_v0="${__AMBER_VAL_1}"
+    ret_file_append40_v0="${command_1}"
     return 0
 }
-dir_create__38_v0() {
+
+dir_create__42_v0() {
     local path=$1
-    dir_exists__32_v0 "${path}"
-    __AF_dir_exists32_v0__52_12="$__AF_dir_exists32_v0"
-    if [ $(echo '!' "$__AF_dir_exists32_v0__52_12" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+    dir_exists__36_v0 "${path}"
+    ret_dir_exists36_v0__87_12="${ret_dir_exists36_v0}"
+    if [ "$(( ! ${ret_dir_exists36_v0__87_12} ))" != 0 ]; then
         mkdir -p "${path}"
-        __AS=$?
+        __status=$?
+        if [ "${__status}" != 0 ]; then
+            ret_dir_create42_v0=''
+            return "${__status}"
+        fi
     fi
 }
-is_command__97_v0() {
+
+is_command__104_v0() {
     local command=$1
-    [ -x "$(command -v ${command})" ]
-    __AS=$?
-    if [ $__AS != 0 ]; then
-        __AF_is_command97_v0=0
+    [ -x "$(command -v "${command}")" ]
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+        ret_is_command104_v0=0
         return 0
     fi
-    __AF_is_command97_v0=1
+    ret_is_command104_v0=1
     return 0
 }
-is_root__102_v0() {
-    __AMBER_VAL_2=$(id -u)
-    __AS=$?
-    if [ $(
-        [ "_${__AMBER_VAL_2}" != "_0" ]
-        echo $?
-    ) != 0 ]; then
-        __AF_is_root102_v0=1
+
+is_root__109_v0() {
+    command_2="$(id -u)"
+    __status=$?
+    if [ "$([ "_${command_2}" != "_0" ]; echo $?)" != 0 ]; then
+        ret_is_root109_v0=1
         return 0
     fi
-    __AF_is_root102_v0=0
+    ret_is_root109_v0=0
     return 0
 }
-file_download__140_v0() {
+
+file_download__148_v0() {
     local url=$1
     local path=$2
-    is_command__97_v0 "curl"
-    __AF_is_command97_v0__9_9="$__AF_is_command97_v0"
-    is_command__97_v0 "wget"
-    __AF_is_command97_v0__12_9="$__AF_is_command97_v0"
-    is_command__97_v0 "aria2c"
-    __AF_is_command97_v0__15_9="$__AF_is_command97_v0"
-    if [ "$__AF_is_command97_v0__9_9" != 0 ]; then
-        curl -L -o "${path}" "${url}"
-        __AS=$?
-    elif [ "$__AF_is_command97_v0__12_9" != 0 ]; then
-        wget "${url}" -P "${path}"
-        __AS=$?
-    elif [ "$__AF_is_command97_v0__15_9" != 0 ]; then
-        aria2c "${url}" -d "${path}"
-        __AS=$?
+    is_command__104_v0 "curl"
+    ret_is_command104_v0__14_9="${ret_is_command104_v0}"
+    is_command__104_v0 "wget"
+    ret_is_command104_v0__17_9="${ret_is_command104_v0}"
+    is_command__104_v0 "aria2c"
+    ret_is_command104_v0__20_9="${ret_is_command104_v0}"
+    if [ "${ret_is_command104_v0__14_9}" != 0 ]; then
+        curl -L -o "${path}" "${url}" >/dev/null 2>&1
+        __status=$?
+    elif [ "${ret_is_command104_v0__17_9}" != 0 ]; then
+        wget "${url}" -P "${path}" >/dev/null 2>&1
+        __status=$?
+    elif [ "${ret_is_command104_v0__20_9}" != 0 ]; then
+        aria2c "${url}" -d "${path}" >/dev/null 2>&1
+        __status=$?
     else
-        __AF_file_download140_v0=0
-        return 0
+        ret_file_download148_v0=''
+        return 1
     fi
-    __AF_file_download140_v0=1
-    return 0
 }
-__0_nixos_config_github="github:Enoxime/nixos-config"
-__1_raw_nixos_config_github="https://raw.githubusercontent.com/Enoxime/nixos-config/refs/heads"
-__2_dir_path="/persist"
-menu__142_v0() {
+
+nixos_config_github_3="github:Enoxime/nixos-config"
+raw_nixos_config_github_4="https://raw.githubusercontent.com/Enoxime/nixos-config/refs/heads"
+dir_path_5="/persist"
+menu__150_v0() {
     echo "
 ################
 # nixos-config #
@@ -153,7 +153,8 @@ Flags:
   -h  --help    Show help for this script
 "
 }
-linux_menu__143_v0() {
+
+linux_menu__151_v0() {
     echo "
 ###############################
 # nixos-config: linux_install #
@@ -166,21 +167,49 @@ Flags:
   -d  --disk-path           Udev path of the disk where to install NixOS
   -h  --help                Show help for linux_install
   -m  --machine-name        Name of the machine also known as the hostname
+  -p  --password            Password of the username for the system (GNU/Linux only)
       --secure              Fill the disk zeros by opening the disk with cryptsetup. Default to false
   -s  --sops-secret-path    Path of the sops file
   -u  --username            Username for the system
   -v  --version             Specify a tag or a branch. Set to latest by default
 "
 }
-linux_private__144_v0() {
+
+linux_password__152_v0() {
+    local p=$1
+    local u=$2
+    dir_create__42_v0 "/mnt/persist/home/${u}"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+    code_33="${__status}"
+        echo "Command failed with exit code: ${code_33}"
+    fi
+    command_3="$(mkpasswd ''"${p}"'')"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+        echo "Something went wrong with the mkpasswd command"'!'""
+        exit 1
+    fi
+    hashed_password_34="${command_3}"
+    file_write__39_v0 "/mnt/persist/home/${u}/hashedPasswordFile" "${hashed_password_34}"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+        echo "File: /mnt/persist/home/${u}/hashedPasswordFile. Was not created"'!'" Status: ${__status}"
+        exit 1
+    fi
+    ret_linux_password152_v0="/mnt/persist/home/${u}/hashedPasswordFile"
+    return 0
+}
+
+linux_private__153_v0() {
     local m=$1
     local u=$2
-    local file_name="private.nix"
-    local content=""
-    __AMBER_LEN="${m}"
-    __AMBER_LEN="${u}"
-    if [ $(echo $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') '&&' $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-        content="{
+    file_name_27="private.nix"
+    content_28=""
+    __length_4="${m}"
+    __length_5="${u}"
+    if [ "$(( $(( ${#__length_4} > 0 )) && $(( ${#__length_5} > 0 )) ))" != 0 ]; then
+        content_28="{
   ${m} = {
     username = \"${u}\";
   };
@@ -190,273 +219,239 @@ linux_private__144_v0() {
         echo "machine_name or username empty"'!'""
         exit 1
     fi
-    file_exists__33_v0 "${__2_dir_path}/private/${file_name}"
-    __AF_file_exists33_v0__66_6="$__AF_file_exists33_v0"
-    if [ "$__AF_file_exists33_v0__66_6" != 0 ]; then
-        file_write__35_v0 "${__2_dir_path}/private/${file_name}" "${content}"
-        __AS=$?
-        if [ $__AS != 0 ]; then
-            echo "File: ${__2_dir_path}/private/${file_name}. Was not created"'!'" Status: $__AS"
+    file_exists__37_v0 "${dir_path_5}/private/${file_name_27}"
+    ret_file_exists37_v0__86_6="${ret_file_exists37_v0}"
+    if [ "${ret_file_exists37_v0__86_6}" != 0 ]; then
+        file_write__39_v0 "${dir_path_5}/private/${file_name_27}" "${content_28}"
+        __status=$?
+        if [ "${__status}" != 0 ]; then
+            echo "File: ${dir_path_5}/private/${file_name_27}. Was not created"'!'" Status: ${__status}"
             exit 1
         fi
-        __AF_file_write35_v0__67_5="${__AF_file_write35_v0}"
-        echo "${__AF_file_write35_v0__67_5}" >/dev/null 2>&1
     else
-        file_append__36_v0 "${__2_dir_path}/private/${file_name}" "${content}"
-        __AS=$?
-        if [ $__AS != 0 ]; then
-            echo "File: ${__2_dir_path}/private/${file_name}. Was not created"'!'" Status: $__AS"
+        file_append__40_v0 "${dir_path_5}/private/${file_name_27}" "${content_28}"
+        __status=$?
+        if [ "${__status}" != 0 ]; then
+            echo "File: ${dir_path_5}/private/${file_name_27}. Was not created"'!'" Status: ${__status}"
             exit 1
         fi
-        __AF_file_append36_v0__73_5="${__AF_file_append36_v0}"
-        echo "${__AF_file_append36_v0__73_5}" >/dev/null 2>&1
     fi
-    __AF_linux_private144_v0="${__2_dir_path}/private/${file_name}"
+    ret_linux_private153_v0="${dir_path_5}/private/${file_name_27}"
     return 0
 }
-linux_disko__145_v0() {
+
+linux_disko__154_v0() {
     local machine_name=$1
     local version=$2
-    file_download__140_v0 "${__1_raw_nixos_config_github}/${version}/hosts/${machine_name}/disko-configuration.nix" "${__2_dir_path}/disko-configuration.nix"
-    __AF_file_download140_v0__87_3="$__AF_file_download140_v0"
-    echo "$__AF_file_download140_v0__87_3" >/dev/null 2>&1
+    file_download__148_v0 "${raw_nixos_config_github_4}/${version}/hosts/${machine_name}/disko-configuration.nix" "${dir_path_5}/disko-configuration.nix"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+    code_30="${__status}"
+        echo "Command failed with exit code: ${code_30}"
+    fi
     # Destroy, format and mount the disk via disko
-    nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount ${__2_dir_path}/disko-configuration.nix
-    __AS=$?
-    if [ $__AS != 0 ]; then
-        echo "Something went wrong with disko"'!'" Error: $__AS"
+    nix     --extra-experimental-features "nix-command flakes"     run github:nix-community/disko/latest     -- --mode destroy,format,mount       ${dir_path_5}/disko-configuration.nix
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+        echo "Something went wrong with disko"'!'" Error: ${__status}"
         exit 1
     fi
     # Make a snapshot of the root filesystem
     umount -R /mnt
-    __AS=$?
-    if [ $__AS != 0 ]; then
+    __status=$?
+    if [ "${__status}" != 0 ]; then
         echo "Something went wrong with the recursive umount"'!'""
         exit 1
     fi
     mount /dev/mapper/system /mnt
-    __AS=$?
-    if [ $__AS != 0 ]; then
+    __status=$?
+    if [ "${__status}" != 0 ]; then
         echo "Something went wrong with the mount of the system"'!'""
         exit 1
     fi
     btrfs subvolume snapshot -r /mnt/@root /mnt/@root-blank
-    __AS=$?
-    if [ $__AS != 0 ]; then
+    __status=$?
+    if [ "${__status}" != 0 ]; then
         echo "Something went wrong during the root snapshot"'!'""
         exit 1
     fi
     umount /mnt
-    __AS=$?
-    if [ $__AS != 0 ]; then
+    __status=$?
+    if [ "${__status}" != 0 ]; then
         echo "Something went wrong with the root umount"'!'""
         exit 1
     fi
     # Mount back the system
-    nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode mount ${__2_dir_path}/disko-configuration.nix
-    __AS=$?
-    if [ $__AS != 0 ]; then
-        echo "Something went wrong with disko"'!'" Error: $__AS"
+    nix     --extra-experimental-features "nix-command flakes"     run github:nix-community/disko/latest     -- --mode mount       ${dir_path_5}/disko-configuration.nix
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+        echo "Something went wrong with disko"'!'" Error: ${__status}"
         exit 1
     fi
-    __AF_linux_disko145_v0=1
+    ret_linux_disko154_v0=1
     return 0
 }
-linux_install__146_v0() {
+
+linux_install__155_v0() {
     local opts=("${!1}")
-    local configuration_name=""
-    local disk_path=""
-    local machine_name=""
-    local secure_erase=0
-    local sops_secret_path=""
-    local username=""
-    local version="latest"
-    dir_create__38_v0 "${__2_dir_path}"
-    __AF_dir_create38_v0__143_3="$__AF_dir_create38_v0"
-    echo "$__AF_dir_create38_v0__143_3" >/dev/null 2>&1
-    dir_create__38_v0 "${__2_dir_path}/private"
-    __AF_dir_create38_v0__144_3="$__AF_dir_create38_v0"
-    echo "$__AF_dir_create38_v0__144_3" >/dev/null 2>&1
-    dir_create__38_v0 "${__2_dir_path}/sops/age"
-    __AF_dir_create38_v0__145_3="$__AF_dir_create38_v0"
-    echo "$__AF_dir_create38_v0__145_3" >/dev/null 2>&1
-    i=0
-    for opt in "${opts[@]}"; do
-        if [ $(echo $(
-            [ "_${opt}" != "_-c" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--configuration-name" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            local c_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
-            if [ $(echo $(
-                [ "_${c_opt}" != "_desktop" ]
-                echo $?
-            ) '||' $(
-                [ "_${c_opt}" != "_framework" ]
-                echo $?
-            ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-                configuration_name="${c_opt}"
+    configuration_name_8=""
+    disk_path_9=""
+    machine_name_10=""
+    password_11=""
+    secure_erase_12=0
+    sops_secret_path_13=""
+    username_14=""
+    version_15="latest"
+    dir_create__42_v0 "${dir_path_5}"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+    code_16="${__status}"
+        echo "Command failed with exit code: ${code_16}"
+    fi
+    dir_create__42_v0 "${dir_path_5}/private"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+    code_17="${__status}"
+        echo "Command failed with exit code: ${code_17}"
+    fi
+    dir_create__42_v0 "${dir_path_5}/sops/age"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+    code_18="${__status}"
+        echo "Command failed with exit code: ${code_18}"
+    fi
+    i_20=0;
+    for opt_19 in "${opts[@]}"; do
+        if [ "$(( $([ "_${opt_19}" != "_-c" ]; echo $?) || $([ "_${opt_19}" != "_--configuration-name" ]; echo $?) ))" != 0 ]; then
+            c_opt_21="${opts[$(( ${i_20} + 1 ))]}"
+            if [ "$(( $([ "_${c_opt_21}" != "_desktop" ]; echo $?) || $([ "_${c_opt_21}" != "_framework" ]; echo $?) ))" != 0 ]; then
+                configuration_name_8="${c_opt_21}"
             else
-                linux_menu__143_v0
-                __AF_linux_menu143_v0__154_11="${__AF_linux_menu143_v0}"
-                echo "${__AF_linux_menu143_v0__154_11}" >/dev/null 2>&1
+                linux_menu__151_v0 
                 echo "Wrong configuration name"'!'""
                 exit 1
             fi
-        elif [ $(echo $(
-            [ "_${opt}" != "_-d" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--disk-path" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            local d_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
-            __AMBER_LEN="${d_opt}"
-            if [ $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-                disk_path="${d_opt}"
+        elif [ "$(( $([ "_${opt_19}" != "_-d" ]; echo $?) || $([ "_${opt_19}" != "_--disk-path" ]; echo $?) ))" != 0 ]; then
+            d_opt_22="${opts[$(( ${i_20} + 1 ))]}"
+            __length_6="${d_opt_22}"
+            if [ "$(( ${#__length_6} > 0 ))" != 0 ]; then
+                disk_path_9="${d_opt_22}"
             else
-                linux_menu__143_v0
-                __AF_linux_menu143_v0__165_11="${__AF_linux_menu143_v0}"
-                echo "${__AF_linux_menu143_v0__165_11}" >/dev/null 2>&1
+                linux_menu__151_v0 
                 echo "Disk path not specified"'!'""
                 exit 1
             fi
-        elif [ $(echo $(
-            [ "_${opt}" != "_-h" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--help" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            linux_menu__143_v0
-            __AF_linux_menu143_v0__172_9="${__AF_linux_menu143_v0}"
-            echo "${__AF_linux_menu143_v0__172_9}" >/dev/null 2>&1
+        elif [ "$(( $([ "_${opt_19}" != "_-h" ]; echo $?) || $([ "_${opt_19}" != "_--help" ]; echo $?) ))" != 0 ]; then
+            linux_menu__151_v0 
             exit 0
-        elif [ $(echo $(
-            [ "_${opt}" != "_-m" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--machine-name" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            machine_name="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
-        elif [ $(
-            [ "_${opt}" != "_--secure" ]
-            echo $?
-        ) != 0 ]; then
-            secure_erase=1
-        elif [ $(echo $(
-            [ "_${opt}" != "_-s" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--sops-secret-path" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            local s_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
-            file_exists__33_v0 "${s_opt}"
-            __AF_file_exists33_v0__182_12="$__AF_file_exists33_v0"
-            if [ "$__AF_file_exists33_v0__182_12" != 0 ]; then
-                sops_secret_path="${s_opt}"
+        elif [ "$(( $([ "_${opt_19}" != "_-m" ]; echo $?) || $([ "_${opt_19}" != "_--machine-name" ]; echo $?) ))" != 0 ]; then
+            machine_name_10="${opts[$(( ${i_20} + 1 ))]}"
+        elif [ "$(( $([ "_${opt_19}" != "_-p" ]; echo $?) || $([ "_${opt_19}" != "_--password" ]; echo $?) ))" != 0 ]; then
+            p_opt_23="${opts[$(( ${i_20} + 1 ))]}"
+            __length_7="${p_opt_23}"
+            if [ "$(( ${#__length_7} > 0 ))" != 0 ]; then
+                password_11="${p_opt_23}"
             else
-                linux_menu__143_v0
-                __AF_linux_menu143_v0__185_11="${__AF_linux_menu143_v0}"
-                echo "${__AF_linux_menu143_v0__185_11}" >/dev/null 2>&1
+                linux_menu__151_v0 
+                echo "password is empty"'!'""
+                exit 1
+            fi
+        elif [ "$([ "_${opt_19}" != "_--secure" ]; echo $?)" != 0 ]; then
+            secure_erase_12=1
+        elif [ "$(( $([ "_${opt_19}" != "_-s" ]; echo $?) || $([ "_${opt_19}" != "_--sops-secret-path" ]; echo $?) ))" != 0 ]; then
+            s_opt_24="${opts[$(( ${i_20} + 1 ))]}"
+            file_exists__37_v0 "${s_opt_24}"
+            ret_file_exists37_v0__222_12="${ret_file_exists37_v0}"
+            if [ "${ret_file_exists37_v0__222_12}" != 0 ]; then
+                sops_secret_path_13="${s_opt_24}"
+            else
+                linux_menu__151_v0 
                 echo "Sops secret file not found"'!'""
                 exit 1
             fi
-        elif [ $(echo $(
-            [ "_${opt}" != "_-u" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--username" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            local u_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
-            __AMBER_LEN="${u_opt}"
-            if [ $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-                username="${u_opt}"
+        elif [ "$(( $([ "_${opt_19}" != "_-u" ]; echo $?) || $([ "_${opt_19}" != "_--username" ]; echo $?) ))" != 0 ]; then
+            u_opt_25="${opts[$(( ${i_20} + 1 ))]}"
+            __length_8="${u_opt_25}"
+            if [ "$(( ${#__length_8} > 0 ))" != 0 ]; then
+                username_14="${u_opt_25}"
             else
-                linux_menu__143_v0
-                __AF_linux_menu143_v0__196_11="${__AF_linux_menu143_v0}"
-                echo "${__AF_linux_menu143_v0__196_11}" >/dev/null 2>&1
+                linux_menu__151_v0 
                 echo "Username is empty"'!'""
                 exit 1
             fi
-        elif [ $(echo $(
-            [ "_${opt}" != "_-v" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--version" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            local v_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
-            __AMBER_LEN="${v_opt}"
-            if [ $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-                version="${v_opt}"
+        elif [ "$(( $([ "_${opt_19}" != "_-v" ]; echo $?) || $([ "_${opt_19}" != "_--version" ]; echo $?) ))" != 0 ]; then
+            v_opt_26="${opts[$(( ${i_20} + 1 ))]}"
+            __length_9="${v_opt_26}"
+            if [ "$(( ${#__length_9} > 0 ))" != 0 ]; then
+                version_15="${v_opt_26}"
             fi
         fi
-        ((i++)) || true
+        (( i_20++ )) || true
     done
-    if [ ${secure_erase} != 0 ]; then
-        nvme format --force ${disk_path}
-        __AS=$?
+    if [ "${secure_erase_12}" != 0 ]; then
+        nvme format --force ${disk_path_9}
+        __status=$?
     fi
-    linux_private__144_v0 "${machine_name}" "${username}"
-    __AF_linux_private144_v0__211_22="${__AF_linux_private144_v0}"
-    local private_path="${__AF_linux_private144_v0__211_22}"
-    linux_disko__145_v0 "${machine_name}" "${version}"
-    __AF_linux_disko145_v0__213_3="$__AF_linux_disko145_v0"
-    echo "$__AF_linux_disko145_v0__213_3" >/dev/null 2>&1
+    linux_private__153_v0 "${machine_name_10}" "${username_14}"
+    private_path_29="${ret_linux_private153_v0}"
+    linux_disko__154_v0 "${machine_name_10}" "${version_15}"
     # Copy the private.nix file in the permanent directory
-    dir_create__38_v0 "/mnt/persist/private"
-    __AF_dir_create38_v0__216_3="$__AF_dir_create38_v0"
-    echo "$__AF_dir_create38_v0__216_3" >/dev/null 2>&1
-    cp "${private_path}" "/mnt/persist/private/private.nix"
-    __AS=$?
-    if [ $__AS != 0 ]; then
+    dir_create__42_v0 "/mnt/persist/private"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+    code_31="${__status}"
+        echo "Command failed with exit code: ${code_31}"
+    fi
+    cp "${private_path_29}" "/mnt/persist/private/private.nix"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
         echo "Something went wrong during the copy of the private.nix file"'!'""
         exit 1
     fi
     # Copy the sops secret in the temporary directory
-    cp "${sops_secret_path}" "${__2_dir_path}/sops/age/keys.txt"
-    __AS=$?
-    if [ $__AS != 0 ]; then
+    cp "${sops_secret_path_13}" "${dir_path_5}/sops/age/keys.txt"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
         echo "Something went wrong during the copy of the age key file"'!'""
         exit 1
     fi
     # Copy the sops secret in the permanent directory
-    dir_create__38_v0 "/mnt/persist/sops/age"
-    __AF_dir_create38_v0__229_3="$__AF_dir_create38_v0"
-    echo "$__AF_dir_create38_v0__229_3" >/dev/null 2>&1
-    cp "${sops_secret_path}" "/mnt/persist/sops/age/keys.txt"
-    __AS=$?
-    if [ $__AS != 0 ]; then
+    dir_create__42_v0 "/mnt/persist/sops/age"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+    code_32="${__status}"
+        echo "Command failed with exit code: ${code_32}"
+    fi
+    cp "${sops_secret_path_13}" "/mnt/persist/sops/age/keys.txt"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
         echo "Something went wrong during the copy of the age key file"'!'""
         exit 1
     fi
+    # Create the hashed password file containing the user password
+    linux_password__152_v0 "${password_11}" "${username_14}"
     # Install NixOS
-    nixos-install --root /mnt --flake ${__0_nixos_config_github}/${version}#${configuration_name} --impure
-    __AS=$?
-    if [ $__AS != 0 ]; then
-        echo "Something went wrong with nixos-install"'!'" Error: $__AS"
+    nixos-install --root /mnt --flake ${nixos_config_github_3}/${version_15}#${configuration_name_8} --impure
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+        echo "Something went wrong with nixos-install"'!'" Error: ${__status}"
         exit 1
     fi
     echo "Ready to reboot. Don't forget to remove the usb key"
-    __AF_linux_install146_v0=1
+    ret_linux_install155_v0=1
     return 0
 }
-darwin_private__148_v0() {
+
+darwin_private__157_v0() {
     local machine_name=$1
     local username=$2
-    local content=""
-    local private_path=""
-    __AMBER_LEN="${machine_name}"
-    __AMBER_LEN="${username}"
-    if [ $(echo $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') '&&' $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-        private_path="/Users/${username}/src/perso/darwin/private.nix"
-        content="{
+    content_50=""
+    private_path_51=""
+    __length_10="${machine_name}"
+    __length_11="${username}"
+    if [ "$(( $(( ${#__length_10} > 0 )) && $(( ${#__length_11} > 0 )) ))" != 0 ]; then
+        private_path_51="/Users/${username}/src/perso/darwin/private.nix"
+        content_50="{
   ${machine_name} = {
     username = \"${username}\";
   };
@@ -466,227 +461,166 @@ darwin_private__148_v0() {
         echo "machine_name or username empty"'!'""
         exit 1
     fi
-    file_exists__33_v0 "${private_path}"
-    __AF_file_exists33_v0__285_6="$__AF_file_exists33_v0"
-    if [ "$__AF_file_exists33_v0__285_6" != 0 ]; then
-        file_write__35_v0 "${private_path}" "${content}"
-        __AS=$?
-        if [ $__AS != 0 ]; then
-            echo "File: ${private_path}. Was not created"'!'" Status: $__AS"
+    file_exists__37_v0 "${private_path_51}"
+    ret_file_exists37_v0__332_6="${ret_file_exists37_v0}"
+    if [ "${ret_file_exists37_v0__332_6}" != 0 ]; then
+        file_write__39_v0 "${private_path_51}" "${content_50}"
+        __status=$?
+        if [ "${__status}" != 0 ]; then
+            echo "File: ${private_path_51}. Was not created"'!'" Status: ${__status}"
             exit 1
         fi
-        __AF_file_write35_v0__286_5="${__AF_file_write35_v0}"
-        echo "${__AF_file_write35_v0__286_5}" >/dev/null 2>&1
     else
-        file_append__36_v0 "${private_path}" "${content}"
-        __AS=$?
-        if [ $__AS != 0 ]; then
-            echo "File: ${private_path}. Was not created"'!'" Status: $__AS"
+        file_append__40_v0 "${private_path_51}" "${content_50}"
+        __status=$?
+        if [ "${__status}" != 0 ]; then
+            echo "File: ${private_path_51}. Was not created"'!'" Status: ${__status}"
             exit 1
         fi
-        __AF_file_append36_v0__292_5="${__AF_file_append36_v0}"
-        echo "${__AF_file_append36_v0__292_5}" >/dev/null 2>&1
     fi
-    __AF_darwin_private148_v0="${private_path}"
+    ret_darwin_private157_v0="${private_path_51}"
     return 0
 }
-darwin_install__149_v0() {
+
+darwin_install__158_v0() {
     local opts=("${!1}")
-    local configuration_name=""
-    local machine_name=""
-    local sops_secret_path=""
-    local username=""
-    local version="main"
-    i=0
-    for opt in "${opts[@]}"; do
-        if [ $(echo $(
-            [ "_${opt}" != "_-c" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--configuration-name" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            local c_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
-            if [ $(
-                [ "_${c_opt}" != "_work" ]
-                echo $?
-            ) != 0 ]; then
-                configuration_name="${c_opt}"
+    configuration_name_36=""
+    machine_name_37=""
+    sops_secret_path_38=""
+    username_39=""
+    version_40="main"
+    i_42=0;
+    for opt_41 in "${opts[@]}"; do
+        if [ "$(( $([ "_${opt_41}" != "_-c" ]; echo $?) || $([ "_${opt_41}" != "_--configuration-name" ]; echo $?) ))" != 0 ]; then
+            c_opt_43="${opts[$(( ${i_42} + 1 ))]}"
+            if [ "$([ "_${c_opt_43}" != "_work" ]; echo $?)" != 0 ]; then
+                configuration_name_36="${c_opt_43}"
             else
-                linux_menu__143_v0
-                __AF_linux_menu143_v0__316_11="${__AF_linux_menu143_v0}"
-                echo "${__AF_linux_menu143_v0__316_11}" >/dev/null 2>&1
+                linux_menu__151_v0 
                 echo "Wrong configuration name"'!'""
                 exit 1
             fi
-        elif [ $(echo $(
-            [ "_${opt}" != "_-h" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--help" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            linux_menu__143_v0
-            __AF_linux_menu143_v0__323_9="${__AF_linux_menu143_v0}"
-            echo "${__AF_linux_menu143_v0__323_9}" >/dev/null 2>&1
+        elif [ "$(( $([ "_${opt_41}" != "_-h" ]; echo $?) || $([ "_${opt_41}" != "_--help" ]; echo $?) ))" != 0 ]; then
+            linux_menu__151_v0 
             exit 0
-        elif [ $(echo $(
-            [ "_${opt}" != "_-m" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--machine-name" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            machine_name="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
-        elif [ $(echo $(
-            [ "_${opt}" != "_-s" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--sops-secret-path" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            local s_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
-            file_exists__33_v0 "${s_opt}"
-            __AF_file_exists33_v0__331_12="$__AF_file_exists33_v0"
-            if [ "$__AF_file_exists33_v0__331_12" != 0 ]; then
-                sops_secret_path="${s_opt}"
+        elif [ "$(( $([ "_${opt_41}" != "_-m" ]; echo $?) || $([ "_${opt_41}" != "_--machine-name" ]; echo $?) ))" != 0 ]; then
+            machine_name_37="${opts[$(( ${i_42} + 1 ))]}"
+        elif [ "$(( $([ "_${opt_41}" != "_-s" ]; echo $?) || $([ "_${opt_41}" != "_--sops-secret-path" ]; echo $?) ))" != 0 ]; then
+            s_opt_44="${opts[$(( ${i_42} + 1 ))]}"
+            file_exists__37_v0 "${s_opt_44}"
+            ret_file_exists37_v0__378_12="${ret_file_exists37_v0}"
+            if [ "${ret_file_exists37_v0__378_12}" != 0 ]; then
+                sops_secret_path_38="${s_opt_44}"
             else
-                linux_menu__143_v0
-                __AF_linux_menu143_v0__334_11="${__AF_linux_menu143_v0}"
-                echo "${__AF_linux_menu143_v0__334_11}" >/dev/null 2>&1
+                linux_menu__151_v0 
                 echo "Sops secret file not found"'!'""
                 exit 1
             fi
-        elif [ $(echo $(
-            [ "_${opt}" != "_-u" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--username" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            local u_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
-            __AMBER_LEN="${u_opt}"
-            if [ $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-                username="${u_opt}"
+        elif [ "$(( $([ "_${opt_41}" != "_-u" ]; echo $?) || $([ "_${opt_41}" != "_--username" ]; echo $?) ))" != 0 ]; then
+            u_opt_45="${opts[$(( ${i_42} + 1 ))]}"
+            __length_12="${u_opt_45}"
+            if [ "$(( ${#__length_12} > 0 ))" != 0 ]; then
+                username_39="${u_opt_45}"
             else
-                linux_menu__143_v0
-                __AF_linux_menu143_v0__345_11="${__AF_linux_menu143_v0}"
-                echo "${__AF_linux_menu143_v0__345_11}" >/dev/null 2>&1
+                linux_menu__151_v0 
                 echo "Username is empty"'!'""
                 exit 1
             fi
-        elif [ $(echo $(
-            [ "_${opt}" != "_-v" ]
-            echo $?
-        ) '||' $(
-            [ "_${opt}" != "_--version" ]
-            echo $?
-        ) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-            local v_opt="${opts[$(echo ${i} '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')]}"
-            __AMBER_LEN="${v_opt}"
-            if [ $(echo "${#__AMBER_LEN}" '>' 0 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-                version="${v_opt}"
+        elif [ "$(( $([ "_${opt_41}" != "_-v" ]; echo $?) || $([ "_${opt_41}" != "_--version" ]; echo $?) ))" != 0 ]; then
+            v_opt_46="${opts[$(( ${i_42} + 1 ))]}"
+            __length_13="${v_opt_46}"
+            if [ "$(( ${#__length_13} > 0 ))" != 0 ]; then
+                version_40="${v_opt_46}"
             fi
         fi
-        ((i++)) || true
+        (( i_42++ )) || true
     done
     # Copy the sops secret in the permanent directory
-    dir_create__38_v0 "/Users/${username}/.config/sops/age"
-    __AF_dir_create38_v0__359_3="$__AF_dir_create38_v0"
-    echo "$__AF_dir_create38_v0__359_3" >/dev/null 2>&1
-    cp "${sops_secret_path}" "/Users/${username}/.config/sops/age/keys.txt"
-    __AS=$?
-    if [ $__AS != 0 ]; then
+    dir_create__42_v0 "/Users/${username_39}/.config/sops/age"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+    code_47="${__status}"
+        echo "Command failed with exit code: ${code_47}"
+    fi
+    cp "${sops_secret_path_38}" "/Users/${username_39}/.config/sops/age/keys.txt"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
         echo "Something went wrong during the copy of the age key file"'!'""
         exit 1
     fi
     # Create source directory
-    dir_create__38_v0 "/Users/${username}/src/perso/darwin"
-    __AF_dir_create38_v0__366_3="$__AF_dir_create38_v0"
-    echo "$__AF_dir_create38_v0__366_3" >/dev/null 2>&1
+    dir_create__42_v0 "/Users/${username_39}/src/perso/darwin"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+    code_48="${__status}"
+        echo "Command failed with exit code: ${code_48}"
+    fi
     # Setup the repository for installation
-    file_download__140_v0 "https://github.com/Enoxime/nixos-config/archive/refs/heads/${version}.zip" "/Users/${username}/src/perso/darwin.zip"
-    __AF_file_download140_v0__369_3="$__AF_file_download140_v0"
-    echo "$__AF_file_download140_v0__369_3" >/dev/null 2>&1
-    cd "/Users/${username}/src/perso" || exit
+    file_download__148_v0 "https://github.com/Enoxime/nixos-config/archive/refs/heads/${version_40}.zip" "/Users/${username_39}/src/perso/darwin.zip"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+    code_49="${__status}"
+        echo "Command failed with exit code: ${code_49}"
+    fi
+    cd "/Users/${username_39}/src/perso" || exit
     bsdtar -x --strip-components=1 --directory darwin -f darwin.zip
-    __AS=$?
-    if [ $__AS != 0 ]; then
-        echo "Something went wrong with unzip darwin.zip"'!'" Error: $__AS"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+        echo "Something went wrong with unzip darwin.zip"'!'" Error: ${__status}"
         exit 1
     fi
-    cd "/Users/${username}/src/perso/darwin" || exit
-    darwin_private__148_v0 "${machine_name}" "${username}"
-    __AF_darwin_private148_v0__379_3="${__AF_darwin_private148_v0}"
-    echo "${__AF_darwin_private148_v0__379_3}" >/dev/null 2>&1
+    cd "/Users/${username_39}/src/perso/darwin" || exit
+    darwin_private__157_v0 "${machine_name_37}" "${username_39}"
     # Install Nix darwin
     curl -fsSL https://install.determinate.systems.nix | sh -s -- install --determinate
-    __AS=$?
-    if [ $__AS != 0 ]; then
-        echo "Something went wrong with installing darwin"'!'" Error: $__AS"
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+        echo "Something went wrong with installing darwin"'!'" Error: ${__status}"
         exit 1
     fi
-    nix run nix-darwin/master#darwwin-rebuild -- switch --flake path:.#${configuration_name}
-    __AS=$?
-    if [ $__AS != 0 ]; then
-        echo "Something went wrong with installing darwin"'!'" Error: $__AS"
+    nix run nix-darwin/master#darwwin-rebuild -- switch --flake path:.#${configuration_name_36}
+    __status=$?
+    if [ "${__status}" != 0 ]; then
+        echo "Something went wrong with installing darwin"'!'" Error: ${__status}"
         exit 1
     fi
     echo "Ready to reboot"
-    __AF_darwin_install149_v0=1
+    ret_darwin_install158_v0=1
     return 0
 }
-declare -r args=("$0" "$@")
-is_root__102_v0
-__AF_is_root102_v0__398_10="$__AF_is_root102_v0"
-if [ $(echo '!' "$__AF_is_root102_v0__398_10" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
+
+declare -r args_6=("$0" "$@")
+is_root__109_v0 
+ret_is_root109_v0__451_10="${ret_is_root109_v0}"
+if [ "$(( ! ${ret_is_root109_v0__451_10} ))" != 0 ]; then
     echo "This script requires root permissions"'!'""
     exit 1
 fi
-if [ $(echo "${#args[@]}" '<' 2 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-    menu__142_v0
-    __AF_menu142_v0__405_7="${__AF_menu142_v0}"
-    echo "${__AF_menu142_v0__405_7}" >/dev/null 2>&1
+__length_15=("${args_6[@]}")
+if [ "$(( ${#__length_15[@]} < 2 ))" != 0 ]; then
+    menu__150_v0 
     exit 0
-elif [ $(
-    [ "_${args[1]}" != "_linux_install" ]
-    echo $?
-) != 0 ]; then
-    __SLICE_UPPER_3=$(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
-    __SLICE_OFFSET_4=2
-    __SLICE_OFFSET_4=$((__SLICE_OFFSET_4 > 0 ? __SLICE_OFFSET_4 : 0))
-    __SLICE_LENGTH_5=$(echo $(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') '-' $__SLICE_OFFSET_4 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
-    __SLICE_LENGTH_5=$((__SLICE_LENGTH_5 > 0 ? __SLICE_LENGTH_5 : 0))
-    linux_args=("${args[@]:$__SLICE_OFFSET_4:$__SLICE_LENGTH_5}")
-    linux_install__146_v0 linux_args[@]
-    __AF_linux_install146_v0__411_7="$__AF_linux_install146_v0"
-    echo "$__AF_linux_install146_v0__411_7" >/dev/null 2>&1
-elif [ $(
-    [ "_${args[1]}" != "_darwin_install" ]
-    echo $?
-) != 0 ]; then
-    __SLICE_UPPER_6=$(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
-    __SLICE_OFFSET_7=2
-    __SLICE_OFFSET_7=$((__SLICE_OFFSET_7 > 0 ? __SLICE_OFFSET_7 : 0))
-    __SLICE_LENGTH_8=$(echo $(echo "${#args[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') '-' $__SLICE_OFFSET_7 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
-    __SLICE_LENGTH_8=$((__SLICE_LENGTH_8 > 0 ? __SLICE_LENGTH_8 : 0))
-    darwin_args=("${args[@]:$__SLICE_OFFSET_7:$__SLICE_LENGTH_8}")
-    darwin_install__149_v0 darwin_args[@]
-    __AF_darwin_install149_v0__416_7="$__AF_darwin_install149_v0"
-    echo "$__AF_darwin_install149_v0__416_7" >/dev/null 2>&1
-elif [ $(echo $(
-    [ "_${args[1]}" != "_-h" ]
-    echo $?
-) '||' $(
-    [ "_${args[1]}" != "_--help" ]
-    echo $?
-) | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-    menu__142_v0
-    __AF_menu142_v0__419_45="${__AF_menu142_v0}"
-    echo "${__AF_menu142_v0__419_45}" >/dev/null 2>&1
+elif [ "$([ "_${args_6[1]}" != "_linux_install" ]; echo $?)" != 0 ]; then
+    __length_17=("${args_6[@]}")
+    slice_upper_16="$(echo "${#__length_17[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')"
+    slice_offset_18=2
+    slice_offset_18=$((${slice_offset_18} > 0 ? ${slice_offset_18} : 0))
+    slice_length_19="$(echo "${slice_upper_16}" '-' "${slice_offset_18}" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')"
+    slice_length_19=$((${slice_length_19} > 0 ? ${slice_length_19} : 0))
+    linux_args_7=("${args_6[@]:${slice_offset_18}:${slice_length_19}}")
+    linux_install__155_v0 linux_args_7[@]
+elif [ "$([ "_${args_6[1]}" != "_darwin_install" ]; echo $?)" != 0 ]; then
+    __length_21=("${args_6[@]}")
+    slice_upper_20="$(echo "${#__length_21[@]}" '+' 1 | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')"
+    slice_offset_22=2
+    slice_offset_22=$((${slice_offset_22} > 0 ? ${slice_offset_22} : 0))
+    slice_length_23="$(echo "${slice_upper_20}" '-' "${slice_offset_22}" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')"
+    slice_length_23=$((${slice_length_23} > 0 ? ${slice_length_23} : 0))
+    darwin_args_35=("${args_6[@]:${slice_offset_22}:${slice_length_23}}")
+    darwin_install__158_v0 darwin_args_35[@]
+elif [ "$(( $([ "_${args_6[1]}" != "_-h" ]; echo $?) || $([ "_${args_6[1]}" != "_--help" ]; echo $?) ))" != 0 ]; then
+    menu__150_v0 
 else
-    menu__142_v0
-    __AF_menu142_v0__421_11="${__AF_menu142_v0}"
-    echo "${__AF_menu142_v0__421_11}" >/dev/null 2>&1
+    menu__150_v0 
 fi
 exit 1
