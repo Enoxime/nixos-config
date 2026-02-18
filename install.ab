@@ -37,11 +37,31 @@ Flags:
   -d  --disk-path           Udev path of the disk where to install NixOS
   -h  --help                Show help for linux_install
   -m  --machine-name        Name of the machine also known as the hostname
+  -p  --password            Password of the username for the system (GNU/Linux only)
       --secure              Fill the disk zeros by opening the disk with cryptsetup. Default to false
   -s  --sops-secret-path    Path of the sops file
   -u  --username            Username for the system
   -v  --version             Specify a tag or a branch. Set to latest by default
 "
+}
+
+
+fun linux_password(p: Text, u: Text): Text {
+  dir_create("/mnt/persist/home/{u}") failed(code) {
+     echo "Command failed with exit code: {code}"
+  }
+
+  let hashed_password = $ mkpasswd '{p}' $ failed {
+    echo "Something went wrong with the mkpasswd command!"
+    exit 1
+  }
+  
+  file_write("/mnt/persist/home/{u}/hashedPasswordFile", hashed_password) failed {
+    echo "File: /mnt/persist/home/{u}/hashedPasswordFile. Was not created! Status: {status}"
+    exit 1
+  }
+
+  return "/mnt/persist/home/{u}/hashedPasswordFile"
 }
 
 
@@ -87,7 +107,9 @@ fun linux_disko(
   file_download(
     "{raw_nixos_config_github}/{version}/hosts/{machine_name}/disko-configuration.nix",
     "{dir_path}/disko-configuration.nix"
-  )
+  ) failed(code) {
+     echo "Command failed with exit code: {code}"
+  }
 
   // Destroy, format and mount the disk via disko
   $ nix \
@@ -135,14 +157,21 @@ fun linux_install(opts: []): Bool {
   let configuration_name = ""
   let disk_path = ""
   let machine_name = ""
+  let password = ""
   let secure_erase = false
   let sops_secret_path = ""
   let username = ""
   let version = "latest"
 
-  dir_create(dir_path)
-  dir_create("{dir_path}/private")
-  dir_create("{dir_path}/sops/age")
+  dir_create(dir_path) failed(code) {
+     echo "Command failed with exit code: {code}"
+  }
+  dir_create("{dir_path}/private") failed(code) {
+     echo "Command failed with exit code: {code}"
+  }
+  dir_create("{dir_path}/sops/age") failed(code) {
+     echo "Command failed with exit code: {code}"
+  }
 
   for i, opt in opts {
     if {
@@ -174,6 +203,17 @@ fun linux_install(opts: []): Bool {
       }
 
       opt == "-m" or opt == "--machine-name": machine_name = opts[i+1]
+
+      opt == "-p" or opt == "--password" {
+        let p_opt = opts[i+1]
+        if len(p_opt) > 0 {
+          password = p_opt
+        } else {
+          linux_menu()
+          echo "password is empty!"
+          exit 1
+        }
+      }
 
       opt == "--secure": secure_erase = true
 
@@ -213,7 +253,9 @@ fun linux_install(opts: []): Bool {
   linux_disko(machine_name, version)
 
   // Copy the private.nix file in the permanent directory
-  dir_create("/mnt/persist/private")
+  dir_create("/mnt/persist/private") failed(code) {
+     echo "Command failed with exit code: {code}"
+  }
   $ cp "{private_path}" "/mnt/persist/private/private.nix" $ failed {
     echo "Something went wrong during the copy of the private.nix file!"
     exit 1
@@ -226,11 +268,16 @@ fun linux_install(opts: []): Bool {
   }
 
   // Copy the sops secret in the permanent directory
-  dir_create("/mnt/persist/sops/age")
+  dir_create("/mnt/persist/sops/age") failed(code) {
+     echo "Command failed with exit code: {code}"
+  }
   $ cp "{sops_secret_path}" "/mnt/persist/sops/age/keys.txt" $ failed {
     echo "Something went wrong during the copy of the age key file!"
     exit 1
   }
+
+  // Create the hashed password file containing the user password
+  linux_password(password, username)
 
   // Install NixOS
   $ nixos-install --root /mnt --flake {nixos_config_github}/{version}#{configuration_name} --impure $ failed {
@@ -356,20 +403,26 @@ fun darwin_install(opts: []): Bool {
   }
 
   // Copy the sops secret in the permanent directory
-  dir_create("/Users/{username}/.config/sops/age")
+  dir_create("/Users/{username}/.config/sops/age") failed(code) {
+     echo "Command failed with exit code: {code}"
+  }
   $ cp "{sops_secret_path}" "/Users/{username}/.config/sops/age/keys.txt" $ failed {
     echo "Something went wrong during the copy of the age key file!"
     exit 1
   }
 
   // Create source directory
-  dir_create("/Users/{username}/src/perso/darwin")
+  dir_create("/Users/{username}/src/perso/darwin") failed(code) {
+     echo "Command failed with exit code: {code}"
+  }
 
   // Setup the repository for installation
   file_download(
     "https://github.com/Enoxime/nixos-config/archive/refs/heads/{version}.zip",
     "/Users/{username}/src/perso/darwin.zip"
-  )
+  ) failed(code) {
+     echo "Command failed with exit code: {code}"
+  }
   cd "/Users/{username}/src/perso"
   $ bsdtar -x --strip-components=1 --directory darwin -f darwin.zip $ failed {
     echo "Something went wrong with unzip darwin.zip! Error: {status}"

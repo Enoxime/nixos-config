@@ -11,6 +11,7 @@
       enableUpdateCheck = true;
       enableExtensionUpdateCheck = true;
       extensions = with pkgs.nix-vscode-extensions.vscode-marketplace; [
+        amber-lsp-publisher.amber-lsp
         bierner.markdown-mermaid
         bierner.markdown-preview-github-styles
         catppuccin.catppuccin-vsc

@@ -5,10 +5,6 @@
     group = username;
     path = "/home/${username}/.ssh/${username}_${hostname}";
   };
-  sops.secrets.password_hash ={
-    neededForUsers = true;
-    path = "/persist/home/${username}/hashedPasswordFile";
-  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
