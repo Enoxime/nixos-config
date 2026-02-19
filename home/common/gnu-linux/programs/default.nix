@@ -55,15 +55,17 @@
     eza # A modern replacement for ‘ls’
 
     # networking tools
-    mtr # A network diagnostic tool
-    iperf3
+    cifs-utils
     dnsutils  # `dig` + `nslookup`
-    ldns # replacement of `dig`, it provide the command `drill`
-    socat # replacement of openbsd-netcat
-    nmap # A utility for network discovery and security auditing
+    iperf3
     iproute2 # Collection of utilities for controlling TCP/IP networking and traffic control in Linux (include bridge)
-    vlan
+    ldns # replacement of `dig`, it provide the command `drill`
+    mtr # A network diagnostic tool
+    nmap # A utility for network discovery and security auditing
+    samba4Full
+    socat # replacement of openbsd-netcat
     tcpdump
+    vlan
     wireshark
 
     # CAD / graphics
@@ -91,6 +93,13 @@
     file
     gawk
     gnused
+    # GUI file manager
+    kdePackages.dolphin
+    kdePackages.dolphin-plugins
+    kdePackages.kio
+    kdePackages.kio-fuse
+    kdePackages.kio-extras
+    kdePackages.qtsvg
     languagetool # Proofreading program for English, French German, Polish, and more
     libde265 # Open h.265 video codec implementation
     libva # VAAPI library: Video Acceleration API
