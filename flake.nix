@@ -78,8 +78,8 @@
     # https://github.com/fufexan/nix-gaming
     nix-gaming.url = "github:fufexan/nix-gaming";
 
-    # # https://github.com/nix-community/nixpkgs-xr
-    # nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
+    # https://github.com/nix-community/nixpkgs-xr
+    nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
 
     # https://amber-lang.com/
     amber.url = "github:amber-lang/Amber";
@@ -107,6 +107,7 @@
     sops-nix,
     nix-darwin,
     impermanence,
+    nixpkgs-xr,
     amber,
     nix-vscode-extensions,
     mac-app-util,
@@ -304,6 +305,7 @@
             imports = [ ./hosts/monolith/disko-configuration.nix ];
           }
           impermanence.nixosModules.impermanence
+          nixpkgs-xr.nixosModules.nixpkgs-xr
         ];
         includeHomeManager = true;
         homeManagerModules = [

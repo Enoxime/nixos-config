@@ -24,11 +24,6 @@
       localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
       gamescopeSession.enable = true;
     };
-    # VR headset
-    # alvr = {
-    #   enable = true;
-    #   openFirewall = true;
-    # };
   };
 
   environment.systemPackages = with pkgs; [

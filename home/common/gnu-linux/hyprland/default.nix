@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, username, ... }: {
   imports = [
     ./avizo.nix
     ./config.nix
@@ -41,6 +41,16 @@
       LDFLAGS="-L${pkgs.zlib.out}/lib -L${pkgs.libffi.out}/lib -L${pkgs.readline.out}/lib -L${pkgs.bzip2.out}/lib -L${pkgs.openssl.out}/lib";
       CONFIGURE_OPTS="-with-openssl=${pkgs.openssl.dev}";
       PYENV_VIRTUALENV_DISABLE_PROMPT="1";
+
+      # XDG base directory
+      XDG_CONFIG_HOME="/home/${username}/.config";
+      XDG_CACHE_HOME="/home/${username}/.cache";
+      XDG_DATA_HOME="/home/${username}/.local/share";
+      XDG_STATE_HOME="/home/${username}/.local/.state";
+      XDG_RUNTIME_DIR="/run/user/$UID";
+
+      # xdg-ninja
+      # https://github.com/b3nj5m1n/xdg-ninja
     };
 
     # Add a cursor
