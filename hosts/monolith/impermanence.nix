@@ -7,9 +7,16 @@ _: {
     enable = true;
     hideMounts = true;
     directories = [
-      "/var/lib/bluetooth"
-      "/var/lib/nixos"
       "/etc/NetworkManager/system-connections"
+      "/root"
+      "/var/db/sudo"
+      "/var/lib/bluetooth"
+      "/var/lib/iwd"
+      "/var/lib/nixos"
+      "/var/lib/systemd/coredump"
+      "/var/lib/systemd/timers"
+      "/var/lib/systemd/timesync"
+      "/var/lib/NetworkManager"
     ];
     files = [
       "/etc/machine-id"
