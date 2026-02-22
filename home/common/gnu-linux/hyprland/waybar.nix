@@ -298,6 +298,7 @@ _: {
           "max-length" = 35;
           "on-click" = "~/.config/waybar/scripts/wifi_toggle.sh";
           "on-click-right" = "iwgtk";
+          "interface" = "wlan0";
         };
 
         "bluetooth" = {

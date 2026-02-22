@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, username, ... }: {
   home.packages = with pkgs; [
     protonup-ng
     sidequest
@@ -9,7 +9,7 @@
   ];
 
   home.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\\\${HOME}/.steam/root/compatibilitytools.d";
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/home/${username}/.steam/root/compatibilitytools.d";
   };
 
   # https://nixos.wiki/wiki/Lutris
