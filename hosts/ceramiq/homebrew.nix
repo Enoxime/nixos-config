@@ -22,6 +22,7 @@ _: {
         args = { "no_quarantine" = true; };
       }
       "iterm2"
+      "ghostty"
     ];
 
     brews = [

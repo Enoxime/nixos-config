@@ -6,5 +6,6 @@
     openshift
     terraform-docs
     tflint
+    opencode
   ];
 }

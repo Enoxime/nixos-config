@@ -120,6 +120,12 @@
         workbench.preferredLightColorTheme = "Catppuccin Latte";
         "workbench.iconTheme" = "catppuccin-mocha";
         github.copilot = {
+          enable = {
+            "*" = true;
+            "plaintext" = false;
+            "markdown" = true;
+            "scminput" = false;
+          };
           nextEditSuggestions.enabled = true;
           advanced = {
             # Enable GitHub Copilot
