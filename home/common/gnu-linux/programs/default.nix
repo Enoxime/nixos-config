@@ -62,7 +62,7 @@
     ldns # replacement of `dig`, it provide the command `drill`
     mtr # A network diagnostic tool
     nmap # A utility for network discovery and security auditing
-    samba4Full
+    samba
     socat # replacement of openbsd-netcat
     tcpdump
     vlan
