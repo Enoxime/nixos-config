@@ -3,6 +3,9 @@
     enable = true;
     package = pkgs.gitFull;
     lfs.enable = true;
+    signing = {
+      format = "openpgp";
+    };
     settings = {
       alias = {
         co = "checkout";
