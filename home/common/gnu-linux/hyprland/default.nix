@@ -1,4 +1,4 @@
-{ pkgs, username, ... }: {
+{ pkgs, username, inputs, ... }: {
   imports = [
     ./avizo.nix
     ./config.nix
@@ -7,7 +7,7 @@
     ./hyprland.nix
     ./hyprlock.nix
     ./rofi.nix
-    ./swww.nix
+    ./awww.nix
     ./waybar.nix
     ./wlogout.nix
   ];
@@ -101,12 +101,12 @@
     hyprgraphics
     hyprland-qtutils
     imagemagick
+    inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
     # inputs.pyprland.packages."x86_64-linux".pyprland # https://hyprland-community.github.io/pyprland/
     kdePackages.qtwayland # qt6-wayland
     libsForQt5.qt5.qtwayland # qt5-wayland
     slurp
     swappy
-    swww
     wl-clipboard
   ];
 }

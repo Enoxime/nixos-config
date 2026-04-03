@@ -65,7 +65,7 @@ Check <https://github.com/nix-community/nixpkgs-xr>
 
 hyprland
 waybar
-swww
+awww
 nixos
 etc...
 

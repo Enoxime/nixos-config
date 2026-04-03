@@ -92,6 +92,9 @@
 
     # https://github.com/hraban/mac-app-util
     mac-app-util.url = "github:hraban/mac-app-util";
+
+    # https://codeberg.org/LGFae/awww
+    awww.url = "git+https://codeberg.org/LGFae/awww";
   };
 
   outputs = inputs@{

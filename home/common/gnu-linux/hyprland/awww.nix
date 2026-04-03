@@ -1,9 +1,9 @@
 { pkgs, ... }: {
   home.file = {
-    swww_randomize = {
+    awww_randomize = {
       enable = true;
       executable = true;
-      target = "./.config/swww/swww_randomize.sh";
+      target = "./.config/awww/awww_randomize.sh";
       text = ''
         #!/usr/bin/env sh
         # Changes the wallpaper to a randomly chosen image in a given directory
@@ -17,10 +17,10 @@
           exit 1
         fi
 
-        # See swww-img(1)
+        # See awww-img(1)
         RESIZE_TYPE="crop"
-        export SWWW_TRANSITION_FPS="''${SWWW_TRANSITION_FPS:-60}"
-        export SWWW_TRANSITION_STEP="''${SWWW_TRANSITION_STEP:-2}"
+        export AWWW_TRANSITION_FPS="''${AWWW_TRANSITION_FPS:-60}"
+        export AWWW_TRANSITION_STEP="''${AWWW_TRANSITION_STEP:-2}"
 
         while true; do
           find -L "$1" -type f \
@@ -29,17 +29,17 @@
           done \
           | sort -n | cut -d':' -f2- \
           | while read -r img; do
-            swww img --transition-type any --resize="$RESIZE_TYPE" "$img"
+            awww img --transition-type any --resize="$RESIZE_TYPE" "$img"
             sleep "''${2:-$DEFAULT_INTERVAL}"
           done
         done
       '';
     };
 
-    swww_daynnight = {
+    awww_daynnight = {
       enable = true;
       executable = true;
-      target = "./.config/swww/swww_daynnight.sh";
+      target = "./.config/awww/awww_daynnight.sh";
       text = ''
         #!/usr/bin/env bash
         # Change the wallpaper to a randomly chosen image in a given directories
@@ -53,10 +53,10 @@
           exit 1
         fi
 
-        # See swww-img(1)
+        # See awww-img(1)
         RESIZE_TYPE="crop"
-        export SWWW_TRANSITION_FPS="''${SWWW_TRANSITION_FPS:-60}"
-        export SWWW_TRANSITION_STEP="''${SWWW_TRANSITION_STEP:-2}"
+        export AWWW_TRANSITION_FPS="''${AWWW_TRANSITION_FPS:-60}"
+        export AWWW_TRANSITION_STEP="''${AWWW_TRANSITION_STEP:-2}"
 
         while true; do
           __current_time=$(date +%H:%M)
@@ -72,7 +72,7 @@
           done \
           | sort -n | cut -d':' -f2- \
           | while read -r img; do
-            swww img --transition-type any --resize="$RESIZE_TYPE" "$img"
+            awww img --transition-type any --resize="$RESIZE_TYPE" "$img"
             sleep "''${3:-$DEFAULT_INTERVAL}"
           done
         done
@@ -88,7 +88,7 @@
         rev = "4f3ada0efcd1e485bb9ebab8fb3612547bba1d5e";
         sha256 = "sha256-lrWGTDk5OfkMXttiCQKFnY7Sz5nUkz1G6gQCOjM0WI0=";
       };
-      target = "./.config/swww/wallpapers";
+      target = "./.config/awww/wallpapers";
     };
   };
 }
