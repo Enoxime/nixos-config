@@ -13,7 +13,7 @@ _: {
       };
 
       exec-once = [
-        "swww query || swww-daemon & $HOME/.config/swww/swww_randomize.sh $HOME/.config/swww/wallpapers/wallpapers 60"
+        "awww query || awww-daemon & $HOME/.config/awww/awww_randomize.sh $HOME/.config/awww/wallpapers/wallpapers 60"
         "systemctl --user start hyprpolkitagent"
         "wl-paste --type text --watch cliphist store" # Stores only text data
         "wl-paste --type image --watch cliphist store" # Stores only image data
