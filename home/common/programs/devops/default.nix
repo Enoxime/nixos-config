@@ -9,6 +9,7 @@
     cmctl # https://github.com/cert-manager/cmctl
     dive # https://github.com/wagoodman/dive
     fluxcd
+    fluxcd-operator
     helm-docs
     krew
     # Trigger error for now. To try again later
