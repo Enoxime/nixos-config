@@ -49,6 +49,9 @@
         # krew
         export PATH="''${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
+        # local bin
+        export PATH="$HOME/.local/bin:$PATH"
+
         # Pipenv auto source (pipenv shell)
         function auto_pipenv_shell {
           if [ ! -n "''${PIPENV_ACTIVE+1}" ]; then

@@ -23,6 +23,7 @@ _: {
       }
       "iterm2"
       "ghostty"
+      "kitty"
     ];
 
     brews = [

@@ -3,9 +3,11 @@
 
   home.packages = with pkgs; [
     cfssl
+    github-copilot-cli
+    opencode
     openshift
     terraform-docs
     tflint
-    opencode
+    uv
   ];
 }
