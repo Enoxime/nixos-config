@@ -22,12 +22,13 @@
       format = "openpgp";
     };
     settings = {
-      aliases = {
+      alias = {
         co = "checkout";
         br = "branch";
         ci = "commit";
         st = "status";
         sw = "switch";
+        gh = "history";
       };
       user = {
         name = "Enoxime";

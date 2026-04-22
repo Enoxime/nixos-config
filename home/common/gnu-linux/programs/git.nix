@@ -13,6 +13,7 @@
         ci = "commit";
         st = "status";
         sw = "switch";
+        gh = "history";
       };
       user = {
         name = "Enoxime";
