@@ -7,5 +7,6 @@
     nodejs # Needed for pre-commit for whatever reasons
     shellcheck
     shfmt
+    uv
   ];
 }

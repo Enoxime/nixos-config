@@ -23,6 +23,8 @@ let
     trf = "terraform";
     tal = "talosctl";
     th = "talhelper";
+    urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))'";
+    urlencode = "python -c 'import urllib.parse as ul, sys; print(ul.quote_plus(sys.argv[1]))'";
   };
 in
 {
@@ -45,22 +47,28 @@ in
         # krew
         export PATH="''${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-        # Pipenv auto source (pipenv shell)
-        function auto_pipenv_shell {
-          if [ ! -n "''${PIPENV_ACTIVE+1}" ]; then
-            if [ -f "Pipfile" ] ; then
-              pipenv shell
+        # uv auto source (source /path/to/activate)
+        function auto_uv_source {
+          local project_venv="''${PWD}/.venv"
+
+          if [[ -d "$project_venv" ]]; then
+            if [[ -z "$VIRTUAL_ENV" || "$VIRTUAL_ENV" != "$project_venv" ]]; then
+              if [[ -n "$VIRTUAL_ENV" ]] && typeset -f deactivate >/dev/null; then
+                deactivate
+              fi
+              source "$project_venv/bin/activate"
             fi
+          elif [[ -n "$VIRTUAL_ENV" && "$VIRTUAL_ENV" == */.venv ]] && typeset -f deactivate >/dev/null; then
+            deactivate
           fi
         }
 
         function cd {
-          builtin cd "$@"
-          auto_pipenv_shell
+          builtin cd "$@" || return $?
+          auto_uv_source
         }
 
-        auto_pipenv_shell
-
+        auto_uv_source
         export TERM=xterm-256color
 
         # kubecolor
@@ -98,8 +106,8 @@ in
       # set some aliases, feel free to add more or remove some
       shellAliases = {
         k = "kubectl";
-        urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
-        urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
+        urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))'";
+        urlencode = "python -c 'import urllib.parse as ul, sys; print(ul.quote_plus(sys.argv[1]))'";
       };
     };
   };

@@ -108,6 +108,8 @@
             };
           };
         };
+        "python.defaultInterpreterPath" = "\${workspaceFolder}/.venv/bin/python";
+        "python.terminal.activateEnvironment" = true;
         "redhat.telemetry.enabled" = false;
         terminal.integrated = {
           fontLigatures.enabled = true;
