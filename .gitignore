@@ -1,1 +1,4 @@
 private.nix
+
+# uv virtual environment
+.venv/
