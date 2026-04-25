@@ -64,7 +64,7 @@ in
         }
 
         function cd {
-          builtin cd "$@"
+          builtin cd "$@" || return $?
           auto_uv_source
         }
 
