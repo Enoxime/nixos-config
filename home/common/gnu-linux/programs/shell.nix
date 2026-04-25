@@ -68,6 +68,7 @@ in
           auto_uv_source
         }
 
+        auto_uv_source
         export TERM=xterm-256color
 
         # kubecolor
