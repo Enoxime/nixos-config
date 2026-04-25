@@ -49,10 +49,17 @@ in
 
         # uv auto source (source /path/to/activate)
         function auto_uv_source {
-          if [[ -d "''${PWD}/.venv" ]]; then
-            if [[ -n $VIRTUAL_ENV ]]; then
-              source ''${PWD}/.venv/bin/activate
+          local project_venv="''${PWD}/.venv"
+
+          if [[ -d "$project_venv" ]]; then
+            if [[ -z "$VIRTUAL_ENV" || "$VIRTUAL_ENV" != "$project_venv" ]]; then
+              if [[ -n "$VIRTUAL_ENV" ]] && typeset -f deactivate >/dev/null; then
+                deactivate
+              fi
+              source "$project_venv/bin/activate"
             fi
+          elif [[ -n "$VIRTUAL_ENV" && "$VIRTUAL_ENV" == */.venv ]] && typeset -f deactivate >/dev/null; then
+            deactivate
           fi
         }
 
