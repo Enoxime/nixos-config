@@ -66,7 +66,7 @@
     socat # replacement of openbsd-netcat
     tcpdump
     vlan
-    wireshark
+    # wireshark
 
     # CAD / graphics
     blender
