@@ -4,19 +4,16 @@
     nixpkgs-fmt
   ];
 
-  programs.vscode = {
+  programs.vscodium = {
     enable = true;
-    package = pkgs.vscodium;
     profiles."default" = {
-      enableUpdateCheck = true;
-      enableExtensionUpdateCheck = true;
+      enableUpdateCheck = false;
+      enableExtensionUpdateCheck = false;
       extensions = with pkgs.nix-vscode-extensions.vscode-marketplace; [
         amber-lsp-publisher.amber-lsp
         bierner.markdown-mermaid
         bierner.markdown-preview-github-styles
-        catppuccin.catppuccin-vsc
-        # catppuccin.catppuccin-vsc-icons
-        continue.continue
+        # continue.continue
         davidanson.vscode-markdownlint
         hashicorp.terraform
         jnoortheen.nix-ide
