@@ -6,6 +6,9 @@
       "flakes"
       "nix-command"
     ];
+    substituters = [
+      "https://hyprland.cachix.org"
+    ];
     extra-substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
