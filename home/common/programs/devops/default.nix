@@ -21,6 +21,7 @@
     kubeseal
     kubevirt
     kustomize
+    oras
     talhelper
     talosctl
     tenv
