@@ -29,7 +29,7 @@
   environment.systemPackages = with pkgs; [
     # https://nixos.wiki/wiki/Android
     android-tools
-    bottles
+    # bottles
     (heroic.override {
       extraPkgs = pkgs: [
         pkgs.gamescope
