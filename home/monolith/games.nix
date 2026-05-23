@@ -13,17 +13,17 @@
   };
 
   # https://nixos.wiki/wiki/Lutris
-  programs.lutris = {
-    enable = true;
-    extraPackages = with pkgs; [
-      mangohud
-      winetricks
-      gamescope
-      gamemode
-      umu-launcher
-    ];
-    protonPackages = [ pkgs.proton-ge-bin ];
-  };
+  # programs.lutris = {
+  #   enable = true;
+  #   extraPackages = with pkgs; [
+  #     mangohud
+  #     winetricks
+  #     gamescope
+  #     gamemode
+  #     umu-launcher
+  #   ];
+  #   protonPackages = [ pkgs.proton-ge-bin ];
+  # };
 
   # VR headset support
   xdg.portal = {
