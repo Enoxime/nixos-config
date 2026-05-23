@@ -15,8 +15,8 @@
         davidanson.vscode-markdownlint
         hashicorp.terraform
         jnoortheen.nix-ide
-        ms-python.python
-        ms-python.debugpy
+        # ms-python.python
+        # ms-python.debugpy
         ph0enixkm.amber-language
         redhat.ansible
         redhat.vscode-yaml

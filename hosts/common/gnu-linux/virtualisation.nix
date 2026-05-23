@@ -8,7 +8,7 @@
     };
 
     # https://wiki.nixos.org/wiki/Incus
-    incus.enable = false;
+    incus.enable = true;
 
     libvirtd = {
       enable = true;
