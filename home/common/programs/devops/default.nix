@@ -14,6 +14,7 @@
     krew
     # Trigger error for now. To try again later
     # krr # https://github.com/robusta-dev/krr
+    kubectx
     kubectl
     kubectl-cnpg
     kubernetes-helm
