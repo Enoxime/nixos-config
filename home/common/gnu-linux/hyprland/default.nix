@@ -59,6 +59,7 @@
     # https://github.com/catppuccin/cursors?tab=readme-ov-file
     # https://wiki.hyprland.org/Hypr-Ecosystem/hyprcursor/
     pointerCursor = {
+      enable = true;
       gtk.enable = true;
       name = "catppuccin-mocha-mauve-cursors";
       package = pkgs.catppuccin-cursors.mochaMauve;
@@ -103,8 +104,8 @@
     imagemagick
     inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
     # inputs.pyprland.packages."x86_64-linux".pyprland # https://hyprland-community.github.io/pyprland/
-    kdePackages.qtwayland # qt6-wayland
-    libsForQt5.qt5.qtwayland # qt5-wayland
+    qt6.qtwayland # qt6-wayland
+    qt5.qtwayland # qt5-wayland
     slurp
     swappy
     wl-clipboard
