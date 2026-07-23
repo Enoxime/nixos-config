@@ -11,6 +11,10 @@
       local mod = "SUPER"
 
       hl.config({
+        ecosystem = {
+          no_update_news = true,
+          no_donation_nag = true,
+        },
         general = {
           gaps_in = 1,
           gaps_out = 5,
