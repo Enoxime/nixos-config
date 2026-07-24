@@ -16,6 +16,7 @@
   # https://nix.catppuccin.com/search/rolling/
   catppuccin = {
     enable = true;
+    autoEnable = true;
     # flavor = "macchiato";
     flavor = "mocha";
   };

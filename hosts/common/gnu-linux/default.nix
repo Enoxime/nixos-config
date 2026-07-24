@@ -1,4 +1,4 @@
-_: {
+{ pkgs, ... }: {
   imports = [
     ./greeter.nix
     ./locales.nix
@@ -12,4 +12,9 @@ _: {
   ];
 
   environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
+
+  environment.systemPackages = [
+    # https://nixos.wiki/wiki/Android
+    pkgs.android-tools
+  ];
 }
