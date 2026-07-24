@@ -15,5 +15,17 @@
       autostart = false;
       configFile = config.sops.secrets."wireguard/homelab".path;
     };
+
+    bridges = {
+      externalbr0 = {
+        interfaces = ["wlan0"];
+      };
+    };
+
+    # interfaces = {
+    #   externalbr0 = {
+    #     useDHCP = true;
+    #   };
+    # };
   };
 }
