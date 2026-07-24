@@ -19,7 +19,7 @@
     # networking.firewall.allowedTCPPorts = [ ... ];
     # networking.firewall.allowedUDPPorts = [ ... ];
     # Or disable the firewall altogether.
-    firewall= {
+    firewall = {
       enable = true;
       trustedInterfaces = [
         "incusbr0"
