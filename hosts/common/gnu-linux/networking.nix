@@ -19,7 +19,12 @@
     # networking.firewall.allowedTCPPorts = [ ... ];
     # networking.firewall.allowedUDPPorts = [ ... ];
     # Or disable the firewall altogether.
-    firewall.enable = true;
+    firewall = {
+      enable = true;
+      trustedInterfaces = [
+        "incusbr0"
+      ];
+    };
     nftables.enable = true;
 
     # This config does not exists
@@ -33,7 +38,6 @@
     # };
 
     enableIPv6 = true;
-
   };
 
   environment.systemPackages = with pkgs; [
