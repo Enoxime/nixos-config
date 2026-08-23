@@ -37,7 +37,9 @@
     ipcalc  # it is a calculator for the IPv4/v6 addresses
 
     # security/encrypt
-    sops
     age
+    hdparm
+    nvme-cli
+    sops
   ];
 }
