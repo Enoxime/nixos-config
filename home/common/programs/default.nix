@@ -36,8 +36,10 @@
     # networking tools
     ipcalc  # it is a calculator for the IPv4/v6 addresses
 
-    # security/encrypt
-    sops
+    # disk management + security/encrypt
     age
+    hdparm
+    nvme-cli
+    sops
   ];
 }
