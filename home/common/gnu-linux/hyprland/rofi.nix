@@ -1,18 +1,10 @@
 { pkgs, ... }: {
   programs.rofi = {
     enable = true;
-    font = "FantasqueSansM Nerd Font";
-    location = "center";
-    # pass ={};
-    plugins = [
-      pkgs.rofi-calc
-      # pkgs.rofi-systemd
-      # pkgs.rofi-screenshot
-      # pkgs.rofi-file-browser
-      pkgs.rofi-emoji
-    ];
-    terminal = "${pkgs.wezterm}/bin/wezterm";
-    extraConfig = {
+    settings = {
+      location = 0;
+      font = "FantasqueSansM Nerd Font";
+      terminal = "${pkgs.wezterm}/bin/wezterm";
       modes = "drun,filebrowser,calc,emoji";
       icon-theme = "Numix-Circle";
       show-icons = true;
@@ -23,5 +15,12 @@
       sidebar-mode = true;
       border-radius = 10;
     };
+    plugins = [
+      pkgs.rofi-calc
+      # pkgs.rofi-systemd
+      # pkgs.rofi-screenshot
+      # pkgs.rofi-file-browser
+      pkgs.rofi-emoji
+    ];
   };
 }

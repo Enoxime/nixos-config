@@ -40,6 +40,7 @@
     age
     hdparm
     nvme-cli
+    smartmontools
     sops
   ];
 }

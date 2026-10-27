@@ -21,7 +21,17 @@
       enableZshIntegration = true;
     };
     # https://github.com/catppuccin/firefox
-    librewolf.enable = true;
+    librewolf = {
+      enable = true;
+      settings = {
+        "privacy.resistFingerprinting" = false;
+        "privacy.resistFingerprinting.pbmode" = false;
+        "privacy.fingerprintingProtection" = true;
+        "privacy.fingerprintingProtection.pbmode" = true;
+        "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC";
+        "browser.in-content.dark-mode" = true;
+      };
+    };
     mpv = {
       enable = true;
       config = {
@@ -78,8 +88,6 @@
     # misc
     aspell # Command line spell checker. http://aspell.net/
     aspellDicts.en
-    aspellDicts.en-science
-    aspellDicts.en-computers
     aspellDicts.fr
     bc
     borgbackup
@@ -109,7 +117,7 @@
     openssl
     # opera
     # (opera.override { proprietaryCodecs = true; }) # 'opera' has been removed due to lack of maintenance in nixpkgs
-    popcorntime
+    # popcorntime
     sqlite
     sshpass
     tree

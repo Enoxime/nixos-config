@@ -14,7 +14,7 @@
     ];
 
     initrd = {
-      systemd.enable = true;
+      enable = true;
       luks.devices."system".device = "/dev/disk/by-partlabel/cryptsystem";
       # To get a fresh clean root device
       # postDeviceCommands = lib.mkAfter ''
