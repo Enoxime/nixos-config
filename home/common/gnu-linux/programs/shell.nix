@@ -8,7 +8,7 @@ let
     "....." = "cd ../../../..";
     "......" = "cd ../../../../..";
     cat = "bat --style header --style snip --style changes --style header";
-    "l." = "exa -ald --color=always --group-directories-first --icons .*";
+    "l." = "exa -al --color=always --group-directories-first --icons .*";
     # la = "exa -a --color=always --group-directories-first --icons";
     # ll = "exa -l --color=always --group-directories-first --icons";
     # ls = "exa -al --color=always --group-directories-first --icons";
@@ -18,11 +18,11 @@ let
     meteo = "curl 'wttr.in/Montreal?0&lang=fr'";
     gitkeep = "find ''$([[ ! -z $@ ]] && echo $@ || echo \".\") -type d -empty -exec touch {}/.gitkeep \;";
     dgitkeep = "find ''$([[ ! -z $@ ]] && echo $@ || echo \".\") -name \".gitkeep\" -type f -delete";
-    testssl = "docker run -it --rm --name test_ssl drwetter/testssl.sh";
+    testssl = "podman run -it --rm --name test_ssl drwetter/testssl.sh";
     tf = "tofu";
     trf = "terraform";
     tal = "talosctl";
-    th = "talhelper";
+    to = "topf";
     urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))'";
     urlencode = "python -c 'import urllib.parse as ul, sys; print(ul.quote_plus(sys.argv[1]))'";
   };
@@ -98,12 +98,10 @@ in
     bash = {
       enable = true;
       enableCompletion = true;
-      # TODO add your custom bashrc here
       bashrcExtra = ''
         export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.kube/plugins/bin"
       '';
 
-      # set some aliases, feel free to add more or remove some
       shellAliases = {
         k = "kubectl";
         urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))'";

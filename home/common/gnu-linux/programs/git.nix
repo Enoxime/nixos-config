@@ -32,7 +32,7 @@
       core = {
         editor = "nvim";
         excludesfile = "~/.gitignore";
-        fsmonitor = true;
+        fsmonitor = false;
         untrackedCache = true;
         # pager = "delta";
       };
