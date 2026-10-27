@@ -14,7 +14,6 @@
     ];
 
     initrd = {
-      systemd.enable = true;
       # luks.devices."system".device = "/dev/disk/by-partlabel/cryptsystem";
       # luks.devices."system".device = "/dev/disk/by-partlabel/disk-main-luks";
       # luks.devices."cryptsystem" = {
