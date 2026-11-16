@@ -1,8 +1,4 @@
 { pkgs, config, ... }: {
-  sops.secrets."homelab/ca" = {
-    sopsFile = ../../../secrets/secrets.yaml;
-  };
-
   # TODO
   # services.clamav = {
   #   daemon.enable = ;
