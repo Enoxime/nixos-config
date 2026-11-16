@@ -6,10 +6,10 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     wireplumber.enable = true;
-    jack.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
     pwvucontrol
+    # pipewire.jack
   ];
 }

@@ -44,6 +44,11 @@ reboot
 <https://github.com/Alexays/Waybar/wiki/Module:-Hyprland#window>
 <https://nix.catppuccin.com/search/rolling/>
 <https://github.com/nix-community/impermanence>
+<https://saylesss88.github.io/index.html>
+
+### ai
+
+<https://hermes-agent.nousresearch.com/docs/getting-started/nix-setup#home-manager-module>
 
 ## Learn
 
@@ -53,13 +58,6 @@ reboot
 ## TODOs
 
 BORGbackup
-
-incus:
-<https://linuxcontainers.org/>
-<https://linuxcontainers.org/incus/>
-<https://wiki.nixos.org/wiki/Incus>
-
-Check <https://github.com/nix-community/nixpkgs-xr>
 
 ## Sources
 

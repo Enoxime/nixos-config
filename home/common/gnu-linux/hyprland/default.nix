@@ -100,7 +100,6 @@
     hyprland-qt-support # https://wiki.hyprland.org/Hypr-Ecosystem/hyprland-qt-support/
     hyprutils
     hyprgraphics
-    hyprland-qtutils
     imagemagick
     inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
     # inputs.pyprland.packages."x86_64-linux".pyprland # https://hyprland-community.github.io/pyprland/
