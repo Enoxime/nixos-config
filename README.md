@@ -119,7 +119,7 @@ sudo nix \
     --mode destroy,format,mount \
     --flake path:.#framework
 sudo umount -R /mnt
-sudo mount /dev/mapper/cryptsystem /mnt
+sudo mount /dev/mapper/system /mnt
 sudo btrfs subvolume snapshot -r /mnt/@root /mnt/@root-blank
 sudo umount /mnt
 sudo nix \

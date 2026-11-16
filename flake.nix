@@ -291,10 +291,10 @@
           # Add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
           # https://github.com/NixOS/nixos-hardware/blob/master/framework/16-inch/7040-amd
           nixos-hardware.nixosModules.framework-16-7040-amd
-          # disko.nixosModules.disko
-          # {
-          #   imports = [ ./hosts/bubule/disko-configuration.nix ];
-          # }
+          disko.nixosModules.disko
+          {
+            imports = [ ./hosts/bubule/disko-configuration.nix ];
+          }
         ];
         includeHomeManager = true;
         homeManagerModules = [];

@@ -9,11 +9,12 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/nvme0n1";
+        device = "/dev/disk/by-id/nvme-eui.e8238fa6bf530001001b448b470c5bc9";
         content = {
           type = "gpt";
           partitions = {
             ESP = {
+              label = "boot";
               size = "1G";
               type = "EF00";
               content = {
@@ -29,9 +30,10 @@
             };
             luks = {
               size = "100%";
+              label = "cryptsystem";
               content = {
                 type = "luks";
-                name = "cryptsystem";
+                name = "system";
                 settings.allowDiscards = true;
                 # disable settings.keyFile if you want to use interactive password entry
                 #passwordFile = "/tmp/secret.key"; # Interactive
@@ -43,8 +45,8 @@
                 content = {
                   type = "btrfs";
                   extraArgs = [
-                    "--label"
-                    "system"
+                    # "--label"
+                    # "system"
                     "--force"
                   ];
                   subvolumes = {
@@ -92,7 +94,7 @@
                       ];
                     };
                     "@swap" = {
-                      mountpoint = "/swap";
+                      mountpoint = "/.swap";
                       swap.swapfile.size = "38G";
                     };
                     "@snapshots" = {
@@ -124,7 +126,4 @@
       };
     };
   };
-
-  fileSystems."/persist".neededForBoot = true;
-  fileSystems."/var/log".neededForBoot = true;
 }
