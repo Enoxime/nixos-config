@@ -1,7 +1,7 @@
 _: {
   imports = [
     ./configuration.nix
-    # ./disko-configuration.nix
+    ./disko-configuration.nix
     # ./dns.nix
     ./filesystems.nix
     ./framework.nix
