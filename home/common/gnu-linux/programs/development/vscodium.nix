@@ -119,11 +119,11 @@
         workbench.preferredHighContrastLightColorTheme = "Catppuccin Latte";
         workbench.preferredLightColorTheme = "Catppuccin Latte";
         workbench.iconTheme = "catppuccin-mocha";
-        "yaml.schemas" = {
-          "file://${config.home.homeDirectory}/.vscode-oss/extensions/continue.continue/config-yaml-schema.json" = [
-            ".continue/**/*.yaml"
-          ];
-        };
+        # "yaml.schemas" = {
+        #   "file://${config.home.homeDirectory}/.vscode-oss/extensions/continue.continue/config-yaml-schema.json" = [
+        #     ".continue/**/*.yaml"
+        #   ];
+        # };
         "[dockercompose]" = {
           "editor.insertSpaces" = true;
           "editor.tabSize" = 2;

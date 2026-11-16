@@ -21,9 +21,9 @@
     # Or disable the firewall altogether.
     firewall = {
       enable = true;
-      trustedInterfaces = [
-        "incusbr0"
-      ];
+      # trustedInterfaces = [
+      #   "virbr0"
+      # ];
     };
     nftables.enable = true;
 

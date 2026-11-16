@@ -1,4 +1,4 @@
-{ pkgs, config, username, hostname, ... }: {
+{ config, username, ... }: {
   sops.secrets."wireguard/homelab" = {
     mode = "0440";
     owner = "${username}";
@@ -6,9 +6,9 @@
   };
 
   networking = {
-    hosts = {
-      "127.0.0.1" = ["garage.garage"];
-    };
+    # hosts = {
+    #   # "127.0.0.1" = ["garage.garage"];
+    # };
 
     # vpn
     wg-quick.interfaces.homelab-mgmt = {

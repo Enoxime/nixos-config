@@ -20,7 +20,23 @@
   # Smart card mode (CCID) of Yubikey
   services.pcscd.enable = true;
 
-  security.pki.certificates = [
-    "${config.sops.secrets."homelab/ca".path}"
+  # security.pki.certificates = [
+  #   "${config.sops.secrets."homelab/ca".path}"
+  # ];
+  security.pki.certificates = [ ''
+      homelab
+      =========
+      -----BEGIN CERTIFICATE-----
+      MIIBmzCCAUKgAwIBAgIRAI0B2KCqdAvy0xu72BZ/jOEwCgYIKoZIzj0EAwIwLDEQ
+      MA4GA1UEChMHaG9tZWxhYjEYMBYGA1UEAxMPaG9tZWxhYiBSb290IENBMB4XDTI2
+      MTAyNTEzMzEzMFoXDTM2MTAyMjEzMzEzMFowLDEQMA4GA1UEChMHaG9tZWxhYjEY
+      MBYGA1UEAxMPaG9tZWxhYiBSb290IENBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcD
+      QgAErNDzUAaLqqqKo/ra497+95O8tfoC5nHQUtuzj58KUeL6259NVl+cVgy0FWyW
+      ChwFsT0m1JOed0p+32P6jD+FaqNFMEMwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB
+      /wQIMAYBAf8CAQEwHQYDVR0OBBYEFNm0fATNhmzDGeqyvfjyG+1vVQwyMAoGCCqG
+      SM49BAMCA0cAMEQCIBbxJ+j1Ueji8KeJ8SAUQ+hhxS5d3vd9wmBgLepFsWwuAiBK
+      XWCCEM1aaWvYPBUcmgTk3d8nHRW2yNnbo//xZClKMA==
+      -----END CERTIFICATE-----
+    ''
   ];
 }
