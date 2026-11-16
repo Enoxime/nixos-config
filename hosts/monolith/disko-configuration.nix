@@ -14,7 +14,7 @@ _: {
           type = "gpt";
           partitions = {
             ESP = {
-              label ="boot";
+              label = "boot";
               size = "1G";
               type = "EF00";
               content = {
