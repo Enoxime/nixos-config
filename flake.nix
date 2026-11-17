@@ -58,9 +58,6 @@
     # https://nix.catppuccin.com/
     catppuccin.url = "github:catppuccin/nix";
 
-    # See https://budimanjojo.github.io/talhelper/latest/installation/
-    talhelper.url = "github:budimanjojo/talhelper";
-
     # SOPS https://github.com/Mic92/sops-nix
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -106,7 +103,6 @@
     hyprland,
     # pyprland,
     catppuccin,
-    talhelper,
     sops-nix,
     nix-darwin,
     impermanence,
@@ -187,7 +183,6 @@
         catppuccin.nixosModules.catppuccin
         ({ ... }: {
           nixpkgs.overlays = [
-            talhelper.overlays.default
             nix-vscode-extensions.overlays.default
           ];
         })
@@ -246,7 +241,6 @@
         mac-app-util.darwinModules.default
         ({ ... }: {
           nixpkgs.overlays = [
-            talhelper.overlays.default
             nix-vscode-extensions.overlays.default
           ];
         })
