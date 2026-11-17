@@ -52,5 +52,8 @@
   };
 
   # To permit GPU pass-through for docker
-  hardware.nvidia-container-toolkit.enable = true;
+  # hardware.nvidia-container-toolkit.enable = true;
+
+  # Docker with Nvidia. See https://wiki.nixos.org/wiki/Docker#NVIDIA_Docker_Containers
+  # virtualisation.docker.daemon.settings.features.cdi = true;
 }

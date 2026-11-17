@@ -1,7 +1,8 @@
 { pkgs, inputs, username, ... }: {
   home.packages = with pkgs; [
     protonup-ng
-    sidequest
+    # Marked as insecure
+    # sidequest
     inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.star-citizen
     # VR headset support
     opencomposite
