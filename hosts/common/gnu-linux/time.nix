@@ -5,8 +5,15 @@ _: {
 
   # Set your time zone.
   time = {
-    hardwareClockInLocalTime = true;
+    hardwareClockInLocalTime = false;
     # timeZone = "${config.sops.secrets.timezone.path}";
     timeZone = "America/New_York";
+  };
+
+  services.ntp = {
+    enable = true;
+    servers = [
+      "2.pool.ntp.org" # IPv6 support
+    ];
   };
 }
