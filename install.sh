@@ -334,7 +334,7 @@ linux_install__249_v0() {
     local secure_erase_47=0
     local sops_secret_path_48=""
     local username_49=""
-    local version_50=""
+    local version_50="main"
     local disko_version_51="latest"
     dir_create__44_v0 "${dir_path_5}"
     __status=$?
