@@ -1,12 +1,5 @@
-{ config, pkgs, lib, ... }: {
-  sops.secrets."hermes_agent/env" = {
-    sopsFile = ../../../../secrets/secrets.yaml;
-    mode = "0440";
-    path = "${config.home.homeDirectory}/.hermes/.env";
-  };
-  sops.secrets."hermes_agent/llama_url" = {
-    sopsFile = ../../../../secrets/secrets.yaml;
-  };
+{ config, pkgs, ... }: {
+  sops.secrets."hermes_agent/env".sopsFile = ../../../../secrets/secrets.yaml;
 
   services.hermes-agent = {
     enable = true;
@@ -14,7 +7,7 @@
     settings = {
       model = {
         provider = "custom";
-        base_url = lib.strings.fileContents config.sops.secrets."hermes_agent/llama_url".path;
+        base_url = "\${OPENAI_BASE_URL}";
         default = "Ministral-3R-8B-Reasoning";
       };
       display.interface = "tui";
@@ -67,7 +60,7 @@
         compression = {
           model = "Ministral-3R-8B-Reasoning";
           provider = "custom";
-          base_url = lib.strings.fileContents config.sops.secrets."hermes_agent/llama_url".path;
+          base_url = "\${OPENAI_BASE_URL}";
         };
       };
       plugins = {
@@ -138,7 +131,7 @@
       data_share.enabled = false;
     };
 
-    # environmentFiles = [ config.sops.secrets."hermes/env".path ];
+    environmentFiles = [ config.sops.secrets."hermes_agent/env".path ];
     # environment = {
     #   SEARXNG_URL = "";
     # };
