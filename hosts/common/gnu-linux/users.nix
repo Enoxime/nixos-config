@@ -1,4 +1,4 @@
-{ pkgs, username, hostname, userExtraGroups, config, ... }: {
+{ pkgs, username, hostname, userExtraGroups, ... }: {
   sops.secrets.ssh_key = {
     mode = "0400";
     owner = username;

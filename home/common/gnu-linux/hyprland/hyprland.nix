@@ -1,4 +1,4 @@
-{ lib, ... }: {
+_: {
   wayland.windowManager.hyprland = {
     configType = "lua";
     enable = true; # enable Hyprland

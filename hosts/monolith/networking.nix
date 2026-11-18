@@ -6,9 +6,9 @@
   };
 
   networking = {
-    hosts = {
-      "127.0.0.1" = ["garage.garage"];
-    };
+    # hosts = {
+    #   "127.0.0.1" = ["garage.garage"];
+    # };
 
     # networkmanager.ensureProfiles.profiles = {};
 
