@@ -1,20 +1,20 @@
 { buildGoModule, pkgs, lib, ... }: let
   # pversion = "${version}" ? "1.1";
-  pversion = "1.1";
+  version = "1.1";
 in
 buildGoModule {
   pname = "bshchk";
-  version = "${pversion}";
+  version = "${version}";
 
   src = pkgs.fetchFromGitHub {
     owner = "b1ek";
     repo = "bshchk";
-    rev = "${pversion}";
+    rev = "${version}";
     hash = "sha256-sncLKkcnFZd3Tlxpuajy0PWJ7ARo8RM1jpaP1gIDl28=";
   };
 
   ldflags = [
-    "-X main.version=${pversion}"
+    "-X main.version=${version}"
   ];
 
   vendorHash = "sha256-k3I7PnzK5rF2BcDSadNRXI7LrK0VnZfX4eNxCvwt3uc=";

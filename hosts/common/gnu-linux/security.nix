@@ -1,4 +1,8 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, lib, ... }: {
+  # sops.secrets."homelab/ca.pem" = {
+  #   sopsFile = ../../../secrets/secrets.yaml;
+  # };
+
   # TODO
   # services.clamav = {
   #   daemon.enable = ;
@@ -16,8 +20,9 @@
   # Smart card mode (CCID) of Yubikey
   services.pcscd.enable = true;
 
-  # security.pki.certificates = [
-  #   "${config.sops.secrets."homelab/ca".path}"
+  # security.pki.certificates = [ ''
+  #     $(lib.strings.fileContents config.sops.secrets."homelab/ca.pem".path)
+  #   ''
   # ];
   security.pki.certificates = [ ''
       homelab
