@@ -7,21 +7,24 @@
   vals,
   ...
 }: let
-  pversion = "0.6.0";
+  version = "v0.6.2";
 in
 buildGoModule {
   pname = "topf";
-  version = "${pversion}";
+  version = "${version}";
 
   src = pkgs.fetchFromGitHub {
     owner = "postfinance";
     repo = "topf";
-    # rev = "${pversion}";
-    tag = "v${pversion}";
-    hash = "sha256-NRKRROq6uxLlAHCtpT+s+eBVjFgf8qjjwlYGhdNApUs=";
+    rev = "${version}";
+    hash = "sha256-frUyZtpA0iyFwHxlN5SqZ0WFfU4sMalmdkHtulg+B3I=";
   };
 
-  vendorHash = "sha256-9xYy1Ep7bZ0nW63fmrxiqfOrHWt7Kcn+zGhcjBpdvYY=";
+  vendorHash = "sha256-VLZLPM1/a1Lf5ggk4pwB/AL+Drrdfmm3f9DYjvpBKcA=";
+
+  ldflags = [
+    "-w -X main.version=${version}"
+  ];
 
   depsBuildBuild = [
     age
