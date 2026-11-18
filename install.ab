@@ -41,7 +41,8 @@ Flags:
       --secure              Fill the disk zeros by opening the disk with cryptsetup. Default to false
   -s  --sops-secret-path    Path of the sops file
   -u  --username            Username for the system
-  -v  --version             Specify a tag or a branch. Set to latest by default
+  -v  --version             Specify a tag or a branch. Set to main by default
+      --disko-version       Specify a tag or a branch for disko. Set to latest by default
 ")
 }
 
@@ -102,7 +103,7 @@ fun linux_private(m: Text, u: Text): Text {
 
 fun linux_disko(
   machine_name: Text,
-  version: Text = "main"): Bool {
+  version: Text = "latest"): Bool {
 
   file_download(
     "{raw_nixos_config_github}/{version}/hosts/{machine_name}/disko-configuration.nix",
@@ -161,7 +162,8 @@ fun linux_install(opts: []): Bool {
   let secure_erase = false
   let sops_secret_path = ""
   let username = ""
-  let version = "latest"
+  let version = "main"
+  let disko_version = "latest"
 
   dir_create(dir_path) failed(code) {
      echo_error("Command failed with exit code: {code}")
@@ -243,6 +245,11 @@ fun linux_install(opts: []): Bool {
         let v_opt = opts[i+1]
         if len(v_opt) > 0: version = v_opt
       }
+
+      opt == "--disko-version" {
+        let disko_version_opt = opts[i+1]
+        if len(disko_version_opt) > 0: disko_version = disko_version_opt
+      }
     }
   }
 
@@ -256,7 +263,7 @@ fun linux_install(opts: []): Bool {
 
   let private_path = linux_private(machine_name, username)
 
-  linux_disko(machine_name, version)
+  linux_disko(machine_name, disko_version)
 
   // Copy the private.nix file in the permanent directory
   dir_create("/mnt/persist/private") failed(code) {
