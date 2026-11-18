@@ -162,7 +162,7 @@ fun linux_install(opts: []): Bool {
   let secure_erase = false
   let sops_secret_path = ""
   let username = ""
-  let version = ""
+  let version = "main"
   let disko_version = "latest"
 
   dir_create(dir_path) failed(code) {
