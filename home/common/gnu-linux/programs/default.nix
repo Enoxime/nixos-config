@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   imports = [
+    ./ai.nix
     ./development
     ./devops
     ./games.nix
@@ -11,8 +12,8 @@
   programs = {
     # A lightweight multi-protocol & multi-source command-line download utility
     aria2.enable = true;
-    # Another process monitor but seems nice
     bottom.enable = true;
+    chromium.enable = true;
     fastfetch.enable = true;
     # A command-line fuzzy finder
     fzf = {
@@ -41,6 +42,8 @@
         gpu-context = "wayland";
       };
     };
+    pnpm.enable = true;
+    ripgrep.enable = true;
     # https://home-manager-options.extranix.com/?query=spotify-player&release=master
     # https://github.com/aome510/spotify-player
     # https://github.com/aome510/spotify-player/blob/master/docs/config.md

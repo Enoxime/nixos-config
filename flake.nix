@@ -92,6 +92,9 @@
 
     # https://codeberg.org/LGFae/awww
     awww.url = "git+https://codeberg.org/LGFae/awww";
+
+    # https://hermes-agent.nousresearch.com/docs/getting-started/nix-setup
+    hermes-agent.url = "github:NousResearch/hermes-agent";
   };
 
   outputs = inputs@{
@@ -113,6 +116,7 @@
     lan-mouse,
     mac-app-util,
     awww,
+    hermes-agent,
     ...
   }:
   let
@@ -200,6 +204,7 @@
                 ./home/common/gnu-linux
                 ./home/${hostname}/home.nix
                 catppuccin.homeModules.catppuccin
+                hermes-agent.homeManagerModules.default
               ]
               ++ homeManagerModules;
               extraSpecialArgs = {
