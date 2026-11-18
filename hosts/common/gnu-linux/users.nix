@@ -35,5 +35,6 @@
     "d /home/${username}/.ssh 0750 ${username} ${username} -"
     "d /home/${username}/mnt 0750 ${username} ${username} -"
     "d /home/${username}/mnt/tempon 0750 ${username} ${username} -"
+    "d /home/${username}/.local/bin 0750 ${username} ${username} -"
   ];
 }
