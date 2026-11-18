@@ -1,5 +1,5 @@
 import { file_exists, dir_create, file_append, file_write } from "std/fs"
-import { is_root } from "std/env"
+import { is_root, echo_error, echo_info } from "std/env"
 import { file_download } from "std/http"
 
 const nixos_config_github = "github:Enoxime/nixos-config"
@@ -7,7 +7,7 @@ const raw_nixos_config_github = "https://raw.githubusercontent.com/Enoxime/nixos
 const dir_path = "/persist"
 
 fun menu(): Text {
-  echo "
+  echo("
 ################
 # nixos-config #
 ################
@@ -20,12 +20,12 @@ Available Commands:
 
 Flags:
   -h  --help    Show help for this script
-"
+")
 }
 
 
 fun linux_menu(): Text {
-  echo "
+  echo("
 ###############################
 # nixos-config: linux_install #
 ###############################
@@ -42,23 +42,23 @@ Flags:
   -s  --sops-secret-path    Path of the sops file
   -u  --username            Username for the system
   -v  --version             Specify a tag or a branch. Set to latest by default
-"
+")
 }
 
 
 fun linux_password(p: Text, u: Text): Text {
   dir_create("/mnt/persist/home/{u}") failed(code) {
-     echo "Command failed with exit code: {code}"
+     echo_error("Command failed with exit code: {code}")
   }
 
-  let hashed_password = $ mkpasswd '{p}' $ failed {
-    echo "Something went wrong with the mkpasswd command!"
-    exit 1
+  const hashed_password = $ mkpasswd '{p}' $ failed {
+    echo_error("Something went wrong with the mkpasswd command!")
+    exit(1)
   }
-  
+
   file_write("/mnt/persist/home/{u}/hashedPasswordFile", hashed_password) failed {
-    echo "File: /mnt/persist/home/{u}/hashedPasswordFile. Was not created! Status: {status}"
-    exit 1
+    echo_error("File: /mnt/persist/home/{u}/hashedPasswordFile. Was not created! Status: {status()}")
+    exit(1)
   }
 
   return "/mnt/persist/home/{u}/hashedPasswordFile"
@@ -66,7 +66,7 @@ fun linux_password(p: Text, u: Text): Text {
 
 
 fun linux_private(m: Text, u: Text): Text {
-  let file_name = "private.nix"
+  const file_name = "private.nix"
   let content = ""
 
   if len(m) > 0 and len(u) > 0 {
@@ -79,20 +79,20 @@ fun linux_private(m: Text, u: Text): Text {
 "
   }
   else {
-    echo "machine_name or username empty!"
-    exit 1
+    echo_error("machine_name or username empty!")
+    exit(1)
   }
 
   if file_exists("{dir_path}/private/{file_name}") {
     file_write("{dir_path}/private/{file_name}", content) failed {
-      echo "File: {dir_path}/private/{file_name}. Was not created! Status: {status}"
-      exit 1
+      echo_error("File: {dir_path}/private/{file_name}. Was not created! Status: {status()}")
+      exit(1)
     }
   }
   else {
     file_append("{dir_path}/private/{file_name}", content) failed {
-      echo "File: {dir_path}/private/{file_name}. Was not created! Status: {status}"
-      exit 1
+      echo_error("File: {dir_path}/private/{file_name}. Was not created! Status: {status()}")
+      exit(1)
     }
   }
 
@@ -102,13 +102,13 @@ fun linux_private(m: Text, u: Text): Text {
 
 fun linux_disko(
   machine_name: Text,
-  version: Text = "latest"): Bool {
+  version: Text = "main"): Bool {
 
   file_download(
     "{raw_nixos_config_github}/{version}/hosts/{machine_name}/disko-configuration.nix",
     "{dir_path}/disko-configuration.nix"
   ) failed(code) {
-     echo "Command failed with exit code: {code}"
+     echo_error("Command failed with exit code: {code}")
   }
 
   // Destroy, format and mount the disk via disko
@@ -117,26 +117,26 @@ fun linux_disko(
     run github:nix-community/disko/latest \
     -- --mode destroy,format,mount \
       {dir_path}/disko-configuration.nix $ failed {
-    echo "Something went wrong with disko! Error: {status}"
-    exit 1
+    echo_error("Something went wrong with disko! Error: {status()}")
+    exit(1)
   }
 
   // Make a snapshot of the root filesystem
   $ umount -R /mnt $ failed {
-    echo "Something went wrong with the recursive umount!"
-    exit 1
+    echo_error("Something went wrong with the recursive umount!")
+    exit(1)
   }
   $ mount /dev/mapper/system /mnt $ failed {
-    echo "Something went wrong with the mount of the system!"
-    exit 1
+    echo_error("Something went wrong with the mount of the system!")
+    exit(1)
   }
   $ btrfs subvolume snapshot -r /mnt/@root /mnt/@root-blank $ failed {
-    echo "Something went wrong during the root snapshot!"
-    exit 1
+    echo_error("Something went wrong during the root snapshot!")
+    exit(1)
   }
   $ umount /mnt $ failed {
-    echo "Something went wrong with the root umount!"
-    exit 1
+    echo_error("Something went wrong with the root umount!")
+    exit(1)
   }
 
   // Mount back the system
@@ -145,8 +145,8 @@ fun linux_disko(
     run github:nix-community/disko/latest \
     -- --mode mount \
       {dir_path}/disko-configuration.nix $ failed {
-    echo "Something went wrong with disko! Error: {status}"
-    exit 1
+    echo_error("Something went wrong with disko! Error: {status()}")
+    exit(1)
   }
 
   return true
@@ -164,13 +164,13 @@ fun linux_install(opts: []): Bool {
   let version = "latest"
 
   dir_create(dir_path) failed(code) {
-     echo "Command failed with exit code: {code}"
+     echo_error("Command failed with exit code: {code}")
   }
   dir_create("{dir_path}/private") failed(code) {
-     echo "Command failed with exit code: {code}"
+     echo_error("Command failed with exit code: {code}")
   }
   dir_create("{dir_path}/sops/age") failed(code) {
-     echo "Command failed with exit code: {code}"
+     echo_error("Command failed with exit code: {code}")
   }
 
   for i, opt in opts {
@@ -181,8 +181,8 @@ fun linux_install(opts: []): Bool {
           configuration_name = c_opt
         } else {
           linux_menu()
-          echo "Wrong configuration name!"
-          exit 1
+          echo_error("Wrong configuration name!")
+          exit(1)
         }
       }
 
@@ -192,14 +192,14 @@ fun linux_install(opts: []): Bool {
           disk_path = d_opt
         } else {
           linux_menu()
-          echo "Disk path not specified!"
-          exit 1
+          echo_error("Disk path not specified!")
+          exit(1)
         }
       }
 
       opt == "-h" or opt == "--help" {
         linux_menu()
-        exit 0
+        exit(0)
       }
 
       opt == "-m" or opt == "--machine-name": machine_name = opts[i+1]
@@ -210,8 +210,8 @@ fun linux_install(opts: []): Bool {
           password = p_opt
         } else {
           linux_menu()
-          echo "password is empty!"
-          exit 1
+          echo_error("password is empty!")
+          exit(1)
         }
       }
 
@@ -223,8 +223,8 @@ fun linux_install(opts: []): Bool {
           sops_secret_path = s_opt
         } else {
           linux_menu()
-          echo "Sops secret file not found!"
-          exit 1
+          echo_error("Sops secret file not found!")
+          exit(1)
         }
       }
 
@@ -234,8 +234,8 @@ fun linux_install(opts: []): Bool {
           username = u_opt
         } else {
           linux_menu()
-          echo "Username is empty!"
-          exit 1
+          echo_error("Username is empty!")
+          exit(1)
         }
       }
 
@@ -246,6 +246,12 @@ fun linux_install(opts: []): Bool {
     }
   }
 
+  if len(password) == 0 {
+    linux_menu()
+    echo_error("error: password is empty!")
+    exit(1)
+  }
+
   if secure_erase: trust $ nvme format --force {disk_path} $
 
   let private_path = linux_private(machine_name, username)
@@ -254,26 +260,26 @@ fun linux_install(opts: []): Bool {
 
   // Copy the private.nix file in the permanent directory
   dir_create("/mnt/persist/private") failed(code) {
-     echo "Command failed with exit code: {code}"
+     echo_error("Command failed with exit code: {code}")
   }
   $ cp "{private_path}" "/mnt/persist/private/private.nix" $ failed {
-    echo "Something went wrong during the copy of the private.nix file!"
-    exit 1
+    echo_error("Something went wrong during the copy of the private.nix file!")
+    exit(1)
   }
 
   // Copy the sops secret in the temporary directory
   $ cp "{sops_secret_path}" "{dir_path}/sops/age/keys.txt" $ failed {
-    echo "Something went wrong during the copy of the age key file!"
-    exit 1
+    echo_error("Something went wrong during the copy of the age key file!")
+    exit(1)
   }
 
   // Copy the sops secret in the permanent directory
   dir_create("/mnt/persist/sops/age") failed(code) {
-     echo "Command failed with exit code: {code}"
+     echo_error("Command failed with exit code: {code}")
   }
   $ cp "{sops_secret_path}" "/mnt/persist/sops/age/keys.txt" $ failed {
-    echo "Something went wrong during the copy of the age key file!"
-    exit 1
+    echo_error("Something went wrong during the copy of the age key file!")
+    exit(1)
   }
 
   // Create the hashed password file containing the user password
@@ -281,18 +287,18 @@ fun linux_install(opts: []): Bool {
 
   // Install NixOS
   $ nixos-install --root /mnt --flake {nixos_config_github}/{version}#{configuration_name} --impure $ failed {
-    echo "Something went wrong with nixos-install! Error: {status}"
-    exit 1
+    echo_error("Something went wrong with nixos-install! Error: {status()}")
+    exit(1)
   }
 
-  echo "Ready to reboot. Don't forget to remove the usb key"
+  echo_info("Ready to reboot. Don't forget to remove the usb key")
 
   return true
 }
 
 
 fun darwin_menu(): Text {
-  echo "
+  echo("
 ################################
 # nixos-config: darwin_install #
 ################################
@@ -306,7 +312,7 @@ Flags:
   -s  --sops-secret-path    Path of the sops file
   -u  --username            Username for the system
   -v  --version             Specify a tag or a branch. Set to latest by default
-"
+")
 }
 
 
@@ -325,20 +331,20 @@ fun darwin_private(machine_name: Text, username: Text): Text {
 "
   }
   else {
-    echo "machine_name or username empty!"
-    exit 1
+    echo_error("machine_name or username empty!")
+    exit(1)
   }
 
   if file_exists("{private_path}") {
     file_write("{private_path}", content) failed {
-      echo "File: {private_path}. Was not created! Status: {status}"
-      exit 1
+      echo_error("File: {private_path}. Was not created! Status: {status()}")
+      exit(1)
     }
   }
   else {
     file_append("{private_path}", content) failed {
-      echo "File: {private_path}. Was not created! Status: {status}"
-      exit 1
+      echo_error("File: {private_path}. Was not created! Status: {status()}")
+      exit(1)
     }
   }
 
@@ -361,14 +367,14 @@ fun darwin_install(opts: []): Bool {
           configuration_name = c_opt
         } else {
           linux_menu()
-          echo "Wrong configuration name!"
-          exit 1
+          echo_error("Wrong configuration name!")
+          exit(1)
         }
       }
 
       opt == "-h" or opt == "--help" {
         linux_menu()
-        exit 0
+        exit(0)
       }
 
       opt == "-m" or opt == "--machine-name": machine_name = opts[i+1]
@@ -379,8 +385,8 @@ fun darwin_install(opts: []): Bool {
           sops_secret_path = s_opt
         } else {
           linux_menu()
-          echo "Sops secret file not found!"
-          exit 1
+          echo_error("Sops secret file not found!")
+          exit(1)
         }
       }
 
@@ -390,8 +396,8 @@ fun darwin_install(opts: []): Bool {
           username = u_opt
         } else {
           linux_menu()
-          echo "Username is empty!"
-          exit 1
+          echo_error("Username is empty!")
+          exit(1)
         }
       }
 
@@ -404,16 +410,16 @@ fun darwin_install(opts: []): Bool {
 
   // Copy the sops secret in the permanent directory
   dir_create("/Users/{username}/.config/sops/age") failed(code) {
-     echo "Command failed with exit code: {code}"
+     echo_error("Command failed with exit code: {code}")
   }
   $ cp "{sops_secret_path}" "/Users/{username}/.config/sops/age/keys.txt" $ failed {
-    echo "Something went wrong during the copy of the age key file!"
-    exit 1
+    echo_error("Something went wrong during the copy of the age key file!")
+    exit(1)
   }
 
   // Create source directory
   dir_create("/Users/{username}/src/perso/darwin") failed(code) {
-     echo "Command failed with exit code: {code}"
+     echo_error("Command failed with exit code: {code}")
   }
 
   // Setup the repository for installation
@@ -421,27 +427,27 @@ fun darwin_install(opts: []): Bool {
     "https://github.com/Enoxime/nixos-config/archive/refs/heads/{version}.zip",
     "/Users/{username}/src/perso/darwin.zip"
   ) failed(code) {
-     echo "Command failed with exit code: {code}"
+     echo_error("Command failed with exit code: {code}")
   }
-  cd "/Users/{username}/src/perso"
+  trust cd("/Users/{username}/src/perso")
   $ bsdtar -x --strip-components=1 --directory darwin -f darwin.zip $ failed {
-    echo "Something went wrong with unzip darwin.zip! Error: {status}"
-    exit 1
+    echo_error("Something went wrong with unzip darwin.zip! Error: {status()}")
+    exit(1)
   }
-  cd "/Users/{username}/src/perso/darwin"
+  trust cd("/Users/{username}/src/perso/darwin")
   darwin_private(machine_name, username)
 
   // Install Nix darwin
   $ curl -fsSL https://install.determinate.systems.nix | sh -s -- install --determinate $ failed {
-    echo "Something went wrong with installing darwin! Error: {status}"
-    exit 1
+    echo_error("Something went wrong with installing darwin! Error: {status()}")
+    exit(1)
   }
   $ nix run nix-darwin/master#darwwin-rebuild -- switch --flake path:.#{configuration_name} $ failed {
-    echo "Something went wrong with installing darwin! Error: {status}"
-    exit 1
+    echo_error("Something went wrong with installing darwin! Error: {status()}")
+    exit(1)
   }
 
-  echo "Ready to reboot"
+  echo_info("Ready to reboot")
 
   return true
 }
@@ -449,23 +455,23 @@ fun darwin_install(opts: []): Bool {
 
 main(args) {
   if not is_root() {
-    echo "This script requires root permissions!"
-    exit 1
+    echo_error("This script requires root permissions!")
+    exit(1)
   }
 
   if {
     len(args) < 2 {
       menu()
-      exit 0
+      exit(0)
     }
 
     args[1] == "linux_install" {
-      let linux_args = args[2..=len(args)]
+      const linux_args = args[2..=len(args)]
       linux_install(linux_args)
     }
 
     args[1] == "darwin_install" {
-      let darwin_args = args[2..=len(args)]
+      const darwin_args = args[2..=len(args)]
       darwin_install(darwin_args)
     }
 
@@ -474,5 +480,5 @@ main(args) {
     else: menu()
   }
 
-  exit 1
+  exit(1)
 }
