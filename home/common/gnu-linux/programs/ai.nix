@@ -8,7 +8,8 @@
       model = {
         provider = "custom";
         base_url = "\${OPENAI_BASE_URL}";
-        default = "Ministral-3R-8B-Reasoning";
+        default = "qwen3.8-27b";
+        context_length = 65536;
       };
       display.interface = "tui";
       webapp.enabled = false;
@@ -20,7 +21,7 @@
         home_mode = "auto"; # auto | real | profile — subprocess HOME policy
       };
       agent = {
-        reasoning_effort = "ultra"; # empty = medium. Options: none, minimal, low, medium, high, xhigh, max, ultra
+        reasoning_effort = "xhigh"; # empty = medium. Options: none, minimal, low, medium, high, xhigh, max, ultra
         disabled_toolsets = [
           "vision"
           "video"
@@ -58,7 +59,7 @@
       # The summarization model/provider is configured under auxiliary:
       auxiliary = {
         compression = {
-          model = "Ministral-3R-8B-Reasoning";
+          model = "qwen3.8-27b";
           provider = "custom";
           base_url = "\${OPENAI_BASE_URL}";
         };
