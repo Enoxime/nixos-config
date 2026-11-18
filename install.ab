@@ -162,7 +162,7 @@ fun linux_install(opts: []): Bool {
   let secure_erase = false
   let sops_secret_path = ""
   let username = ""
-  let version = "main"
+  let version = ""
   let disko_version = "latest"
 
   dir_create(dir_path) failed(code) {
@@ -243,12 +243,20 @@ fun linux_install(opts: []): Bool {
 
       opt == "-v" or opt == "--version" {
         let v_opt = opts[i+1]
-        if len(v_opt) > 0: version = v_opt
+        if len(v_opt) > 0 {
+          version = v_opt
+        } else {
+          version = "main"
+        }
       }
 
       opt == "--disko-version" {
         let disko_version_opt = opts[i+1]
-        if len(disko_version_opt) > 0: disko_version = disko_version_opt
+        if len(disko_version_opt) > 0 {
+          disko_version = disko_version_opt
+        } else {
+          disko_version = "latest"
+        }
       }
     }
   }
