@@ -9,16 +9,6 @@
     defaultSopsFile = ../../secrets/${hostname}/secrets.yaml;
   };
 
-  # Catppuccin theme
-  # https://nix.catppuccin.com/
-  # https://nix.catppuccin.com/search/rolling/
-  catppuccin = {
-    enable = true;
-    autoEnable = true;
-    # flavor = "macchiato";
-    flavor = "mocha";
-  };
-
   # dconf.settings = {
   #   # virt-manager auto connect to local
   #   "org/virt-manager/virt-manager/connections" = {

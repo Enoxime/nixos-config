@@ -1,9 +1,4 @@
 _: {
-  catppuccin.wlogout = {
-    enable = true;
-    accent = "red";
-  };
-
   programs.wlogout = {
     enable = true;
     layout = [
