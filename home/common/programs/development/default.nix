@@ -2,7 +2,6 @@
   home.packages = with pkgs; [
     amber-lang
     # bshchk
-    (callPackage ../../../../pkgs/bshchk.nix {})
     # topf
     (callPackage ../../../../pkgs/topf.nix {})
     pipenv

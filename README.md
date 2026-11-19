@@ -99,6 +99,7 @@ bash <( curl \
     -d DISK_PATH \
     -m MACHINE_NAME \
     --secure \
+    --password PASSWORD \
     -s SOPS_SECRET_PATH \
     -u USERNAME
 # or
@@ -108,6 +109,7 @@ bash <( curl \
   linux_install \
     -c work \
     -m MACHINE_NAME \
+    --password PASSWORD \
     -s SOPS_SECRET_PATH \
     -u USERNAME
 
