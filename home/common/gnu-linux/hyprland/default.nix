@@ -1,6 +1,7 @@
 { pkgs, username, inputs, ... }: {
   imports = [
     ./avizo.nix
+    ./catppuccin.nix
     ./config.nix
     ./dunst.nix
     ./gammastep.nix
